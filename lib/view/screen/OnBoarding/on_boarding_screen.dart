@@ -32,7 +32,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             children: const [IntroPage1(), IntroPage2(), IntroPage3()],
           ),
           Container(
-            alignment: const Alignment(0, 0.70),
+            alignment: const Alignment(0, 0.78),
             child: SmoothPageIndicator(
               effect: const WormEffect(
                   dotColor: Color(0xffD9D9D9),
@@ -44,17 +44,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Container(
             alignment: const Alignment(0, 0.96),
             child: Padding(
-              padding: const EdgeInsets.only(left: 26, right: 29),
+              padding: const EdgeInsets.only(left: 22, right: 21),
               child: Container(
                 decoration: const BoxDecoration(boxShadow: [
                   BoxShadow(
                       blurRadius: 10,
-                      color: Color.fromRGBO(0, 0, 0, 0.35),
+                      color: Color.fromRGBO(0, 0, 0, 0.20),
                       offset: Offset(0, 4))
                 ]),
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(370, 61),
+                        minimumSize: const Size(370, 40),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)),
                         backgroundColor: const Color(0XFF0085FF),
@@ -72,7 +72,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       'Berikutnya',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700, fontSize: 16),
+                          fontWeight: FontWeight.w700, fontSize: 14),
                     )),
               ),
             ),
