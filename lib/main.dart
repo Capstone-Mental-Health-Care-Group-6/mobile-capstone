@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/widget/card_invoice_widget.dart';
+import 'package:empathi_care/view/widget/count_down_payment_widget.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -31,6 +31,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         title: 'Flutter Demo',
-        home: const CardInvoicePayment());
+        home: const CountDown());
   }
 }
