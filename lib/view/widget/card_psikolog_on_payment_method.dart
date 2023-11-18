@@ -15,7 +15,6 @@ class _CardPsikologOnPaymentMethodState
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
-      margin: const EdgeInsets.only(top: 20),
       decoration: const BoxDecoration(
           color: Color(0xFFCCE7FF),
           borderRadius: BorderRadius.all(Radius.circular(10))),
