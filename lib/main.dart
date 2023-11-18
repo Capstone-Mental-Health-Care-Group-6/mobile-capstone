@@ -1,36 +1,48 @@
-import 'package:empathi_care/view/widget/card_invoice_widget.dart';
-import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
+import 'package:empathi_care/view/screen/splash_screen.dart';
+import 'package:empathi_care/view_model/logreg_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
   initializeDateFormatting('id', null).then((_) {
     runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (_) => CountDownPaymentSuccessProvider()),
-        ],
-        child: const MyApp(),
-      ),
+      const MyApp(),
     );
   });
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        title: 'Flutter Demo',
-        home: const CardInvoicePayment());
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (BuildContext context) => LogRegProvider())
+        ],
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme:
+                  ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
+              useMaterial3: true,
+              textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                  textStyle: MaterialStateProperty.all(
+                    TextStyle(
+                        fontFamily: GoogleFonts.montserrat().fontFamily,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+            ),
+            home: const SplashScreen(),
+          );
+        });
   }
 }
