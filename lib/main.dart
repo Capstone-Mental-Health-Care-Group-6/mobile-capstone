@@ -1,6 +1,8 @@
+import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
+import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => LogRegProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => CountDownPaymentSuccessProvider()),
+              create: (BuildContext context) =>
+                  CountDownPaymentSuccessProvider()),
+          ChangeNotifierProvider<NavigationProvider>(
+            create: (create) => NavigationProvider(),
+          )
         ],
         builder: (context, child) {
           return MaterialApp(
@@ -44,7 +50,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: const SplashScreen(),
+            home: const RoutesScreen(),
           );
         });
   }

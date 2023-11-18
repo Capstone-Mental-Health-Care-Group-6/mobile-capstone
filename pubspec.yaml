@@ -44,6 +44,7 @@ dependencies:
   getwidget: ^4.0.0
   shimmer: ^3.0.0
   intl: ^0.18.1
+  flashy_tab_bar2: ^0.0.6
 
 dev_dependencies:
   flutter_lints: ^2.0.0
