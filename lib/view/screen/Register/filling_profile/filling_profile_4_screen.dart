@@ -17,8 +17,14 @@ class _FillingProfile1State extends State<FillingProfile4> {
   final _formKey = GlobalKey<FormState>();
   late DateTime selectDate = DateTime.now();
   final currentDate = DateTime.now();
-
   List jenisKelamin = ['Laki - laki', 'Perempuan'];
+  late FillingProvider fillingProvider = Provider.of(context, listen: false);
+  @override
+  void initState() {
+    fillingProvider.itemStatus = List.generate(2, (index) => false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
