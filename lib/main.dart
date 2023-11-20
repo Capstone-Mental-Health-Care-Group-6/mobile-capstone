@@ -1,12 +1,18 @@
+import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() {
-  runApp(const MyApp());
+  initializeDateFormatting('id', null).then((_) {
+    runApp(
+      const MyApp(),
+    );
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +25,8 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => LogRegProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => FillingProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => CountDownPaymentSuccessProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
