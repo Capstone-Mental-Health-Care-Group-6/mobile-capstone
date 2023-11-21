@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/widget/card_konselings_widget.dart';
+import 'package:empathi_care/view/widget/card_konseling_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -14,7 +14,12 @@ class ZoomScreen extends StatelessWidget {
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w700,
             fontSize: 16.0,
+            color: Colors.black,
           ),
+        ),
+        leading: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
         ),
         backgroundColor: Colors.white,
         actions: [
@@ -315,16 +320,16 @@ class ZoomScreen extends StatelessWidget {
                   const SizedBox(
                     height: 8.0,
                   ),
-                  const CardKonselingWidget(
+                  const CardKonselingWidgets(
                     title: 'Konseling 1',
                     date: '15/10/2023',
                     time: '10.30-11.00',
-                    textButton: 'Mulai Sekarang',
+                    textButton: 'Sesi Berakhir',
                   ),
                   const SizedBox(
                     height: 10.0,
                   ),
-                  const CardKonselingWidget(
+                  const CardKonselingWidgets(
                     title: 'Konseling 2',
                     date: '16/10/2023',
                     time: '10.30-11.00',
