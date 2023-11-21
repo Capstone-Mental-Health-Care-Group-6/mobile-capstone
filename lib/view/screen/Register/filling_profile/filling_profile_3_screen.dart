@@ -44,7 +44,7 @@ class _FillingProfile1State extends State<FillingProfile3> {
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 25),
               child: Text(
-                'Berapa nomor ponselmu?',
+                'Tanggal Lahir',
                 style: GoogleFonts.montserrat(
                     fontSize: 24, fontWeight: FontWeight.w600),
               ),
