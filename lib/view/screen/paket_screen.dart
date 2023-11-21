@@ -317,12 +317,14 @@ class _PaketScreenState extends State<PaketScreen> {
                                 );
                               },
                         style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
                             shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        )),
+                              borderRadius: BorderRadius.circular(8),
+                            )),
                         child: Text(
                           "Pilih Paket",
                           style: GoogleFonts.montserrat(
+                            color: Colors.white,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -506,13 +508,15 @@ class _PaketScreenState extends State<PaketScreen> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     fixedSize: Size(MediaQuery.of(context).size.width, 20),
+                    backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     )),
                 onPressed: () {},
                 child: Text(
-                  "Pilih Paket",
+                  "Pilih Metode",
                   style: GoogleFonts.montserrat(
+                    color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),

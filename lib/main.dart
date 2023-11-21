@@ -1,3 +1,4 @@
+import 'package:empathi_care/view/screen/paket_screen.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
@@ -20,31 +21,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(
-              create: (BuildContext context) => LogRegProvider()),
-          ChangeNotifierProvider(
-              create: (BuildContext context) => CountDownPaymentSuccessProvider()),
+          ChangeNotifierProvider(create: (BuildContext context) => LogRegProvider()),
+          ChangeNotifierProvider(create: (BuildContext context) => CountDownPaymentSuccessProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
+              colorScheme: ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
               useMaterial3: true,
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all(
-                    TextStyle(
-                        fontFamily: GoogleFonts.montserrat().fontFamily,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
+                    TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily, fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
             ),
-            home: const SplashScreen(),
+            // home: const SplashScreen(),
+            home: const PaketScreen(),
           );
         });
   }
