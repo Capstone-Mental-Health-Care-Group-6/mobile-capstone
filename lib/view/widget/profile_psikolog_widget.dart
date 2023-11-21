@@ -119,7 +119,7 @@ class ProfilePsikologWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5.0,
                 ),
                 ButtonClockWidget(),

@@ -1,5 +1,5 @@
 import 'package:empathi_care/view/screen/Register/create_success_screen.dart';
-import 'package:empathi_care/view/widget/timeline/timeline4_widget.dart';
+import 'package:empathi_care/view/widget/timeline_widget.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,7 +47,9 @@ class _FillingProfile1State extends State<FillingProfile4> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TimeLine4(),
+            const TimeLine1(
+              index: 4,
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 25),
               child: Text(
