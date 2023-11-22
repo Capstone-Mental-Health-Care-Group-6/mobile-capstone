@@ -1,7 +1,6 @@
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -165,7 +164,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0XFF0085FF),
                       foregroundColor: Colors.white),
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navigator.of(context)
+                    //     .push(MaterialPageRoute(builder: (_) => DummyScreen()));
+                  },
                   child: Text(
                     'Login',
                     textAlign: TextAlign.center,

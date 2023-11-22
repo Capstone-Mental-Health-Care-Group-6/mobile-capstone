@@ -209,21 +209,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0XFF0085FF),
-                      foregroundColor: Colors.white),
+                      foregroundColor: const Color.fromRGBO(255, 255, 255, 1)),
                   onPressed: () {
-                    if (_formKey.currentState!.validate() &&
-                        logRegProvider.check != true) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Syarat dan ketentuan belum di setujui'),
-                        ),
-                      );
+                    if (!_formKey.currentState!.validate()) {
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => VerificationScreen(
-                                email: emailController.text,
-                              )));
+                      if (logRegProvider.check != true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('Syarat dan ketentuan belum di setujui'),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => VerificationScreen(
+                                  email: emailController.text,
+                                )));
+                      }
                     }
                   },
                   child: Text(

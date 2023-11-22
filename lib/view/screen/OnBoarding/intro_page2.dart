@@ -42,7 +42,10 @@ class _IntroPage2State extends State<IntroPage2> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 55, right: 59, top: 82),
+              padding: EdgeInsets.only(
+                  left: 55,
+                  right: 59,
+                  top: MediaQuery.of(context).size.height / 14),
               child: Image.asset(
                 'assets/image/OnBoarding2.png',
                 width: 298,

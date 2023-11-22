@@ -41,7 +41,10 @@ class _IntroPage1State extends State<IntroPage1> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 22, right: 59, top: 56),
+            padding: EdgeInsets.only(
+                left: 22,
+                right: 59,
+                top: MediaQuery.of(context).size.height / 25),
             child: Image.asset(
               'assets/image/OnBoarding1.png',
               width: 292,

@@ -6,7 +6,6 @@ class ListRiwayatTransaksi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -54,25 +53,32 @@ class ListRiwayatTransaksi extends StatelessWidget {
         Column(
           children: [
             buildListDokter(
-                "assets/Dokter 1.png", "Rangga S.Psi., M.Psi", "Rp.50.000",getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30))),
+                "assets/Dokter 1.png",
+                "Rangga S.Psi., M.Psi",
+                "Rp.50.000",
+                getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30))),
             buildListDokter(
-                "assets/Dokter 2.png", "Melani S.Psi., M.Psi", "Rp.40.000",getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00))),
+                "assets/Dokter 2.png",
+                "Melani S.Psi., M.Psi",
+                "Rp.40.000",
+                getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00))),
             buildListDokter(
-                "assets/Dokter 3.png", "Seto Mulyadi S.Psi., M.Psi", "Rp.50.000",getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30))),
-                buildListDokter(
-                "assets/Dokter 4.png", "Roslina Vearuli S.Psi., M.Psi", "Rp.50.000",getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)))
+                "assets/Dokter 3.png",
+                "Seto Mulyadi S.Psi., M.Psi",
+                "Rp.50.000",
+                getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30))),
+            buildListDokter(
+                "assets/Dokter 4.png",
+                "Roslina Vearuli S.Psi., M.Psi",
+                "Rp.50.000",
+                getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)))
           ],
         )
       ]),
     );
   }
 
-  Widget buildListDokter(
-    String img,
-    String name,
-    String harga,
-    String tgl
-  ) {
+  Widget buildListDokter(String img, String name, String harga, String tgl) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Column(
@@ -147,7 +153,5 @@ class ListRiwayatTransaksi extends StatelessWidget {
         ],
       ),
     );
-
-    ;
   }
 }
