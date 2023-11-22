@@ -221,7 +221,7 @@ class ZoomScreen extends StatelessWidget {
               height: 140.0,
               color: const Color(0xffCCE7FF),
               child: Image.asset(
-                'assets/doctors.png',
+                'assets/images/doctors.png',
                 width: 50,
                 height: 50,
               ),

@@ -52,7 +52,7 @@ class _DetailTransactionState extends State<DetailTransaction> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: starsRating
                         .map((_) => SvgPicture.asset(
-                              'assets/images/star.svg',
+                              'assets/icons/star.svg',
                               width: 20,
                             ))
                         .toList(),

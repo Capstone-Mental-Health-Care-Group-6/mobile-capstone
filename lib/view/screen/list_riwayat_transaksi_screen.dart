@@ -53,22 +53,22 @@ class ListRiwayatTransaksi extends StatelessWidget {
         Column(
           children: [
             buildListDokter(
-                "assets/Dokter 1.png",
+                "assets/images/Dokter 1.png",
                 "Rangga S.Psi., M.Psi",
                 "Rp.50.000",
                 getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30))),
             buildListDokter(
-                "assets/Dokter 2.png",
+                "assets/images/Dokter 2.png",
                 "Melani S.Psi., M.Psi",
                 "Rp.40.000",
                 getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00))),
             buildListDokter(
-                "assets/Dokter 3.png",
+                "assets/images/Dokter 3.png",
                 "Seto Mulyadi S.Psi., M.Psi",
                 "Rp.50.000",
                 getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30))),
             buildListDokter(
-                "assets/Dokter 4.png",
+                "assets/images/Dokter 4.png",
                 "Roslina Vearuli S.Psi., M.Psi",
                 "Rp.50.000",
                 getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)))

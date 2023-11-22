@@ -29,7 +29,7 @@ class UploadImageWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SvgPicture.asset(
-                  'assets/download.svg',
+                  'assets/icons/download.svg',
                   width: 34.0,
                   height: 34.0,
                 ),

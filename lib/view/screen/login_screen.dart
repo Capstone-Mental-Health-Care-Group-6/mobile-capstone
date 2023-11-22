@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding:
                     const EdgeInsets.only(top: 100.59, left: 30, right: 30),
                 child: Image.asset(
-                  'assets/image/Login.png',
+                  'assets/images/Login.png',
                   width: 400,
                   height: 300,
                 ),
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       foregroundColor: Colors.white),
                   onPressed: () {
                     // Navigator.of(context)
-                    //     .push(MaterialPageRoute(builder: (_) => DummyScreen()));
+                    //     .push(MaterialPageRoute(builder: (_) => Dummy()));
                   },
                   child: Text(
                     'Login',

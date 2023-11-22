@@ -47,7 +47,7 @@ class _IntroPage2State extends State<IntroPage2> {
                   right: 59,
                   top: MediaQuery.of(context).size.height / 14),
               child: Image.asset(
-                'assets/image/OnBoarding2.png',
+                'assets/images/OnBoarding2.png',
                 width: 298,
                 height: 303.1,
               ),
