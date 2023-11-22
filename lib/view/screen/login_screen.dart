@@ -14,12 +14,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late LogRegProvider logRegProvider;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   void initState() {
-    logRegProvider = Provider.of(context, listen: false);
+    logRegProvider = Provider.of<LogRegProvider>(context, listen: false);
     logRegProvider.visiblePassword = true;
-    logRegProvider.emailController.clear();
-    logRegProvider.passwordController.clear();
+    emailController.clear();
+    passwordController.clear();
     super.initState();
   }
 
@@ -67,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
                 child: TextFormField(
-                  controller: logRegProvider.emailController,
+                  controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 13),
@@ -102,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Consumer<LogRegProvider>(
                   builder: (context, loginProvider, _) {
                     return TextFormField(
-                      controller: logRegProvider.passwordController,
+                      controller: passwordController,
                       obscureText: loginProvider.visiblePassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
