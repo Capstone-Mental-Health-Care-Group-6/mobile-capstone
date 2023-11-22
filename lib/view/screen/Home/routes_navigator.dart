@@ -3,7 +3,7 @@ import 'package:empathi_care/view/screen/OnBoarding/screen_empat.dart';
 import 'package:empathi_care/view/screen/OnBoarding/screen_lima.dart';
 import 'package:empathi_care/view/screen/OnBoarding/screen_satu.dart';
 import 'package:empathi_care/view/screen/OnBoarding/screen_tiga.dart';
-import 'package:empathi_care/view/widget/navigation_bototom_bar.dart';
+import 'package:empathi_care/view/widget/navigation_bottom_bar.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
