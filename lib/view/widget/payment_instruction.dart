@@ -49,8 +49,8 @@ class _PaymentInstructionState extends State<PaymentInstruction> {
                     style: GoogleFonts.montserrat(fontWeight: FontWeight.w500),
                   ),
                   isExpanded
-                      ? const Icon(Icons.keyboard_arrow_down)
-                      : const Icon(Icons.keyboard_arrow_up)
+                      ? const Icon(Icons.keyboard_arrow_up)
+                      : const Icon(Icons.keyboard_arrow_down)
                 ],
               ),
             ),
