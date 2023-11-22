@@ -28,6 +28,8 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => CountDownPaymentSuccessProvider()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => ChatBotCSProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
@@ -44,8 +46,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            // home: const SplashScreen(),
-            home: const PaketScreen(),
+            home: const SplashScreen(),
           );
         });
   }
