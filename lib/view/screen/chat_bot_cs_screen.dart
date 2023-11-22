@@ -12,18 +12,30 @@ class ChatMenuScreen extends StatefulWidget {
 }
 
 class _ChatMenuScreenState extends State<ChatMenuScreen> {
+  late ChatBotCSProvider _chatBotProvider;
+
   @override
   void initState() {
     super.initState();
 
-    Provider.of<ChatBotCSProvider>(context, listen: false).addInitialMessages();
+    _chatBotProvider = Provider.of<ChatBotCSProvider>(context, listen: false);
+    _chatBotProvider.addInitialMessages();
+  }
+
+  @override
+  void dispose() {
+    _chatBotProvider.clearMessages();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HelpBot', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          'HelpBot',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -43,7 +55,6 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                   value: 'option2',
                   child: Text('Option 2'),
                 ),
-                
               ];
             },
             onSelected: (value) {},
