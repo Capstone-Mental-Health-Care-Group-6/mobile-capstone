@@ -10,7 +10,6 @@ class UploadImageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 198.0,
       decoration: const BoxDecoration(
         color: Color.fromRGBO(242, 242, 242, 1.0),
       ),
@@ -22,8 +21,7 @@ class UploadImageWidget extends StatelessWidget {
         ),
         dashPattern: const [4.0, 4.0],
         child: SizedBox(
-          width: 328.0,
-          height: 174.0,
+          width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
