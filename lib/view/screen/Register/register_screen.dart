@@ -1,3 +1,4 @@
+import 'package:empathi_care/view/screen/Register/verification_screen.dart';
 import 'package:empathi_care/view/screen/login_screen.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
@@ -15,6 +16,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
   late LogRegProvider logRegProvider;
   @override
@@ -23,9 +27,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     logRegProvider.check = false;
     logRegProvider.visiblePassword = true;
     logRegProvider.visiblePassword2 = true;
-    logRegProvider.emailController.clear();
-    logRegProvider.passwordController.clear();
-    logRegProvider.confirmPasswordController.clear();
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
     super.initState();
   }
 
@@ -74,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: logRegProvider.emailController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 13),
                       border: OutlineInputBorder(
@@ -107,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Consumer<LogRegProvider>(
                   builder: (context, logRegProvider, _) {
                     return TextFormField(
-                      controller: logRegProvider.passwordController,
+                      controller: passwordController,
                       obscureText: logRegProvider.visiblePassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
@@ -145,8 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return 'Password harus mempunyai minimum 1 angka';
                         } else if (!RegExp(r'^.{8,}$').hasMatch(value)) {
                           return 'Password harus mempunyai minimum 8 karakter';
-                        } else if (value !=
-                            logRegProvider.confirmPasswordController.text) {
+                        } else if (value != confirmPasswordController.text) {
                           return 'Password tidak sama';
                         } else {
                           return null;
@@ -161,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Consumer<LogRegProvider>(
                   builder: (context, logRegProvider, _) {
                     return TextFormField(
-                      controller: logRegProvider.confirmPasswordController,
+                      controller: confirmPasswordController,
                       obscureText: logRegProvider.visiblePassword2,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
@@ -188,8 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: (value) {
                         if (value! == '') {
                           return 'Password anda masih kosong';
-                        } else if (value !=
-                            logRegProvider.passwordController.text) {
+                        } else if (value != passwordController.text) {
                           return 'Password tidak sama';
                         } else {
                           return null;
@@ -217,6 +219,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Text('Syarat dan ketentuan belum di setujui'),
                         ),
                       );
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => VerificationScreen(
+                                email: emailController.text,
+                              )));
                     }
                   },
                   child: Text(
