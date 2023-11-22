@@ -86,7 +86,7 @@ class _FillingProfile1State extends State<FillingProfile4> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         alignment: Alignment.center,
-                        width: 174,
+                        width: MediaQuery.of(context).size.width / 2.38,
                         height: 40,
                         child: Text(
                           jenisKelamin[index],
