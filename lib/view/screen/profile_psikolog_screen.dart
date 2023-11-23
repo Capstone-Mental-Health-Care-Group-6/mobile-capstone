@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +31,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
   late AnimationController _animateControllerNext;
   late AnimationController _animateControllerPrev;
   DateTime? firstDate, lastDate;
+  List<Map<String, dynamic>> selectedSchedule = [];
   List<String> selectedDate = [];
   bool isInstan = false, isLoading = true;
-  Map<String, List> listJadwal = {};
+  Map<String, List> scheduleList = {};
   List<String> listKeahlian = [
     "Keluarga",
     "Percintaan",
@@ -79,6 +82,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
       selectedDate.add("");
     }
 
+    if (isInstan) {
+      selectedSchedule.add({"date": "", "selected": false});
+    }
+
     await Future.delayed(const Duration(seconds: 2)).then((value) {
       setState(() {
         isLoading = false;
@@ -103,7 +110,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
       isLoading = true;
     });
     if (isInstan) {
-      return listJadwal['date'] = [
+      return scheduleList['date'] = [
         "9.30 - 10.00",
         "13.30 - 14.00",
         "15.30 - 16.00",
@@ -230,7 +237,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                               ),
                                             ),
                                             Text(
-                                              "${listJadwal['date']?.length} Jadwal Tersedia",
+                                              "${scheduleList['date']?.length} Jadwal Tersedia",
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 14,
                                               ),
@@ -242,18 +249,30 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                           shrinkWrap: true,
                                           physics: const NeverScrollableScrollPhysics(),
                                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                                          itemCount: listJadwal["date"]?.length,
+                                          itemCount: scheduleList["date"]?.length,
                                           itemBuilder: (context, indexGrid) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffCCE7FF),
-                                                borderRadius: BorderRadius.circular(12),
+                                            return InkWell(
+                                              onTap: () {
+                                                selectedSchedule[0]['date'] = scheduleList["date"]![indexGrid].toString();
+                                                selectedSchedule[0]['selected'] = true;
+                                                setState(() {});
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: const Color(0xffCCE7FF),
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  border: selectedSchedule[0]['date'] == scheduleList["date"]![indexGrid].toString() ? Border.all(color: Colors.blue) : null,
+                                                ),
+                                                child: Center(
+                                                    child: Text(
+                                                  scheduleList["date"]![indexGrid].toString(),
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: selectedSchedule[0]['date'] == scheduleList["date"]![indexGrid].toString() ? Colors.blue : Colors.black,
+                                                  ),
+                                                )),
                                               ),
-                                              child: Center(
-                                                  child: Text(
-                                                listJadwal["date"]![indexGrid].toString(),
-                                                style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
-                                              )),
                                             );
                                           },
                                         ),
@@ -813,7 +832,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                               ),
                                             ),
                                             Text(
-                                              "${listJadwal['date${indexList + 1}']?.length} Jadwal Tersedia",
+                                              "${scheduleList['date${indexList + 1}']?.length} Jadwal Tersedia",
                                               style: GoogleFonts.montserrat(
                                                 fontSize: 14,
                                               ),
@@ -825,7 +844,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                           shrinkWrap: true,
                                           physics: const NeverScrollableScrollPhysics(),
                                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                                          itemCount: listJadwal["date${indexList + 1}"]?.length,
+                                          itemCount: scheduleList["date${indexList + 1}"]?.length,
                                           itemBuilder: (context, indexGrid) {
                                             return Container(
                                               decoration: BoxDecoration(
@@ -834,7 +853,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                               ),
                                               child: Center(
                                                   child: Text(
-                                                listJadwal["date${indexList + 1}"]![indexGrid].toString(),
+                                                scheduleList["date${indexList + 1}"]![indexGrid].toString(),
                                                 style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
                                               )),
                                             );
@@ -1171,11 +1190,13 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                     final dateTime = DateTime.parse(value.toString());
                     final dateIndo = DateFormat("dd/MM/yyyy", "id_ID").format(dateTime);
                     selectedDate[indexList] = dateIndo;
-                    listJadwal["date${indexList + 1}"] = [
+                    scheduleList["date${indexList + 1}"] = [
                       "9.30 - 10.00",
                       "13.30 - 14.00",
                       "15.30 - 16.00",
                     ];
+                    selectedSchedule.add({"date": "", "selected": false});
+                    log(selectedSchedule.toString());
                     setState(() {});
                   }
                 });
@@ -1209,7 +1230,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                         ),
                       ),
                       Text(
-                        "${listJadwal['date${indexList + 1}']?.length} Jadwal Tersedia",
+                        "${scheduleList['date${indexList + 1}']?.length} Jadwal Tersedia",
                         style: GoogleFonts.montserrat(
                           fontSize: 14,
                         ),
@@ -1221,18 +1242,31 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                    itemCount: listJadwal["date${indexList + 1}"]?.length,
+                    itemCount: scheduleList["date${indexList + 1}"]?.length,
                     itemBuilder: (context, indexGrid) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xffCCE7FF),
-                          borderRadius: BorderRadius.circular(12),
+                      return InkWell(
+                        onTap: () {
+                          selectedSchedule[indexList]['date'] = scheduleList["date${indexList + 1}"]![indexGrid].toString();
+                          selectedSchedule[indexList]['selected'] = true;
+                          log(selectedSchedule.toString());
+                          setState(() {});
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffCCE7FF),
+                            borderRadius: BorderRadius.circular(12),
+                            border: selectedSchedule[indexList]['date'] == scheduleList["date${indexList + 1}"]![indexGrid].toString() ? Border.all(color: Colors.blue) : null,
+                          ),
+                          child: Center(
+                              child: Text(
+                            scheduleList["date${indexList + 1}"]![indexGrid].toString(),
+                            style: GoogleFonts.montserrat(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: selectedSchedule[indexList]['date'] != scheduleList["date${indexList + 1}"]![indexGrid].toString() ? Colors.black : Colors.blue,
+                            ),
+                          )),
                         ),
-                        child: Center(
-                            child: Text(
-                          listJadwal["date${indexList + 1}"]![indexGrid].toString(),
-                          style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
-                        )),
                       );
                     },
                   ),
