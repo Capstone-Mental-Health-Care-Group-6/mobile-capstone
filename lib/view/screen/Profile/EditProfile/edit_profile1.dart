@@ -382,16 +382,32 @@ class _EditProfile1State extends State<EditProfile1> {
                       foregroundColor: Colors.white),
                   onPressed: () {
                     Navigator.pop(context);
-                    const SizedBox(
-                      height: 147.4,
-                      width: 219,
-                      child: Column(
-                        children: [
-                          Icon(Icons.task_alt),
-                          Text('Data Anda Berhasil diubah'),
-                        ],
-                      ),
-                    );
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
+                              content: SizedBox(
+                                width: 219,
+                                height: 147,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.task_alt,
+                                        size: 80,
+                                        color: Color(0xff0085FF),
+                                      ),
+                                      Text(
+                                        'Data Anda Berhasil diubah',
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ]),
+                              ),
+                            ));
                   },
                   child: Text(
                     'Simpan',
