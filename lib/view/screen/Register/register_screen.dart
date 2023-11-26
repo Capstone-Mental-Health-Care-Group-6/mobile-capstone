@@ -1,7 +1,7 @@
 import 'package:empathi_care/view/screen/Register/verification_screen.dart';
 import 'package:empathi_care/view/screen/login_screen.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
-import 'package:empathi_care/view_model/logreg_provider.dart';
+import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,13 +20,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  late LogRegProvider logRegProvider;
+  late PasswordProvider passwordProvider;
   @override
   void initState() {
-    logRegProvider = Provider.of(context, listen: false);
-    logRegProvider.check = false;
-    logRegProvider.visiblePassword = true;
-    logRegProvider.visiblePassword2 = true;
+    passwordProvider = Provider.of(context, listen: false);
+    passwordProvider.check = false;
+    passwordProvider.visiblePassword = true;
+    passwordProvider.visiblePassword2 = true;
     emailController.clear();
     passwordController.clear();
     confirmPasswordController.clear();
@@ -108,11 +108,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 13, right: 20),
-                child: Consumer<LogRegProvider>(
-                  builder: (context, logRegProvider, _) {
+                child: Consumer<PasswordProvider>(
+                  builder: (context, passwordProvider, _) {
                     return TextFormField(
                       controller: passwordController,
-                      obscureText: logRegProvider.visiblePassword,
+                      obscureText: passwordProvider.visiblePassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           contentPadding:
@@ -125,11 +125,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Icon(Icons.lock_outline),
                           ),
                           suffixIcon: IconButton(
-                            icon: logRegProvider.visiblePassword
+                            icon: passwordProvider.visiblePassword
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off_outlined),
                             onPressed: () {
-                              logRegProvider.changeVisible();
+                              passwordProvider.changeVisible();
                             },
                           ),
                           label: const Text('Password')),
@@ -161,11 +161,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 13, right: 20),
-                child: Consumer<LogRegProvider>(
-                  builder: (context, logRegProvider, _) {
+                child: Consumer<PasswordProvider>(
+                  builder: (context, passwordProvider, _) {
                     return TextFormField(
                       controller: confirmPasswordController,
-                      obscureText: logRegProvider.visiblePassword2,
+                      obscureText: passwordProvider.visiblePassword2,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           contentPadding:
@@ -178,11 +178,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Icon(Icons.lock_outline),
                           ),
                           suffixIcon: IconButton(
-                            icon: logRegProvider.visiblePassword2
+                            icon: passwordProvider.visiblePassword2
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off_outlined),
                             onPressed: () {
-                              logRegProvider.changeVisible2();
+                              passwordProvider.changeVisible2();
                             },
                           ),
                           label: const Text('Konfirmasi Password')),
@@ -213,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   onPressed: () {
                     if (!_formKey.currentState!.validate()) {
                     } else {
-                      if (logRegProvider.check != true) {
+                      if (passwordProvider.check != true) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content:
@@ -238,13 +238,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Padding(
                   padding: const EdgeInsets.only(top: 12, left: 5, right: 38),
-                  child: Consumer<LogRegProvider>(
-                    builder: (context, logRegProvider, child) => Row(children: [
+                  child: Consumer<PasswordProvider>(
+                    builder: (context, passwordProvider, child) =>
+                        Row(children: [
                       Checkbox(
-                        value: logRegProvider.check,
+                        value: passwordProvider.check,
                         activeColor: MaterialStateColor.resolveWith(
                             (states) => const Color(0xff0085FF)),
-                        onChanged: (value) => logRegProvider.changeCheck(value),
+                        onChanged: (value) =>
+                            passwordProvider.changeCheck(value),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),
