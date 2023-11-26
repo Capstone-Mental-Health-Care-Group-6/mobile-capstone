@@ -202,7 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 12),
+                padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(370, 40),
