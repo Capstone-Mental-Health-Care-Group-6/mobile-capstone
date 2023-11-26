@@ -23,21 +23,22 @@ class _CreateSuccessAccountScreenState
             alignment: Alignment.center,
             child: const Icon(
               Icons.check_circle,
-              size: 170,
+              size: 190.36,
               color: Color(0xff2B99FF),
             ),
           ),
           Text(
-            'Sukses Buat Akun!',
+            'Akunmu\nberhasil dibuat',
             style: GoogleFonts.montserrat(
-                fontSize: 22, fontWeight: FontWeight.w500),
+                fontSize: 32, fontWeight: FontWeight.w600),
+            textAlign: TextAlign.center,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              ' Silahkan untuk masuk kembali ya.',
+              ' Silahkan masuk kembali.',
               style: GoogleFonts.montserrat(
-                  fontSize: 11, fontWeight: FontWeight.w400),
+                  fontSize: 20, fontWeight: FontWeight.w500),
             ),
           ),
           Container(
