@@ -16,7 +16,8 @@ class TermsScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(right: 20, left: 20, bottom: 35),
+          padding:
+              const EdgeInsets.only(right: 20, left: 20, bottom: 35, top: 12),
           child: Column(
             children: [
               Text(
