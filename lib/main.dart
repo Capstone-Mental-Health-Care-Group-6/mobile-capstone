@@ -1,4 +1,3 @@
-import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view/screen/splash_screen.dart';
@@ -31,7 +30,8 @@ class MyApp extends StatelessWidget {
                   CountDownPaymentSuccessProvider()),
           ChangeNotifierProvider<NavigationProvider>(
             create: (create) => NavigationProvider(),
-          )
+          ),
+          ChangeNotifierProvider(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) =>
