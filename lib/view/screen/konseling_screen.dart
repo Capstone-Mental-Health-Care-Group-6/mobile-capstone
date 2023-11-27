@@ -21,10 +21,20 @@ class _KonselingScreenState extends State<KonselingScreen> {
         ),
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
+          preferredSize: const Size.fromHeight(1.5),
           child: Container(
-            color: const Color.fromRGBO(0, 0, 0, 0.25),
-            height: 1.5,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 185, 185, 185),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  spreadRadius: 2,
+                  blurRadius: 3,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            height: 1,
           ),
         ),
       ),
