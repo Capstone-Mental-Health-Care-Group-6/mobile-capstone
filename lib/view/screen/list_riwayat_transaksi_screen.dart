@@ -6,7 +6,6 @@ class ListRiwayatTransaksi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -22,57 +21,57 @@ class ListRiwayatTransaksi extends StatelessWidget {
           },
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
+          preferredSize: const Size.fromHeight(1.5),
           child: Container(
-            color: const Color.fromRGBO(0, 0, 0, 0.25),
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 185, 185, 185),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  spreadRadius: 2,
+                  blurRadius: 3,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
             height: 1,
           ),
         ),
       ),
-      body: Column(children: [
-        Container(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.only(left: 20, top: 15),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Riwayat Pemesanan",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 3),
-                child: Text(
-                  "Konsultasi online dengan dokter kami",
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Column(
-          children: [
-            buildListDokter(
-                "assets/Dokter 1.png", "Rangga S.Psi., M.Psi", "Rp.50.000",getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30))),
-            buildListDokter(
-                "assets/Dokter 2.png", "Melani S.Psi., M.Psi", "Rp.40.000",getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00))),
-            buildListDokter(
-                "assets/Dokter 3.png", "Seto Mulyadi S.Psi., M.Psi", "Rp.50.000",getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30))),
-                buildListDokter(
-                "assets/Dokter 4.png", "Roslina Vearuli S.Psi., M.Psi", "Rp.50.000",getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)))
-          ],
-        )
-      ]),
+      body: SingleChildScrollView(
+          child: Column(
+        children: [
+          buildListDokter(
+              "assets/Dokter 1.png",
+              "Rangga S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30)),
+              true),
+          buildListDokter(
+              "assets/Dokter 2.png",
+              "Melani S.Psi., M.Psi",
+              "Rp.40.000",
+              getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00)),
+              true),
+          buildListDokter(
+              "assets/Dokter 3.png",
+              "Seto Mulyadi S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30)),
+              true),
+          buildListDokter(
+              "assets/Dokter 4.png",
+              "Roslina Vearuli S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)),
+              false)
+        ],
+      )),
     );
   }
 
   Widget buildListDokter(
-    String img,
-    String name,
-    String harga,
-    String tgl
-  ) {
+      String img, String name, String harga, String tgl, bool berirating) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Column(
@@ -123,18 +122,28 @@ class ListRiwayatTransaksi extends StatelessWidget {
                           TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
                     ),
                     const Spacer(),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0085FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(13),
-                            ),
-                            minimumSize: const Size(120, 45)),
-                        onPressed: () {},
-                        child: const Text(
-                          "Detail",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ))
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                          color: berirating
+                              ? const Color(0xFF0085FF)
+                              : const Color(0xFFFFBB00),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                      ),
+                      onPressed: () {
+                        if (berirating) {
+                        } else {}
+                      },
+                      child: Text(
+                        berirating ? "Detail" : "Beri Rating",
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                   ]),
                 )
               ],
@@ -147,7 +156,5 @@ class ListRiwayatTransaksi extends StatelessWidget {
         ],
       ),
     );
-
-    ;
   }
 }
