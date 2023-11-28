@@ -27,7 +27,7 @@ class _CardPsikologOnPaymentMethodState
               image: DecorationImage(
                   fit: BoxFit.cover,
                   image: AssetImage(
-                    'assets/image/logo-psikolog.png',
+                    'assets/images/logo-psikolog.png',
                   )),
             )),
         title: Text('Rangga S.Psi., M.Psi',

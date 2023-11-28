@@ -1,5 +1,6 @@
 import 'package:empathi_care/view/widget/button_clock_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePsikologWidget extends StatelessWidget {
@@ -15,7 +16,7 @@ class ProfilePsikologWidget extends StatelessWidget {
           height: 140.0,
           color: const Color(0xffCCE7FF),
           child: Image.asset(
-            'assets/doctors.png',
+            'assets/images/doctors.png',
             width: 50,
             height: 50,
           ),
@@ -42,7 +43,9 @@ class ProfilePsikologWidget extends StatelessWidget {
                   const SizedBox(
                     width: 100.0,
                   ),
-                  Image.asset('assets/star.png'),
+                  SvgPicture.asset(
+                    'assets/icons/star.svg',
+                  ),
                   const SizedBox(
                     width: 8.0,
                   ),

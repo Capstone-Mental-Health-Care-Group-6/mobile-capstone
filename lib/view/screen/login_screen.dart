@@ -1,7 +1,6 @@
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -40,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding:
                     const EdgeInsets.only(top: 100.59, left: 30, right: 30),
                 child: Image.asset(
-                  'assets/image/Login.png',
+                  'assets/images/Login.png',
                   width: 400,
                   height: 300,
                 ),
@@ -157,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 12),
+                padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(370, 40),
@@ -165,7 +164,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0XFF0085FF),
                       foregroundColor: Colors.white),
-                  onPressed: () {},
+                  onPressed: () {
+                    // Navigator.of(context)
+                    //     .push(MaterialPageRoute(builder: (_) => Dummy()));
+                  },
                   child: Text(
                     'Login',
                     textAlign: TextAlign.center,

@@ -31,7 +31,7 @@ class RiwayatPemesananIsnone extends StatelessWidget {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(left: 30,top: 15),
+            padding: const EdgeInsets.only(left: 30, top: 15),
             child: const Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +68,7 @@ class RiwayatPemesananIsnone extends StatelessWidget {
                   ),
                 ),
                 Image.asset(
-                  "assets/Reminders-rafiki 1.png",
+                  "assets/images/Reminders-rafiki 1.png",
                   width: 300,
                   height: 300,
                 ),

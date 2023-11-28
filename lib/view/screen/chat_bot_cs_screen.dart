@@ -23,7 +23,10 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HelpBot', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          'HelpBot',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -43,7 +46,6 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                   value: 'option2',
                   child: Text('Option 2'),
                 ),
-                
               ];
             },
             onSelected: (value) {},
@@ -63,7 +65,6 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                     itemBuilder: (context, index) {
                       final message = provider.chatBotCs[index];
                       var buttonKey = index;
-                      print(message.isUser);
 
                       return Align(
                         alignment: message.isUser
@@ -121,7 +122,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           ),
           const SizedBox(width: 8.0),
           const CircleAvatar(
-            backgroundImage: AssetImage('assets/Ellipse 7.png'),
+            backgroundImage: AssetImage('assets/images/Ellipse 7.png'),
             radius: 20.0,
           ),
         ],
@@ -137,7 +138,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/ChatBot.png',
+            'assets/images/ChatBot.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(

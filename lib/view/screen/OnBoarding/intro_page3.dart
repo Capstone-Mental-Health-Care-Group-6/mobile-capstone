@@ -17,9 +17,12 @@ class _IntroPage3State extends State<IntroPage3> {
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 55, right: 59, top: 207),
+              padding: EdgeInsets.only(
+                  left: 55,
+                  right: 59,
+                  top: MediaQuery.of(context).size.height / 4.38),
               child: Image.asset(
-                'assets/image/OnBoarding3.png',
+                'assets/images/OnBoarding3.png',
                 width: 301,
                 height: 303,
               ),

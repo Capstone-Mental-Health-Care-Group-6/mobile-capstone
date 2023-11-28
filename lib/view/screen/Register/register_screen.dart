@@ -47,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 67.36, left: 30, right: 30),
                 child: Image.asset(
-                  'assets/image/Register.png',
+                  'assets/images/Register.png',
                   width: 400,
                   height: 300,
                 ),
@@ -202,28 +202,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 12),
+                padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(370, 40),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0XFF0085FF),
-                      foregroundColor: Colors.white),
+                      foregroundColor: const Color.fromRGBO(255, 255, 255, 1)),
                   onPressed: () {
-                    if (_formKey.currentState!.validate() &&
-                        logRegProvider.check != true) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Syarat dan ketentuan belum di setujui'),
-                        ),
-                      );
+                    if (!_formKey.currentState!.validate()) {
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => VerificationScreen(
-                                email: emailController.text,
-                              )));
+                      if (logRegProvider.check != true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('Syarat dan ketentuan belum di setujui'),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => VerificationScreen(
+                                  email: emailController.text,
+                                )));
+                      }
                     }
                   },
                   child: Text(

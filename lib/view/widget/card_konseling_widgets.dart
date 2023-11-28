@@ -1,10 +1,8 @@
-import 'package:empathi_care/view_model/zoom_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 
-class CardKonselingWidget extends StatelessWidget {
-  const CardKonselingWidget(
+class CardKonselingWidgets extends StatelessWidget {
+  const CardKonselingWidgets(
       {super.key,
       required this.title,
       required this.date,
@@ -100,43 +98,48 @@ class CardKonselingWidget extends StatelessWidget {
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: Consumer<ZoomViewModel>(
-                  builder: (context, consultationSession, _) {
-                    return ElevatedButton(
-                      style: 
-                       ElevatedButton.styleFrom(
-                        backgroundColor: consultationSession.isConsultationSession ? Colors.transparent : const Color(0xff0085FF),
-                        shadowColor: const Color(0xff000000).withOpacity(0.1),
-                        side: const BorderSide(
-                          color: Color(0xff0085FF)
+                child: textButton == 'Mulai Sekarang'
+                    ? ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff0085FF),
+                          shadowColor: const Color(0xff000000).withOpacity(0.1),
+                          side: const BorderSide(color: Color(0xff0085FF)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                              8.0,
+                            ),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            8.0,
+                        onPressed: () {},
+                        child: Text(
+                          textButton,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                8.0,
+                              ),
+                            ),
+                            side: BorderSide(color: Color(0xff0085FF))),
+                        onPressed: () {},
+                        child: Text(
+                          textButton,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                            color: Color(0xff0085FF),
                           ),
                         ),
                       ),
-                      onPressed: () {
-                        if (!consultationSession.isConsultationSession) {
-                          consultationSession.startConsultationSession();
-                        } else {
-                          consultationSession.endConsultationSession();
-                        }
-                      },
-                      child: Text(
-                        consultationSession.isConsultationSession
-                            ? 'Sesi Berakhir'
-                            : 'Mulai Sekarang',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 12.0,
-                          color: consultationSession.isConsultationSession ? const Color(0xff0085FF) : Colors.white,
-                        ),
-                      ),
-                    );
-                  },
-                ),
               ),
             ],
           ),

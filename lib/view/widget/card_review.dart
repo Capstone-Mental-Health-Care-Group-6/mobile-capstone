@@ -47,7 +47,7 @@ class _CardReviewState extends State<CardReview> {
                   spacing: 5,
                   children: [
                     SvgPicture.asset(
-                      'assets/images/star.svg',
+                      'assets/icons/star.svg',
                       color: const Color(0xFFFFBB00),
                       width: 20,
                     ),
