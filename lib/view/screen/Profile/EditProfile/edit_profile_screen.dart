@@ -384,30 +384,38 @@ class _EditProfile1State extends State<EditProfile1> {
                     Navigator.pop(context);
                     showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5))),
-                              content: SizedBox(
-                                width: 219,
-                                height: 147,
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.task_alt,
-                                        size: 80,
-                                        color: Color(0xff0085FF),
-                                      ),
-                                      Text(
-                                        'Data Anda Berhasil diubah',
-                                        style: GoogleFonts.montserrat(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ]),
-                              ),
-                            ));
+                        builder: (context) {
+                          Future.delayed(
+                            const Duration(seconds: 3),
+                            () {
+                              Navigator.of(context).pop(true);
+                            },
+                          );
+                          return AlertDialog(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            content: SizedBox(
+                              width: 219,
+                              height: 147,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.task_alt,
+                                      size: 80,
+                                      color: Color(0xff0085FF),
+                                    ),
+                                    Text(
+                                      'Data Anda Berhasil diubah',
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                  ]),
+                            ),
+                          );
+                        });
                   },
                   child: Text(
                     'Simpan',
