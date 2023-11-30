@@ -208,7 +208,8 @@ class _KonselingScreenState extends State<KonselingScreen> {
       "Pendidikan",
       "Keluarga",
       "Kecanduan",
-      "Option lain",
+      "Kesepian",
+      'Sosial',
       "Lainnya",
     ];
 
@@ -219,7 +220,14 @@ class _KonselingScreenState extends State<KonselingScreen> {
           return AlertDialog(
             backgroundColor: Colors.white,
             title: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close)),
                 buildPilihTopik(
                     "Pilih Topik",
                     "Permasalahan apa yang ingin anda diskusikan ?",
@@ -238,7 +246,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
                 controller: ScrollController(),
                 child: ListView(
                   shrinkWrap: true,
-                  itemExtent: 30,
+                  itemExtent: 35,
                   children: options.map((option) {
                     return ListTile(
                       contentPadding: EdgeInsets.zero,
