@@ -290,14 +290,14 @@ class _KonselingScreenState extends State<KonselingScreen> {
                 ),
               ),
             ),
-            actionsPadding: const EdgeInsets.only(right: 15, bottom: 5),
+            actionsPadding: const EdgeInsets.only(right: 15, bottom: 10),
             actions: [
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.zero,
                       backgroundColor: const Color(0xFF0085FF),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       minimumSize: const Size(100, 38)),
                   onPressed: () {
