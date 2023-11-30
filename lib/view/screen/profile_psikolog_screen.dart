@@ -149,7 +149,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                           color: const Color(0xffCCE7FF),
                           child: const Align(
                             alignment: Alignment.bottomCenter,
-                            child: Image(image: AssetImage("assets/images/image_psikolog.png")),
+                            child: Image(image: AssetImage("assets/doctors.png")),
                           ),
                         ),
                         Padding(
