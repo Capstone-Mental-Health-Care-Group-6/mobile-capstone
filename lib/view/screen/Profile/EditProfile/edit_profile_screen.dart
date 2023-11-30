@@ -294,6 +294,27 @@ class _EditProfile1State extends State<EditProfile1> {
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: GestureDetector(
+                        onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          selectDate = (await showDatePicker(
+                            context: context,
+                            initialDate: currentDate,
+                            firstDate: DateTime(1990),
+                            lastDate: DateTime.now(),
+                          ))!;
+                          datectl.text =
+                              DateFormat('dd MMMM yyyy').format(selectDate);
+                        },
+                        child: const Icon(
+                          Icons.calendar_month_outlined,
+                          size: 24,
+                          color: Color(0xff636363),
+                        ),
+                      ),
+                    ),
                     label: Text('Tanggal Lahir',
                         style: GoogleFonts.montserrat(
                             fontSize: 14, fontWeight: FontWeight.w500)),
