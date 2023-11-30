@@ -63,7 +63,6 @@ class _FillingProfile1State extends State<FillingProfile3> {
                   datectl.text = DateFormat('dd MMMM yyyy').format(selectDate);
                 },
                 controller: datectl,
-                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.only(left: 17),
                     border: const OutlineInputBorder(
