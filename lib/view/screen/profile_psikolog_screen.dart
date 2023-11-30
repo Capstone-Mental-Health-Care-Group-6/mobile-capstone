@@ -148,7 +148,6 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                           height: 140,
                           color: const Color(0xffCCE7FF),
                           child: const Align(
-                            alignment: Alignment.bottomCenter,
                             child: Image(image: AssetImage("assets/doctors.png")),
                           ),
                         ),
