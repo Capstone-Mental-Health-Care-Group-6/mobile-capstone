@@ -28,7 +28,7 @@ class ListRiwayatTransaksi extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.25),
-                  spreadRadius: 2,
+                  spreadRadius: 0.5,
                   blurRadius: 3,
                   offset: const Offset(0, 2),
                 ),
@@ -73,7 +73,7 @@ class ListRiwayatTransaksi extends StatelessWidget {
   Widget buildListDokter(
       String img, String name, String harga, String tgl, bool berirating) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -93,9 +93,10 @@ class ListRiwayatTransaksi extends StatelessWidget {
                 Row(
                   children: [
                     Text(name,
-                        style: const TextStyle(fontWeight: FontWeight.w600)),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 15)),
                     const Spacer(),
-                    Text(harga)
+                    Text(harga, style: const TextStyle(fontSize: 15),)
                   ],
                 ),
                 const Padding(
@@ -130,8 +131,10 @@ class ListRiwayatTransaksi extends StatelessWidget {
                               : const Color(0xFFFFBB00),
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(13),
+                          borderRadius: BorderRadius.circular(10),
                         ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                       ),
                       onPressed: () {
                         if (berirating) {
@@ -141,6 +144,7 @@ class ListRiwayatTransaksi extends StatelessWidget {
                         berirating ? "Detail" : "Beri Rating",
                         style: const TextStyle(
                           fontSize: 16,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -150,7 +154,7 @@ class ListRiwayatTransaksi extends StatelessWidget {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 8, right: 8),
+            padding: EdgeInsets.only(left: 8, right: 8, bottom: 0),
             child: Divider(),
           )
         ],
