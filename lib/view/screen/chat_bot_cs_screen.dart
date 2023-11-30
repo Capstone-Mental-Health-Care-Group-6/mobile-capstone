@@ -147,7 +147,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/images/ChatBot.png',
+            'assets/images/chatbot.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(

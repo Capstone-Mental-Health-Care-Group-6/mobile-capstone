@@ -1,4 +1,5 @@
 import 'package:empathi_care/utils/constant/date.dart';
+import 'package:empathi_care/view/screen/HistoryTransactions/detail_transaction.dart';
 import 'package:flutter/material.dart';
 
 class ListRiwayatTransaksi extends StatelessWidget {
@@ -14,12 +15,6 @@ class ListRiwayatTransaksi extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(2.0),
           child: Container(
@@ -28,57 +23,59 @@ class ListRiwayatTransaksi extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(children: [
-        Container(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.only(left: 20, top: 15),
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Riwayat Pemesanan",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 3),
-                child: Text(
-                  "Konsultasi online dengan dokter kami",
-                  style: TextStyle(fontSize: 15),
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Container(
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.only(left: 20, top: 15),
+            child: const Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Riwayat Pemesanan",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.only(top: 3),
+                  child: Text(
+                    "Konsultasi online dengan dokter kami",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        Column(
-          children: [
-            buildListDokter(
-                "assets/images/Dokter 1.png",
-                "Rangga S.Psi., M.Psi",
-                "Rp.50.000",
-                getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30))),
-            buildListDokter(
-                "assets/images/Dokter 2.png",
-                "Melani S.Psi., M.Psi",
-                "Rp.40.000",
-                getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00))),
-            buildListDokter(
-                "assets/images/Dokter 3.png",
-                "Seto Mulyadi S.Psi., M.Psi",
-                "Rp.50.000",
-                getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30))),
-            buildListDokter(
-                "assets/images/Dokter 4.png",
-                "Roslina Vearuli S.Psi., M.Psi",
-                "Rp.50.000",
-                getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)))
-          ],
-        )
-      ]),
+          Column(
+            children: [
+              buildListDokter(
+                  "assets/images/Dokter 1.png",
+                  "Rangga S.Psi., M.Psi",
+                  "Rp.50.000",
+                  getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30)),context),
+              buildListDokter(
+                  "assets/images/Dokter 2.png",
+                  "Melani S.Psi., M.Psi",
+                  "Rp.40.000",
+                  getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00)),context),
+              buildListDokter(
+                  "assets/images/Dokter 3.png",
+                  "Seto Mulyadi S.Psi., M.Psi",
+                  "Rp.50.000",
+                  getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30)),context),
+              buildListDokter(
+                  "assets/images/Dokter 4.png",
+                  "Roslina Vearuli S.Psi., M.Psi",
+                  "Rp.50.000",
+                  getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)),context)
+            ],
+          )
+        ]),
+      ),
     );
   }
 
-  Widget buildListDokter(String img, String name, String harga, String tgl) {
+  Widget buildListDokter(String img, String name, String harga, String tgl, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 20),
       child: Column(
@@ -136,7 +133,9 @@ class ListRiwayatTransaksi extends StatelessWidget {
                               borderRadius: BorderRadius.circular(13),
                             ),
                             minimumSize: const Size(120, 45)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const DetailTransaction()));
+                        },
                         child: const Text(
                           "Detail",
                           style: TextStyle(color: Colors.white, fontSize: 16),

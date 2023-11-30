@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class EditProfile1 extends StatefulWidget {
-  const EditProfile1({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<EditProfile1> createState() => _EditProfile1State();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _EditProfile1State extends State<EditProfile1> {
+class _EditProfileState extends State<EditProfile> {
   final namaLengkap = TextEditingController();
   final emailController = TextEditingController();
   final datectl = TextEditingController();

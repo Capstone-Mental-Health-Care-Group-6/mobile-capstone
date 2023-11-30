@@ -1,3 +1,4 @@
+import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
@@ -167,6 +168,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     // Navigator.of(context)
                     //     .push(MaterialPageRoute(builder: (_) => Dummy()));
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (_) => const RoutesScreen()),
+                          (route) => false,
+                        );
                   },
                   child: Text(
                     'Login',

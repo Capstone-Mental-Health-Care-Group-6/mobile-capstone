@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Padding(
                           padding: const EdgeInsets.only(left: 0, right: 150),
                           child: Image.asset(
-                            'assets/img/logo.png',
+                            'assets/images/Logo.png',
                             height: media.height * 0.044,
                           ),
                         ),
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/img/Konten.png'),
+                            image: AssetImage('assets/images/Konten.png'),
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/img/Konten.png'),
+                            image: AssetImage('assets/images/Konten.png'),
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         margin: EdgeInsets.symmetric(horizontal: 15),
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/img/Konten.png'),
+                            image: AssetImage('assets/images/Konten.png'),
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 190.0,
                       enableInfiniteScroll: true,
                       autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 10),
+                      autoPlayInterval: Duration(seconds: 3),
                       autoPlayAnimationDuration: Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       scrollDirection: Axis.horizontal,
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('assets/img/Frame.png'),
+                        image: AssetImage('assets/images/Frame.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                  'assets/img/Kupon${index + 1}.png'),
+                                  'assets/images/Kupon${index + 1}.png'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(
-                                    'assets/img/cover${index + 1}.png',
+                                    'assets/images/cover${index + 1}.png',
                                     width: 180,
                                     height: 100,
                                     fit: BoxFit.cover,
@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage('assets/img/chatbot.png'),
+                      image: AssetImage('assets/images/chatbot.png'),
                     ),
                   ),
                   child: Center(
