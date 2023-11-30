@@ -31,7 +31,8 @@ class MyApp extends StatelessWidget {
                   CountDownPaymentSuccessProvider()),
           ChangeNotifierProvider<NavigationProvider>(
             create: (create) => NavigationProvider(),
-          )
+          ),
+          ChangeNotifierProvider<FillingProvider>(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) =>
