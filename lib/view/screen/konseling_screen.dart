@@ -1,3 +1,4 @@
+import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
 class KonselingScreen extends StatefulWidget {
@@ -14,10 +15,9 @@ class _KonselingScreenState extends State<KonselingScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Konseling",
+          "Buat Janji",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+              fontWeight: FontWeight.bold, fontFamily: MyFont.fontMontserrat),
         ),
         centerTitle: true,
         bottom: PreferredSize(
@@ -28,8 +28,8 @@ class _KonselingScreenState extends State<KonselingScreen> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.25),
-                  spreadRadius: 2,
-                  blurRadius: 3,
+                  spreadRadius: 0.3,
+                  blurRadius: 1,
                   offset: const Offset(0, 2),
                 ),
               ],
@@ -50,7 +50,10 @@ class _KonselingScreenState extends State<KonselingScreen> {
                 children: [
                   Text(
                     "Alur Konseling",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: MyFont.fontMontserrat),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 5),
@@ -58,11 +61,14 @@ class _KonselingScreenState extends State<KonselingScreen> {
                       children: [
                         Text(
                           "Ingin tau lebih lanjut ? ",
-                          style: TextStyle(fontSize: 15),
+                          style: TextStyle(
+                              fontSize: 13, fontFamily: MyFont.fontMontserrat, color: Color(0xff636363)),
                         ),
                         Text(
                           "Baca Selengkapnya",
-                          style: TextStyle(fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontFamily: MyFont.fontMontserrat, color: Color(0xff6C8AF7), fontSize: 13),
                         )
                       ],
                     ),
@@ -103,8 +109,10 @@ class _KonselingScreenState extends State<KonselingScreen> {
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
                       "Ceritakan masalahmu dengan psikolog profesional",
-                      style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: MyFont.fontMontserrat),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -122,7 +130,10 @@ class _KonselingScreenState extends State<KonselingScreen> {
                         },
                         child: const Text(
                           "Mulai Sekarang",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: MyFont.fontMontserrat),
                         )),
                   )
                 ],
@@ -165,11 +176,14 @@ class _KonselingScreenState extends State<KonselingScreen> {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w600),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: MyFont.fontMontserrat),
                 ),
                 Text(
                   subtitle,
-                  style: const TextStyle(color: Colors.grey),
+                  style: const TextStyle(
+                      color: Colors.grey, fontFamily: MyFont.fontMontserrat),
                 ),
               ],
             ),
@@ -196,11 +210,14 @@ class _KonselingScreenState extends State<KonselingScreen> {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 18),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      fontFamily: MyFont.fontMontserrat),
                 ),
                 Text(
                   subtitle,
-                  style: const TextStyle(fontSize: 12),
+                  style: const TextStyle(
+                      fontSize: 12, fontFamily: MyFont.fontMontserrat),
                 )
               ],
             ),
@@ -263,7 +280,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
                       title: Row(
                         children: [
                           Transform.scale(
-                            scale: 1.5,
+                            scale: 1.3,
                             child: Radio<String>(
                               value: option,
                               groupValue: selectedOption,
@@ -281,7 +298,9 @@ class _KonselingScreenState extends State<KonselingScreen> {
                           Text(
                             option,
                             style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w400),
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: MyFont.fontMontserrat),
                           ),
                         ],
                       ),
@@ -308,7 +327,8 @@ class _KonselingScreenState extends State<KonselingScreen> {
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
-                        fontWeight: FontWeight.w600),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: MyFont.fontMontserrat),
                   )),
             ],
             insetPadding: const EdgeInsets.all(20),
