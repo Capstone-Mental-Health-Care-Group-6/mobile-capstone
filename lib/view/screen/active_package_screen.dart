@@ -47,6 +47,8 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        shadowColor: Colors.grey,
       ),
       backgroundColor: Colors.white,
       body: Builder(
@@ -457,42 +459,21 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: 152.0,
-                            height: 20.0,
-                            decoration: BoxDecoration(
-                              color: listPaket[index]['status'] ==
-                                          'Percakapan Masih dibuka' ||
-                                      listPaket[index]['status'] ==
-                                          'Masa aktif 29 hari'
-                                  ? const Color(0xff54C438)
-                                  : listPaket[index]['status'] ==
-                                          'Masa aktif 14 hari'
-                                      ? const Color(0xffFFBB00)
-                                      : listPaket[index]['status'] ==
-                                              'Masa aktif 6 hari'
-                                          ? const Color(0xffFF3932)
-                                          : const Color(0xff959595),
-                              borderRadius: BorderRadius.circular(
-                                4.0,
-                              ),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Center(
-                                child: Shimmer.fromColors(
-                                  baseColor: const Color(0xffE0E0E0),
-                                  highlightColor: const Color(0xffF5F5F5),
-                                  child: Container(
-                                    height: 9.25,
-                                    width: 130.0,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(
-                                        20.0,
-                                      ),
-                                      shape: BoxShape.rectangle,
+                          GestureDetector(
+                            onTap: () {},
+                            child: Center(
+                              child: Shimmer.fromColors(
+                                baseColor: const Color(0xffE0E0E0),
+                                highlightColor: const Color(0xffF5F5F5),
+                                child: Container(
+                                  height: 9.25,
+                                  width: 130.0,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(
+                                      20.0,
                                     ),
+                                    shape: BoxShape.rectangle,
                                   ),
                                 ),
                               ),

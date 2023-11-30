@@ -1,3 +1,4 @@
+import 'package:empathi_care/view/screen/zoom_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,7 +42,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
       'method': 'Metode zoom',
       'topic': 'Topik Stress',
       'status': 'Masa aktif 6 hari',
-      'textButton': 'Mulai zoom',
+      'textButton': 'Mulai Gmeet',
     },
     {
       'image': 'assets/images/doctorsEllipse3.png',
@@ -128,6 +129,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
 
   Widget cardInstant(List<Map<String, String>> listPaket) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: listPaket.length,
       itemBuilder: (context, index) {
@@ -294,7 +296,20 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              listPaket[index]['textButton'] == 'Mulai Gmeet'
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ZoomScreen(),
+                                      ),
+                                    )
+                                  : listPaket[index]['textButton'] ==
+                                          'Mulai Chat'
+                                      ? Navigator.pop(context)
+                                      : const SizedBox();
+                            },
                             child: Text(
                               listPaket[index]['textButton']!,
                               style: GoogleFonts.montserrat(
