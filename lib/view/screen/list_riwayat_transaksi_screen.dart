@@ -14,12 +14,6 @@ class ListRiwayatTransaksi extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.5),
           child: Container(
@@ -96,7 +90,10 @@ class ListRiwayatTransaksi extends StatelessWidget {
                         style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 15)),
                     const Spacer(),
-                    Text(harga, style: const TextStyle(fontSize: 15),)
+                    Text(
+                      harga,
+                      style: const TextStyle(fontSize: 15),
+                    )
                   ],
                 ),
                 const Padding(
