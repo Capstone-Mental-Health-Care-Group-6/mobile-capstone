@@ -12,11 +12,20 @@ class ChatMenuScreen extends StatefulWidget {
 }
 
 class _ChatMenuScreenState extends State<ChatMenuScreen> {
+  late ChatBotCSProvider _chatBotProvider;
+
   @override
   void initState() {
     super.initState();
 
-    Provider.of<ChatBotCSProvider>(context, listen: false).addInitialMessages();
+    _chatBotProvider = Provider.of<ChatBotCSProvider>(context, listen: false);
+    _chatBotProvider.addInitialMessages();
+  }
+
+  @override
+  void dispose() {
+    _chatBotProvider.clearMessages();
+    super.dispose();
   }
 
   @override
