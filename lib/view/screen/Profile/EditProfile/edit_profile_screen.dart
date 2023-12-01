@@ -166,7 +166,7 @@ class _EditProfileState extends State<EditProfile> {
                   controller: namaLengkap,
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z_ ]+')),
                   ],
                   decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 17),
