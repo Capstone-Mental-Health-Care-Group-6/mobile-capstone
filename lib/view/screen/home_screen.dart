@@ -14,9 +14,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final media = MediaQuery.of(context).size;
-
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        leadingWidth: 160,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 30),
+          child: Image.asset(
+            'assets/images/Logo.png',
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            color: Colors.white,
+            onPressed: () {},
+          )
+        ],
+      ),
       body: SafeArea(
         child: Stack(
           children: [
@@ -26,26 +41,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    color: Colors.blue,
-                    height: media.height * 0.07,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0, right: 150),
-                          child: Image.asset(
-                            'assets/images/Logo.png',
-                            height: media.height * 0.044,
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.notifications),
-                          color: Colors.white,
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ),
                   SizedBox(height: 12),
                   CarouselSlider(
                     items: [
