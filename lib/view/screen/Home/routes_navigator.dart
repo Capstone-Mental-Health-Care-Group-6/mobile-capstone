@@ -1,7 +1,4 @@
 import 'package:empathi_care/view/screen/OnBoarding/screen_dua.dart';
-import 'package:empathi_care/view/screen/OnBoarding/screen_empat.dart';
-import 'package:empathi_care/view/screen/OnBoarding/screen_lima.dart';
-import 'package:empathi_care/view/screen/OnBoarding/screen_satu.dart';
 import 'package:empathi_care/view/screen/OnBoarding/screen_tiga.dart';
 import 'package:empathi_care/view/screen/Profile/profile_screen.dart';
 import 'package:empathi_care/view/screen/home_screen.dart';

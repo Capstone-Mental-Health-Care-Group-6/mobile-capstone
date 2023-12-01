@@ -14,6 +14,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 3.55;
+    final double itemWidth = size.width / 2;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -36,17 +41,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   CarouselSlider(
                     items: [
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/images/Konten.png'),
                             fit: BoxFit.contain,
@@ -54,8 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/images/Konten.png'),
                             fit: BoxFit.contain,
@@ -63,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/images/Konten.png'),
                             fit: BoxFit.contain,
@@ -76,8 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 190.0,
                       enableInfiniteScroll: true,
                       autoPlay: true,
-                      autoPlayInterval: Duration(seconds: 3),
-                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayInterval: const Duration(seconds: 3),
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
                       autoPlayCurve: Curves.fastOutSlowIn,
                       scrollDirection: Axis.horizontal,
                       enlargeCenterPage: true,
@@ -85,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/Frame.png'),
                         fit: BoxFit.cover,
@@ -110,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: 3,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.all(5),
+                          margin: const EdgeInsets.all(5),
                           width: 280.0,
                           decoration: BoxDecoration(
                             image: DecorationImage(
@@ -133,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Padding(
                             padding: const EdgeInsets.only(right: 20),
                             child: Text(
@@ -149,11 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    margin: const EdgeInsets.symmetric(horizontal: 10),
                     child: GridView.count(
+                      childAspectRatio: (itemWidth / itemHeight),
                       crossAxisCount: 2,
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       children: List.generate(
                         4,
                         (index) {
@@ -165,15 +172,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           ];
 
                           return Container(
-                            margin: EdgeInsets.all(8),
+                            margin: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color(0xff000000).withOpacity(0.12),
+                                  blurRadius: 16,
+                                )
+                              ],
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10)),
                                   child: Image.asset(
                                     'assets/images/cover${index + 1}.png',
                                     width: 180,
@@ -181,13 +196,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                SizedBox(height: 20),
                                 Container(
-                                  margin: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                    itemTexts[index],
-                                    style: GoogleFonts.montserrat(fontSize: 13),
-                                    textAlign: TextAlign.start,
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10)),
+                                    color: Colors.white,
+                                  ),
+                                  height: 77,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 11),
+                                        child: Text(
+                                          itemTexts[index],
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 13),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -201,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             AnimatedPositioned(
-              duration: Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               right: 16,
               bottom: _fabBottomPosition,
               child: GestureDetector(
@@ -209,13 +239,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   width: 70,
                   height: 70,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: AssetImage('assets/images/chatbot.png'),
                     ),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.add,
                       color: Colors.white,
