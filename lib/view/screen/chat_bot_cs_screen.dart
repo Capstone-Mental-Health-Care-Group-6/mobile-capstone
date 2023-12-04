@@ -13,11 +13,13 @@ class ChatMenuScreen extends StatefulWidget {
 
 class _ChatMenuScreenState extends State<ChatMenuScreen> {
   late ChatBotCSProvider _chatBotProvider;
+  OverlayEntry? overlayEntry;
+  bool isOverlayVisible = false;
+  bool cancelDelete = false;
 
   @override
   void initState() {
     super.initState();
-
     _chatBotProvider = Provider.of<ChatBotCSProvider>(context, listen: false);
     _chatBotProvider.addInitialMessages();
   }
@@ -25,7 +27,64 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
   @override
   void dispose() {
     _chatBotProvider.clearMessages();
+    overlayEntry?.remove();
     super.dispose();
+  }
+
+  void toggleOverlayVisibility() {
+    overlayEntry?.remove();
+    setState(() {
+      isOverlayVisible = !isOverlayVisible;
+      cancelDelete = false;
+    });
+  }
+
+  void showButtonOverlay(BuildContext context) {
+    overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 40.0,
+        right: 10.0,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _chatBotProvider.clearMessages();
+                  toggleOverlayVisibility();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffCD2121),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+                child: const Text(
+                  'Hapus Pesan',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    Overlay.of(context).insert(overlayEntry!);
+
+    setState(() {
+      isOverlayVisible = true;
+    });
   }
 
   @override
@@ -39,71 +98,79 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.of(context).pop();
+            if (isOverlayVisible) {
+              toggleOverlayVisibility();
+            } else {
+              Navigator.of(context).pop();
+            }
           },
         ),
         actions: [
-          PopupMenuButton(
+          IconButton(
             icon: const Icon(Icons.more_vert),
-            itemBuilder: (BuildContext context) {
-              return [
-                const PopupMenuItem(
-                  value: 'option1',
-                  child: Text('Option 1'),
-                ),
-                const PopupMenuItem(
-                  value: 'option2',
-                  child: Text('Option 2'),
-                ),
-              ];
+            onPressed: () {
+              if (isOverlayVisible) {
+                toggleOverlayVisibility();
+              } else {
+                showButtonOverlay(context);
+              }
             },
-            onSelected: (value) {},
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 10),
-        child: Column(
-          children: [
-            Text('$formattedDate $formattedHour'),
-            Expanded(
-              child: Consumer<ChatBotCSProvider>(
-                builder: (context, provider, child) {
-                  return ListView.builder(
-                    itemCount: provider.chatBotCs.length,
-                    itemBuilder: (context, index) {
-                      final message = provider.chatBotCs[index];
-                      var buttonKey = index;
-                      print(message.isUser);
+      body: GestureDetector(
+        onTap: () {
+          if (isOverlayVisible && !cancelDelete) {
+            toggleOverlayVisibility();
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 10,
+            bottom: 10,
+            left: 5,
+            right: 10,
+          ),
+          child: Column(
+            children: [
+              Text('$formattedDate $formattedHour'),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Consumer<ChatBotCSProvider>(
+                      builder: (context, provider, child) {
+                        return ListView.builder(
+                          itemCount: provider.chatBotCs.length,
+                          itemBuilder: (context, index) {
+                            final message = provider.chatBotCs[index];
+                            var buttonKey = index;
 
-                      return Align(
-                        alignment: message.isUser
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!message.isUser) {
-                              provider.handleMenuButtonPress(index);
-                            }
+                            return Align(
+                              alignment: message.isUser
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
+                              child: message.isUser
+                                  ? _buildUserMessageContainer(message)
+                                  : (message.text.contains("Selamat") ||
+                                          message.text.contains("1") ||
+                                          message.text
+                                              .startsWith('Explanation') ||
+                                          message.text
+                                              .contains("Bagaimanakah") ||
+                                          message.text.contains("Terimakasih"))
+                                      ? _buildBotMessageContainer(message)
+                                      : _buildMenuResponseButton(
+                                          message, index, buttonKey, provider),
+                            );
                           },
-                          child: message.isUser
-                              ? _buildUserMessageContainer(message)
-                              : (message.text.contains("Selamat") ||
-                                      message.text.contains("1") ||
-                                      message.text.startsWith('Explanation') ||
-                                      message.text.contains("Bagaimanakah") ||
-                                      message.text.contains("Terimakasih"))
-                                  ? _buildBotMessageContainer(message)
-                                  : _buildMenuResponseButton(
-                                      message, index, buttonKey, provider),
-                        ),
-                      );
-                    },
-                  );
-                },
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -132,7 +199,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           ),
           const SizedBox(width: 8.0),
           const CircleAvatar(
-            backgroundImage: AssetImage('assets/Ellipse 7.png'),
+            backgroundImage: AssetImage('assets/images/Ellipse 7.png'),
             radius: 20.0,
           ),
         ],
@@ -148,7 +215,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/ChatBot.png',
+            'assets/images/chatbot.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(
