@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
         title: const Text(
           "Buat Janji",
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontFamily: MyFont.fontMontserrat),
+              fontWeight: FontWeight.w900, fontFamily: MyFont.fontMontserrat),
         ),
         centerTitle: true,
         bottom: PreferredSize(
@@ -51,7 +53,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
                   Text(
                     "Alur Konseling",
                     style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.w700,
                         fontFamily: MyFont.fontMontserrat),
                   ),
@@ -62,13 +64,17 @@ class _KonselingScreenState extends State<KonselingScreen> {
                         Text(
                           "Ingin tau lebih lanjut ? ",
                           style: TextStyle(
-                              fontSize: 13, fontFamily: MyFont.fontMontserrat, color: Color(0xff636363)),
+                              fontSize: 13,
+                              fontFamily: MyFont.fontMontserrat,
+                              color: Color(0xff636363)),
                         ),
                         Text(
                           "Baca Selengkapnya",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
-                              fontFamily: MyFont.fontMontserrat, color: Color(0xff6C8AF7), fontSize: 13),
+                              fontFamily: MyFont.fontMontserrat,
+                              color: Color(0xff6C8AF7),
+                              fontSize: 13),
                         )
                       ],
                     ),
@@ -117,25 +123,25 @@ class _KonselingScreenState extends State<KonselingScreen> {
                   ),
                   const SizedBox(height: 10),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF0085FF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            minimumSize: const Size(120, 45)),
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: MaterialButton(
                         onPressed: () {
                           _showOptionsDialog(context);
                         },
+                        color: const Color(0xFF0085FF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        height: 45,
                         child: const Text(
                           "Mulai Sekarang",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: MyFont.fontMontserrat),
-                        )),
-                  )
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: MyFont.fontMontserrat,
+                          ),
+                        ),
+                      ))
                 ],
               ),
             )
@@ -210,7 +216,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
                 Text(
                   title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                       fontSize: 18,
                       fontFamily: MyFont.fontMontserrat),
                 ),
@@ -242,98 +248,116 @@ class _KonselingScreenState extends State<KonselingScreen> {
 
     await showDialog(
       context: context,
-      builder: (_) => StatefulBuilder(
-        builder: (BuildContext context, StateSetter setState) {
-          return AlertDialog(
+      builder: (_) => Theme(
+        data: ThemeData(
+          dialogTheme: DialogTheme(
             backgroundColor: Colors.white,
-            title: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.close)),
-                buildPilihTopik(
-                    "Pilih Topik",
-                    "Permasalahan apa yang ingin anda diskusikan ?",
-                    "assets/images/Select-rafiki 2.png"),
-                const Divider(
-                  thickness: 2,
-                  color: Color(0xff6C8AF7),
-                )
-              ],
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(13),
             ),
-            contentPadding: const EdgeInsets.only(left: 15, right: 15),
-            content: SizedBox(
-              width: double.maxFinite,
-              height: 200,
-              child: Scrollbar(
-                controller: ScrollController(),
-                child: ListView(
-                  shrinkWrap: true,
-                  itemExtent: 35,
-                  children: options.map((option) {
-                    return ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.3,
-                            child: Radio<String>(
-                              value: option,
-                              groupValue: selectedOption,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  selectedOption = value;
-                                });
-                              },
-                              activeColor: Colors.black,
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                            ),
+          ),
+        ),
+        child: AlertDialog(
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Padding(
+                  padding: EdgeInsets.zero,
+                  child: Icon(Icons.close),
+                ),
+              ),
+              buildPilihTopik(
+                "Pilih Topik",
+                "Permasalahan apa yang ingin anda diskusikan ?",
+                "assets/images/Select-rafiki 2.png",
+              ),
+              const Divider(
+                thickness: 2,
+                color: Color(0xff6C8AF7),
+              )
+            ],
+          ),
+          contentPadding: const EdgeInsets.only(left: 15, right: 15),
+          content: SizedBox(
+            width: double.maxFinite,
+            height: 200,
+            child: Scrollbar(
+              controller: ScrollController(),
+              child: ListView(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemExtent: 30,
+                children: options.map((option) {
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: Row(
+                      children: [
+                        Transform.scale(
+                          scale: 1.2,
+                          child: Radio<String>(
+                            value: option,
+                            groupValue: selectedOption,
+                            onChanged: (String? value) {
+                              setState(() {
+                                selectedOption = value;
+                              });
+                            },
+                            activeColor: Colors.black,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
                           ),
-                          const SizedBox(width: 5),
-                          Text(
-                            option,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: MyFont.fontMontserrat),
+                        ),
+                        const SizedBox(width: 3),
+                        Text(
+                          option,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: MyFont.fontMontserrat,
                           ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          actionsPadding: const EdgeInsets.only(
+            right: 15,
+            bottom: 10,
+          ),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                backgroundColor: const Color(0xFF0085FF),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                minimumSize: const Size(100, 38),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                "Pilih Topik",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: MyFont.fontMontserrat,
                 ),
               ),
             ),
-            actionsPadding: const EdgeInsets.only(right: 15, bottom: 10),
-            actions: [
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      backgroundColor: const Color(0xFF0085FF),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      minimumSize: const Size(100, 38)),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text(
-                    "Pilih Topik",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: MyFont.fontMontserrat),
-                  )),
-            ],
-            insetPadding: const EdgeInsets.all(20),
-          );
-        },
+          ],
+          insetPadding: const EdgeInsets.all(20),
+        ),
       ),
     );
   }
