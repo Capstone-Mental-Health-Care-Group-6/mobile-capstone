@@ -1,5 +1,3 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +28,9 @@ class _KonselingScreenState extends State<KonselingScreen> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.25),
-                  spreadRadius: 0.3,
+                  spreadRadius: 0.2,
                   blurRadius: 1,
-                  offset: const Offset(0, 2),
+                  offset: const Offset(0, 1),
                 ),
               ],
             ),
@@ -41,7 +39,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 35, right: 20),
+        padding: const EdgeInsets.only(left: 20, top: 25, right: 20),
         child: Column(
           children: [
             Container(
@@ -123,25 +121,32 @@ class _KonselingScreenState extends State<KonselingScreen> {
                   ),
                   const SizedBox(height: 10),
                   Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: MaterialButton(
-                        onPressed: () {
-                          _showOptionsDialog(context);
-                        },
-                        color: const Color(0xFF0085FF),
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _showOptionsDialog(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 10,
+                        ),
+                        backgroundColor: const Color(0xFF0085FF),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        height: 45,
-                        child: const Text(
-                          "Mulai Sekarang",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: MyFont.fontMontserrat,
-                          ),
+                      ),
+                      child: const Text(
+                        "Mulai Sekarang",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: MyFont.fontMontserrat,
                         ),
-                      ))
+                      ),
+                    ),
+                  )
                 ],
               ),
             )
@@ -207,7 +212,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
           Image.asset(
             img,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,13 +222,16 @@ class _KonselingScreenState extends State<KonselingScreen> {
                   title,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 16,
                       fontFamily: MyFont.fontMontserrat),
                 ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(
-                      fontSize: 12, fontFamily: MyFont.fontMontserrat),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    subtitle,
+                    style: const TextStyle(
+                        fontSize: 11, fontFamily: MyFont.fontMontserrat),
+                  ),
                 )
               ],
             ),
@@ -233,7 +241,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
     );
   }
 
-  void _showOptionsDialog(BuildContext context) async {
+  void _showOptionsDialog(BuildContext context) {
     List<String> options = [
       "Pekerjaan",
       "Kendali Emosi",
@@ -246,119 +254,138 @@ class _KonselingScreenState extends State<KonselingScreen> {
       "Lainnya",
     ];
 
-    await showDialog(
+    showDialog(
       context: context,
-      builder: (_) => Theme(
-        data: ThemeData(
-          dialogTheme: DialogTheme(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
+      builder: (BuildContext context) {
+        return Dialog(
+          insetPadding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(13),
+          ),
+          backgroundColor: Colors.transparent,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(13),
             ),
-          ),
-        ),
-        child: AlertDialog(
-          title: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Padding(
-                  padding: EdgeInsets.zero,
-                  child: Icon(Icons.close),
+            padding: const EdgeInsets.only(left: 8),
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 15, right: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.zero,
+                          child: Icon(Icons.close),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              buildPilihTopik(
-                "Pilih Topik",
-                "Permasalahan apa yang ingin anda diskusikan ?",
-                "assets/images/Select-rafiki 2.png",
-              ),
-              const Divider(
-                thickness: 2,
-                color: Color(0xff6C8AF7),
-              )
-            ],
-          ),
-          contentPadding: const EdgeInsets.only(left: 15, right: 15),
-          content: SizedBox(
-            width: double.maxFinite,
-            height: 200,
-            child: Scrollbar(
-              controller: ScrollController(),
-              child: ListView(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemExtent: 30,
-                children: options.map((option) {
-                  return ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Row(
-                      children: [
-                        Transform.scale(
-                          scale: 1.2,
-                          child: Radio<String>(
-                            value: option,
-                            groupValue: selectedOption,
-                            onChanged: (String? value) {
-                              setState(() {
-                                selectedOption = value;
-                              });
-                            },
-                            activeColor: Colors.black,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                  child: buildPilihTopik(
+                    "Pilih Topik",
+                    "Permasalahan apa yang ingin anda diskusikan ?",
+                    "assets/images/Select-rafiki 2.png",
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 10, right: 15),
+                  child: Divider(
+                    thickness: 2.3,
+                    color: Color(0xff6C8AF7),
+                  ),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: Scrollbar(
+                    controller: ScrollController(),
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemExtent: 30,
+                      children: options.map((option) {
+                        return ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          title: Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.15,
+                                child: Radio<String>(
+                                  value: option,
+                                  groupValue: selectedOption,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedOption = value;
+                                    });
+                                  },
+                                  activeColor: Colors.black,
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                ),
+                              ),
+                              const SizedBox(width: 3),
+                              Text(
+                                option,
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 10,
+                          ),
+                          backgroundColor: const Color(0xFF0085FF),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        const SizedBox(width: 3),
-                        Text(
-                          option,
-                          style: const TextStyle(
-                            fontSize: 16,
+                        child: const Text(
+                          "Pilih Topik",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontFamily: MyFont.fontMontserrat,
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  );
-                }).toList(),
-              ),
+                  ],
+                ),
+              ],
             ),
           ),
-          actionsPadding: const EdgeInsets.only(
-            right: 15,
-            bottom: 10,
-          ),
-          actions: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.zero,
-                backgroundColor: const Color(0xFF0085FF),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                minimumSize: const Size(100, 38),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(
-                "Pilih Topik",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: MyFont.fontMontserrat,
-                ),
-              ),
-            ),
-          ],
-          insetPadding: const EdgeInsets.all(20),
-        ),
-      ),
+        );
+      },
     );
   }
 }
