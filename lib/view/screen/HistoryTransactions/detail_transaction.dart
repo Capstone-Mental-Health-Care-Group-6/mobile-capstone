@@ -1,3 +1,4 @@
+import 'package:empathi_care/view/screen/chat_history_screen.dart';
 import 'package:empathi_care/view/widget/invoice_rating_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +26,10 @@ class _DetailTransactionState extends State<DetailTransaction> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 5),
-            child: Image.asset('assets/images/chat-with-bg.png'),
+            child: InkWell(
+              child: Image.asset('assets/images/chat-with-bg.png'),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const ChatHistoryScreen())),
+            ),
           )
         ],
       ),

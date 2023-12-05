@@ -53,7 +53,7 @@ class _FillingProfile1State extends State<FillingProfile1> {
                 controller: namaLengkap,
                 keyboardType: TextInputType.emailAddress,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z_ ]+')),
                 ],
                 decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 13),
