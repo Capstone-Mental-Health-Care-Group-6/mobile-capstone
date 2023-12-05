@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
-class RekomendasiPsikolog extends StatefulWidget {
-  const RekomendasiPsikolog({super.key});
+class RekomendasiPsikologInstant extends StatefulWidget {
+  const RekomendasiPsikologInstant({super.key});
 
   @override
-  State<RekomendasiPsikolog> createState() => _RekomendasiPsikologState();
+  State<RekomendasiPsikologInstant> createState() => _RekomendasiPsikologInstantState();
 }
 
-class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
+class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant> {
   final _formKey = GlobalKey<FormState>();
-  String dataSearch = "wow";
-  bool isLoading = true, tersedia = false;
+  String dataSearch = "w";
+  bool isLoading = true;
 
   Future<void> delayLoading() async {
     Future.delayed(const Duration(seconds: 5)).then((value) {
@@ -53,64 +53,27 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
               key: _formKey,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                              top: 20, bottom: 20, left: 20),
-                          width: 250,
-                          height: 50,
-                          child: TextFormField(
-                            // controller: _searchController,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                              ),
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Icon(
-                                  Icons.search,
-                                  size: 23,
-                                ),
-                              ),
-                              hintText: "Search",
-                            ),
-                            onChanged: (value) {},
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    width: double.infinity,
+                    child: TextFormField(
+                      // controller: _searchController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(8)),
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Icon(
+                            Icons.search,
+                            size: 23,
                           ),
                         ),
+                        hintText: "Search",
                       ),
-                      const SizedBox(width: 10),
-                      Container(
-                        margin: const EdgeInsets.only(
-                            top: 20, bottom: 20, right: 20),
-                        height: 50,
-                        child: OutlinedButton.icon(
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0)),
-                            ),
-                          ),
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.filter_alt_outlined,
-                            size: 24.0,
-                            color: Colors.black,
-                          ),
-                          label: Text(
-                            'Filter',
-                            style: GoogleFonts.montserrat(
-                              fontSize: 13.0,
-                              color: const Color(0xff393938),
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                      onChanged: (value) {},
+                    ),
                   ),
                   dataSearch != ""
                       ? SizedBox(
@@ -175,9 +138,13 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                 ),
                                                 SizedBox(height: 3),
                                                 Text(
-                                                  "Pengalaman 1-3 Tahun",
+                                                  "Tersedia",
                                                   style:
-                                                      TextStyle(fontSize: 14),
+                                                      TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.green,
+                                                        fontWeight: FontWeight.bold
+                                                      ),
                                                 )
                                               ],
                                             ),
@@ -216,56 +183,24 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                               ],
                                             ),
                                             const Spacer(),
-                                            tersedia != true
-                                                ? ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .symmetric(
-                                                                    horizontal:
-                                                                        10),
-                                                            backgroundColor:
-                                                                Colors.white,
-                                                            side:
-                                                                const BorderSide(
-                                                                    width: 1,
-                                                                    color: Colors
-                                                                        .blue),
-                                                            shape:
-                                                                RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                              8,
-                                                            ))),
-                                                    onPressed: () {},
-                                                    child: buildShimmerText(
-                                                      "Mulai Chat",
-                                                      fontSize: 16,
-                                                      color: Colors.blue,
-                                                    ))
-                                                : ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 10),
-                                                      backgroundColor:
-                                                          Colors.blue,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {},
-                                                    child: buildShimmerText(
-                                                      "Mulai Chat",
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                    )),
+                                            ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10),
+                                                  backgroundColor: Colors.blue,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                ),
+                                                onPressed: () {},
+                                                child: buildShimmerText(
+                                                  "Mulai Chat",
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                )),
                                           ],
                                         ),
                                       ],
@@ -354,49 +289,6 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey,
-                        highlightColor: Colors.white.withOpacity(0.2),
-                        child: Container(
-                          height: 16,
-                          width: 16,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: 27,
-                      height: 10,
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey,
-                        highlightColor: Colors.white.withOpacity(0.2),
-                        child: Container(
-                          width: 27,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(8),
-                            // shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // const SizedBox(
-                //   width: 156,
-                // ),
               ],
             ),
           ),
@@ -469,13 +361,13 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                               ),
                               const SizedBox(height: 10),
                               SizedBox(
-                                width: 119,
+                                width: 41,
                                 height: 9,
                                 child: Shimmer.fromColors(
                                   baseColor: Colors.grey.withOpacity(0.5),
                                   highlightColor: Colors.white.withOpacity(0.2),
                                   child: Container(
-                                    height: 119,
+                                    height: 41,
                                     width: 9,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),

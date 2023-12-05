@@ -1,3 +1,4 @@
+import 'package:empathi_care/view/screen/counseling/list_psikolog_instant.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/logreg_provider.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: const SplashScreen(),
+            home: const ListPsikologInstant(),
           );
         });
   }
