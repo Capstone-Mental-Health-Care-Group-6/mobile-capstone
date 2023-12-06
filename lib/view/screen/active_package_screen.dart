@@ -81,7 +81,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                           color: Color(0xff0085FF),
                         ),
                         insets: EdgeInsets.symmetric(
-                          horizontal: 131.5,
+                          horizontal: 131.25,
                         ),
                       ),
                       tabs: [
