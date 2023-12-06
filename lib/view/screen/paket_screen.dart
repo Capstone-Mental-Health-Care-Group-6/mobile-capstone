@@ -126,7 +126,7 @@ class _PaketScreenState extends State<PaketScreen> {
                     timeLine(),
                     const SizedBox(height: 16),
                     Text(
-                      "Pilih Paket",
+                      "Pilih Paket dan Metode",
                       style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                     const SizedBox(height: 8),
