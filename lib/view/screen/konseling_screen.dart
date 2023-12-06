@@ -44,11 +44,11 @@ class _KonselingScreenState extends State<KonselingScreen> {
           children: [
             Container(
               alignment: Alignment.topLeft,
-              child: const Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     "Alur Konseling",
                     style: TextStyle(
                         fontSize: 20,
@@ -56,23 +56,28 @@ class _KonselingScreenState extends State<KonselingScreen> {
                         fontFamily: MyFont.fontMontserrat),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 5),
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           "Ingin tau lebih lanjut ? ",
                           style: TextStyle(
                               fontSize: 13,
                               fontFamily: MyFont.fontMontserrat,
                               color: Color(0xff636363)),
                         ),
-                        Text(
-                          "Baca Selengkapnya",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontFamily: MyFont.fontMontserrat,
-                              color: Color(0xff6C8AF7),
-                              fontSize: 13),
+                        InkWell(
+                          onTap: () {
+                            _showAlurKonseling(context);
+                          },
+                          child: const Text(
+                            "Baca Selengkapnya",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontFamily: MyFont.fontMontserrat,
+                                color: Color(0xff6C8AF7),
+                                fontSize: 13),
+                          ),
                         )
                       ],
                     ),
@@ -387,5 +392,121 @@ class _KonselingScreenState extends State<KonselingScreen> {
         );
       },
     );
+  }
+
+  void _showAlurKonseling(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return Dialog(
+        insetPadding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(13),
+        ),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: 500,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(13),
+          ),
+          padding: const EdgeInsets.only(
+            left: 8,
+            right: 8,
+            top: 5,
+          ),
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 5, right: 8, left: 5),
+                child: Row(
+                  
+                  children: [
+                    const Text(
+                      "Alur Konseling",
+                      style: TextStyle(
+                        fontFamily: MyFont.fontMontserrat,
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Icon(Icons.close),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 7,
+                itemBuilder: (context, index) {
+                  final number = (index + 1).toString();
+                  final text = _getTextForIndex(index);
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 5.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: 13, 
+                          child: Text(
+                            '$number.',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              text,
+                              style: const TextStyle(fontSize: 14, fontFamily: MyFont.fontMontserrat, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
+  _getTextForIndex(int index) {
+    switch (index) {
+      case 0:
+        return "Periksa surel konfirmasi pembayaran dari Midtrans sebagai bukti bahwa pembayaran telah diterima.";
+      case 1:
+        return "Pastikan layanan Konseling Plus telah diaktifkan dan dapat diakses melalui ruang obrolan konseling.";
+      case 2:
+        return "Isi data diri awal sambil menanti sambutan dari psikolog.";
+      case 3:
+        return "Setelah mengisi informasi diri, sampaikan permasalahanmu melalui ruang obrolan dengan batasan pesan 1500 karakter.";
+      case 4:
+        return "Jika melebihi 1500 karakter, pesan tidak dapat dikirim, jadi perlu disingkat atau dipotong.";
+      case 5:
+        return "Nyalakan notifikasi dan buka aplikasi Riliv secara teratur karena setiap smartphone memiliki aturan yang berbeda. Pastikan tidak melewatkan pesan yang masuk!";
+      case 6:
+        return "Jika ada keterlambatan pesan atau notifikasi yang tidak muncul, coba tutup sementara aplikasi Riliv dan buka kembali.";
+    }
   }
 }
