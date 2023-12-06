@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<NavigationProvider>(
             create: (create) => NavigationProvider(),
           ),
-          ChangeNotifierProvider<FillingProvider>(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) =>
