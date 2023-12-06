@@ -166,7 +166,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.yellow),
                                               )
-                                            : const Text("Tersedia",
+                                            : const Text("Online",
                                                 style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
