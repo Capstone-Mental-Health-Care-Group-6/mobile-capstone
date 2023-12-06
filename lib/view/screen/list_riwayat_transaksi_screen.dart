@@ -1,4 +1,5 @@
 import 'package:empathi_care/utils/constant/date.dart';
+import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
 class ListRiwayatTransaksi extends StatelessWidget {
@@ -9,10 +10,11 @@ class ListRiwayatTransaksi extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Transaksi saya",
+          "Riwayat Pemesanan",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              fontFamily: MyFont.fontMontserrat),
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.5),
@@ -22,9 +24,9 @@ class ListRiwayatTransaksi extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.25),
-                  spreadRadius: 0.5,
-                  blurRadius: 3,
-                  offset: const Offset(0, 2),
+                  spreadRadius: 0.2,
+                  blurRadius: 1,
+                  offset: const Offset(0, 1),
                 ),
               ],
             ),
@@ -36,25 +38,25 @@ class ListRiwayatTransaksi extends StatelessWidget {
           child: Column(
         children: [
           buildListDokter(
-              "assets/Dokter 1.png",
+              "assets/images/Dokter 1.png",
               "Rangga S.Psi., M.Psi",
               "Rp.50.000",
               getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30)),
               true),
           buildListDokter(
-              "assets/Dokter 2.png",
+              "assets/images/Dokter 2.png",
               "Melani S.Psi., M.Psi",
               "Rp.40.000",
               getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00)),
               true),
           buildListDokter(
-              "assets/Dokter 3.png",
+              "assets/images/Dokter 3.png",
               "Seto Mulyadi S.Psi., M.Psi",
               "Rp.50.000",
               getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30)),
               true),
           buildListDokter(
-              "assets/Dokter 4.png",
+              "assets/images/Dokter 4.png",
               "Roslina Vearuli S.Psi., M.Psi",
               "Rp.50.000",
               getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)),
@@ -73,12 +75,18 @@ class ListRiwayatTransaksi extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8),
-            child: Text(tgl.toString()),
+            child: Text(tgl.toString(),
+                style: const TextStyle(
+                    fontFamily: MyFont.fontMontserrat,
+                    fontWeight: FontWeight.w600)),
           ),
           ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              child: Image.asset(img, height: 80, width: 80),
+            leading: ClipOval(
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.transparent,
+                child: Image.asset(img),
+              ),
             ),
             title: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -86,20 +94,29 @@ class ListRiwayatTransaksi extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(name,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 15)),
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 14,
+                      ),
+                    ),
                     const Spacer(),
                     Text(
                       harga,
-                      style: const TextStyle(fontSize: 15),
-                    )
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Text('Spesialis psikolog',
-                      style: TextStyle(fontSize: 12)),
+                  padding: EdgeInsets.only(top: 2),
+                  child: Text(
+                    'Spesialis psikolog',
+                    style: TextStyle(fontSize: 12),
+                  ),
                 ),
               ],
             ),
@@ -116,44 +133,71 @@ class ListRiwayatTransaksi extends StatelessWidget {
                     const SizedBox(width: 8),
                     const Text(
                       'Konsultasi Selesai',
-                      style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const Spacer(),
-                    OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                          color: berirating
-                              ? const Color(0xFF0085FF)
-                              : const Color(0xFFFFBB00),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
-                      ),
-                      onPressed: () {
-                        if (berirating) {
-                        } else {}
-                      },
-                      child: Text(
-                        berirating ? "Detail" : "Beri Rating",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
+                    berirating
+                        ? ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 3,
+                                vertical: 10,
+                              ),
+                              backgroundColor: const Color(0xFF0085FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text(
+                              "Detail",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: MyFont.fontMontserrat,
+                              ),
+                            ),
+                          )
+                        : OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                color: Color(0xFF0085FF),
+                                width: 1.3,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 7,
+                                vertical: 2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              "Beri Rating",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: MyFont.fontMontserrat,
+                              ),
+                            ),
+                          ),
                   ]),
                 )
               ],
             ),
+            contentPadding: const EdgeInsets.only(left: 10, right: 15),
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 8, right: 8, bottom: 0),
-            child: Divider(),
-          )
+          Container(
+            padding: EdgeInsets.zero,
+            height: 1.2,
+            color: Colors.grey,
+          ),
         ],
       ),
     );
