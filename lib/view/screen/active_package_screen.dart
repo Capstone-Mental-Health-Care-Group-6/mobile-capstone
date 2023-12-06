@@ -81,7 +81,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                           color: Color(0xff0085FF),
                         ),
                         insets: EdgeInsets.symmetric(
-                          horizontal: 132.5,
+                          horizontal: 131.5,
                         ),
                       ),
                       tabs: [
@@ -102,10 +102,12 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                         ),
                         GestureDetector(
                           onTap: () {
-                            setState(() {
+                            if (tabController.index != 1) {
+                              setState(() {
                               isInstant = false;
                               tabController.index = 1;
                             });
+                            }
                           },
                           child: Text(
                             'Premium',
