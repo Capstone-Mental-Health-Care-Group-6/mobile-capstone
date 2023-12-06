@@ -6,10 +6,12 @@ class RekomendasiPsikologInstant extends StatefulWidget {
   const RekomendasiPsikologInstant({super.key});
 
   @override
-  State<RekomendasiPsikologInstant> createState() => _RekomendasiPsikologInstantState();
+  State<RekomendasiPsikologInstant> createState() =>
+      _RekomendasiPsikologInstantState();
 }
 
-class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant> {
+class _RekomendasiPsikologInstantState
+    extends State<RekomendasiPsikologInstant> {
   final _formKey = GlobalKey<FormState>();
   String dataSearch = "w";
   bool isLoading = true;
@@ -32,6 +34,7 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 5,
         shadowColor: Colors.black,
@@ -60,8 +63,7 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
                       // controller: _searchController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(8)),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                         ),
                         prefixIcon: Padding(
                           padding: EdgeInsets.only(left: 10),
@@ -84,127 +86,130 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
                             itemCount: 10,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          width: 3)),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      // offset: Offset(, 3),
+                                    ),
+                                  ],
+                                ),
                                 margin: const EdgeInsets.only(bottom: 12.0),
-                                child: Card(
-                                  color: Colors.white,
-                                  margin: EdgeInsets.zero,
-                                  elevation: 5,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 8),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              height: 80,
-                                              width: 80,
-                                              decoration: const BoxDecoration(
-                                                color: Colors.blue,
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/doctorEllipse.png'),
-                                                  fit: BoxFit.cover,
-                                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 80,
+                                            width: 80,
+                                            decoration: const BoxDecoration(
+                                              color: Colors.blue,
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    'assets/images/doctorEllipse.png'),
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                            const SizedBox(width: 9),
-                                            const Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Rangga S.Psi., M.Psi",
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                          ),
+                                          const SizedBox(width: 9),
+                                          const Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Rangga S.Psi., M.Psi",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(
+                                                "Spesialis Positive psychology",
+                                                style: TextStyle(fontSize: 14),
+                                              ),
+                                              SizedBox(height: 3),
+                                              Text(
+                                                "Online",
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Row(
+                                        children: [
+                                          const Row(
+                                            children: [
+                                              Icon(
+                                                Icons.thumbs_up_down,
+                                                color: Colors.blue,
+                                              ),
+                                              SizedBox(width: 7),
+                                              Text(
+                                                "69%",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
                                                 ),
-                                                SizedBox(height: 5),
-                                                Text(
-                                                  "Spesialis Positive psychology",
-                                                  style:
-                                                      TextStyle(fontSize: 14),
+                                              ),
+                                              SizedBox(width: 8),
+                                              Icon(
+                                                Icons.rate_review,
+                                                color: Colors.blue,
+                                              ),
+                                              SizedBox(width: 7),
+                                              Text(
+                                                "3200",
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
                                                 ),
-                                                SizedBox(height: 3),
-                                                Text(
-                                                  "Tersedia",
-                                                  style:
-                                                      TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.green,
-                                                        fontWeight: FontWeight.bold
-                                                      ),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 6),
-                                        Row(
-                                          children: [
-                                            const Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.thumbs_up_down,
-                                                  color: Colors.blue,
+                                              ),
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                backgroundColor: Colors.blue,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
-                                                SizedBox(width: 7),
-                                                Text(
-                                                  "69%",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 8),
-                                                Icon(
-                                                  Icons.rate_review,
-                                                  color: Colors.blue,
-                                                ),
-                                                SizedBox(width: 7),
-                                                Text(
-                                                  "3200",
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 12,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10),
-                                                  backgroundColor: Colors.blue,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                onPressed: () {},
-                                                child: buildShimmerText(
-                                                  "Mulai Chat",
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                )),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                              ),
+                                              onPressed: () {},
+                                              child: buildShimmerText(
+                                                "Mulai Chat",
+                                                fontSize: 16,
+                                                color: Colors.white,
+                                              )),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );

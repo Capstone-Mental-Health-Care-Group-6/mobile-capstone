@@ -33,6 +33,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
           elevation: 5,
           shadowColor: Colors.black,
@@ -109,6 +110,17 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                     itemCount: 7,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.5),width: 3)),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.white,
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              // offset: Offset(, 3),
+                            ),
+                          ],
+                        ),
                         margin: const EdgeInsets.only(bottom: 12.0),
                         child: Card(
                           color: Colors.white,
@@ -134,7 +146,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                           image: AssetImage(
-                                              'assets/doctorEllipse.png'),
+                                              'assets/images/doctorEllipse.png'),
                                           fit: BoxFit.cover,
                                         ),
                                       ),

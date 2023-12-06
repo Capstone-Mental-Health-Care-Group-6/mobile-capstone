@@ -33,6 +33,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 5,
         shadowColor: Colors.black,
@@ -109,147 +110,150 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                     itemCount: 7,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
+                        decoration: BoxDecoration(
+                          border: Border(bottom: BorderSide(color: Colors.grey.withOpacity(0.5),width: 3)),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.white,
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              // offset: Offset(, 3),
+                            ),
+                          ],
+                        ),
                         margin: const EdgeInsets.only(bottom: 12.0),
-                        child: Card(
-                          color: Colors.white,
-                          margin: EdgeInsets.zero,
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: Column(
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 80,
-                                      width: 80,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.blue,
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/doctorEllipse.png'),
-                                          fit: BoxFit.cover,
-                                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 80,
+                                    width: 80,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.blue,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/doctorEllipse.png'),
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                    const SizedBox(width: 9),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Rangga S.Psi., M.Psi",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(width: 9),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        "Rangga S.Psi., M.Psi",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      const Text(
+                                        "Spesialis Positive psychology",
+                                        style: TextStyle(fontSize: 14),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      tersedia != true
+                                          ? const Text(
+                                              "Sibuk",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.yellow),
+                                            )
+                                          : const Text("Online",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 6),
+                              Row(
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Icon(
+                                        Icons.thumbs_up_down,
+                                        color: Colors.blue,
+                                      ),
+                                      SizedBox(width: 7),
+                                      Text(
+                                        "69%",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
                                         ),
-                                        const SizedBox(height: 5),
-                                        const Text(
-                                          "Spesialis Positive psychology",
-                                          style: TextStyle(fontSize: 14),
+                                      ),
+                                      SizedBox(width: 8),
+                                      Icon(
+                                        Icons.rate_review,
+                                        color: Colors.blue,
+                                      ),
+                                      SizedBox(width: 7),
+                                      Text(
+                                        "3200",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
                                         ),
-                                        const SizedBox(height: 3),
-                                        tersedia != true
-                                            ? const Text(
-                                                "Sibuk",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.yellow),
-                                              )
-                                            : const Text("Online",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.green)),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.thumbs_up_down,
-                                          color: Colors.blue,
-                                        ),
-                                        SizedBox(width: 7),
-                                        Text(
-                                          "69%",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Icon(
-                                          Icons.rate_review,
-                                          color: Colors.blue,
-                                        ),
-                                        SizedBox(width: 7),
-                                        Text(
-                                          "3200",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    tersedia != true
-                                        ? ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10),
-                                                backgroundColor: Colors.white,
-                                                side: const BorderSide(
-                                                    width: 1,
-                                                    color: Colors.blue),
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                  8,
-                                                ))),
-                                            onPressed: () {},
-                                            child: buildShimmerText(
-                                              "Mulai Chat",
-                                              fontSize: 16,
-                                              color: Colors.blue,
-                                            ))
-                                        : ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  tersedia != true
+                                      ? ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 10),
-                                              backgroundColor: Colors.blue,
+                                              backgroundColor: Colors.white,
+                                              side: const BorderSide(
+                                                  width: 1,
+                                                  color: Colors.blue),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                8,
+                                              ))),
+                                          onPressed: () {},
+                                          child: buildShimmerText(
+                                            "Mulai Chat",
+                                            fontSize: 16,
+                                            color: Colors.blue,
+                                          ))
+                                      : ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            padding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 10),
+                                            backgroundColor: Colors.blue,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
-                                            onPressed: () {},
-                                            child: buildShimmerText(
-                                              "Mulai Chat",
-                                              fontSize: 16,
-                                              color: Colors.white,
-                                            )),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                          ),
+                                          onPressed: () {},
+                                          child: buildShimmerText(
+                                            "Mulai Chat",
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                          )),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       );
