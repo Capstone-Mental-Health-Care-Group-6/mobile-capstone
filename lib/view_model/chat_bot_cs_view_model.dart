@@ -11,17 +11,18 @@ class ChatBotCSProvider extends ChangeNotifier {
   final Map<String, String> menuExplanations = {
     'Bagaimana cara mengubah Biodata diri?':
         '1. Buka aplikasi.\n2. Masuk ke akun Anda.\n3. Cari "Profil" atau pada  menu.\n4. Klik opsi "Edit Profil".\n5. Isi data baru dan simpan perubahan.\n\nApakah informasi yang\nsaya berikan sudah jelas?',
-    'Apa saja fitur yang tersedia?': 'Explanation for Fitur\n\nApakah informasi yang\nsaya berikan sudah jelas?',
-    'Panduan Konseling': 'Explanation for Konseling\n\nApakah informasi yang\nsaya berikan sudah jelas?',
+    'Apa saja fitur yang tersedia?':
+        'Explanation for Fitur\n\nApakah informasi yang\nsaya berikan sudah jelas?',
+    'Panduan Konseling':
+        'Explanation for Konseling\n\nApakah informasi yang\nsaya berikan sudah jelas?',
   };
 
- void addMenuMessage(String message) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    _chatMessages.add(ChatBotCS(text: message, isUser: false));
-    notifyListeners();
-  });
-}
-
+  void addMenuMessage(String message) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _chatMessages.add(ChatBotCS(text: message, isUser: false));
+      notifyListeners();
+    });
+  }
 
   void addUserMessage(String message) {
     _chatMessages.add(ChatBotCS(text: message, isUser: true));
@@ -36,6 +37,15 @@ class ChatBotCSProvider extends ChangeNotifier {
     addButton('Bagaimana cara mengubah Biodata diri?');
     addButton('Apa saja fitur yang tersedia?');
     addButton('Panduan Konseling');
+  }
+
+  void clearMessages() {
+    _chatMessages.clear();
+    _buttonHoverStatus.clear();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      notifyListeners();
+    });
   }
 
   void handleMenuButtonPress(int buttonIndex) {
@@ -90,11 +100,12 @@ class ChatBotCSProvider extends ChangeNotifier {
     _buttonHoverStatus[buttonIndex] = isHovered;
     notifyListeners();
   }
-  void addInitialMessages() {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    addMenuMessage('Selamat datang di aplikasi kesehatan mental kami! Saya akan dengan senang hati membantu Anda memahami fitur yang tersedia. Berikut beberapa hal yang dapat Anda lakukan:');
-    addMenuButtons();
-  });
-}
 
+  void addInitialMessages() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      addMenuMessage(
+          'Selamat datang di aplikasi kesehatan mental kami! Saya akan dengan senang hati membantu Anda memahami fitur yang tersedia. Berikut beberapa hal yang dapat Anda lakukan:');
+      addMenuButtons();
+    });
+  }
 }
