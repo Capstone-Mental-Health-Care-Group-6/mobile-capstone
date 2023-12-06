@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget CardPaketWidget({required String title, required String price, required List profit}) {
+Widget cardPaketWidget(
+    {required String title, required String price, required List profit}) {
   return Card(
     margin: EdgeInsets.zero,
     elevation: 4,
@@ -12,7 +13,10 @@ Widget CardPaketWidget({required String title, required String price, required L
       children: [
         Container(
           padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(color: Color(0xffCCE7FF), borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(9))),
+          decoration: const BoxDecoration(
+              color: Color(0xffCCE7FF),
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8), topRight: Radius.circular(9))),
           child: Row(
             // crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -39,7 +43,8 @@ Widget CardPaketWidget({required String title, required String price, required L
                   ),
                   Text(
                     price,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ],
               )

@@ -1,6 +1,7 @@
+import 'package:empathi_care/view/screen/Register/verification_screen.dart';
 import 'package:empathi_care/view/screen/login_screen.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
-import 'package:empathi_care/view_model/logreg_provider.dart';
+import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,17 +16,20 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
-  late LogRegProvider logRegProvider;
+  late PasswordProvider passwordProvider;
   @override
   void initState() {
-    logRegProvider = Provider.of(context, listen: false);
-    logRegProvider.check = false;
-    logRegProvider.visiblePassword = true;
-    logRegProvider.visiblePassword2 = true;
-    logRegProvider.emailController.clear();
-    logRegProvider.passwordController.clear();
-    logRegProvider.confirmPasswordController.clear();
+    passwordProvider = Provider.of(context, listen: false);
+    passwordProvider.check = false;
+    passwordProvider.visiblePassword = true;
+    passwordProvider.visiblePassword2 = true;
+    emailController.clear();
+    passwordController.clear();
+    confirmPasswordController.clear();
     super.initState();
   }
 
@@ -43,7 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 67.36, left: 30, right: 30),
                 child: Image.asset(
-                  'assets/image/Register.png',
+                  'assets/images/Register.png',
                   width: 400,
                   height: 300,
                 ),
@@ -74,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: logRegProvider.emailController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 13),
                       border: OutlineInputBorder(
@@ -104,11 +108,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 13, right: 20),
-                child: Consumer<LogRegProvider>(
-                  builder: (context, logRegProvider, _) {
+                child: Consumer<PasswordProvider>(
+                  builder: (context, passwordProvider, _) {
                     return TextFormField(
-                      controller: logRegProvider.passwordController,
-                      obscureText: logRegProvider.visiblePassword,
+                      controller: passwordController,
+                      obscureText: passwordProvider.visiblePassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           contentPadding:
@@ -121,11 +125,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Icon(Icons.lock_outline),
                           ),
                           suffixIcon: IconButton(
-                            icon: logRegProvider.visiblePassword
+                            icon: passwordProvider.visiblePassword
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off_outlined),
                             onPressed: () {
-                              logRegProvider.changeVisible();
+                              passwordProvider.changeVisible();
                             },
                           ),
                           label: const Text('Password')),
@@ -145,8 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return 'Password harus mempunyai minimum 1 angka';
                         } else if (!RegExp(r'^.{8,}$').hasMatch(value)) {
                           return 'Password harus mempunyai minimum 8 karakter';
-                        } else if (value !=
-                            logRegProvider.confirmPasswordController.text) {
+                        } else if (value != confirmPasswordController.text) {
                           return 'Password tidak sama';
                         } else {
                           return null;
@@ -158,11 +161,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 13, right: 20),
-                child: Consumer<LogRegProvider>(
-                  builder: (context, logRegProvider, _) {
+                child: Consumer<PasswordProvider>(
+                  builder: (context, passwordProvider, _) {
                     return TextFormField(
-                      controller: logRegProvider.confirmPasswordController,
-                      obscureText: logRegProvider.visiblePassword2,
+                      controller: confirmPasswordController,
+                      obscureText: passwordProvider.visiblePassword2,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           contentPadding:
@@ -175,11 +178,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: Icon(Icons.lock_outline),
                           ),
                           suffixIcon: IconButton(
-                            icon: logRegProvider.visiblePassword2
+                            icon: passwordProvider.visiblePassword2
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off_outlined),
                             onPressed: () {
-                              logRegProvider.changeVisible2();
+                              passwordProvider.changeVisible2();
                             },
                           ),
                           label: const Text('Konfirmasi Password')),
@@ -188,8 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: (value) {
                         if (value! == '') {
                           return 'Password anda masih kosong';
-                        } else if (value !=
-                            logRegProvider.passwordController.text) {
+                        } else if (value != passwordController.text) {
                           return 'Password tidak sama';
                         } else {
                           return null;
@@ -200,23 +202,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 12),
+                padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(370, 40),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0XFF0085FF),
-                      foregroundColor: Colors.white),
+                      foregroundColor: const Color.fromRGBO(255, 255, 255, 1)),
                   onPressed: () {
-                    if (_formKey.currentState!.validate() &&
-                        logRegProvider.check != true) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Syarat dan ketentuan belum di setujui'),
-                        ),
-                      );
+                    if (!_formKey.currentState!.validate()) {
+                    } else {
+                      if (passwordProvider.check != true) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('Syarat dan ketentuan belum di setujui'),
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (_) => VerificationScreen(
+                                  email: emailController.text,
+                                )));
+                      }
                     }
                   },
                   child: Text(
@@ -229,13 +238,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Padding(
                   padding: const EdgeInsets.only(top: 12, left: 5, right: 38),
-                  child: Consumer<LogRegProvider>(
-                    builder: (context, logRegProvider, child) => Row(children: [
+                  child: Consumer<PasswordProvider>(
+                    builder: (context, passwordProvider, child) =>
+                        Row(children: [
                       Checkbox(
-                        value: logRegProvider.check,
+                        value: passwordProvider.check,
                         activeColor: MaterialStateColor.resolveWith(
                             (states) => const Color(0xff0085FF)),
-                        onChanged: (value) => logRegProvider.changeCheck(value),
+                        onChanged: (value) =>
+                            passwordProvider.changeCheck(value),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                       ),

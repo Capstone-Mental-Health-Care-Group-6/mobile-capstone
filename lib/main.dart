@@ -1,7 +1,10 @@
-import 'package:empathi_care/view/screen/counseling/list_psikolog_instant.dart';
-import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view/screen/splash_screen.dart';
-import 'package:empathi_care/view_model/logreg_provider.dart';
+import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
+import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
+import 'package:empathi_care/view_model/enabled_button_provider.dart';
+import 'package:empathi_care/view_model/filling_provider.dart';
+import 'package:empathi_care/view_model/password_provider.dart';
+import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -22,9 +25,19 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (BuildContext context) => LogRegProvider()),
+              create: (BuildContext context) => PasswordProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => CountDownPaymentSuccessProvider()),
+              create: (BuildContext context) =>
+                  CountDownPaymentSuccessProvider()),
+          ChangeNotifierProvider<NavigationProvider>(
+            create: (create) => NavigationProvider(),
+          ),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => FillingProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => ChatBotCSProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => EnabledButton()),
         ],
         builder: (context, child) {
           return MaterialApp(
@@ -34,6 +47,7 @@ class MyApp extends StatelessWidget {
               colorScheme:
                   ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
               useMaterial3: true,
+              fontFamily: GoogleFonts.montserrat().fontFamily,
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all(
@@ -45,7 +59,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-            home: const ListPsikologInstant(),
+            home: const SplashScreen(),
           );
         });
   }
