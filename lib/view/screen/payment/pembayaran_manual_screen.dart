@@ -120,7 +120,8 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.yellow,
                         borderRadius: BorderRadius.circular(10),
@@ -165,13 +166,15 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                   child: InkWell(
                     child: Text(
                       "Lihat rincian",
-                      style: GoogleFonts.montserrat(fontSize: 12, color: Colors.blue),
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12, color: Colors.blue),
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Color.fromRGBO(242, 242, 242, 1.0),
@@ -255,25 +258,31 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                 const SizedBox(height: 16),
                 Text(
                   "Upload Bukti Pembayaran",
-                  style: GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "* Transaksi Anda tidak akan kami proses sebelum menekan tombol konfirmasi pembayaran",
-                  style: GoogleFonts.montserrat(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "* Pastikan foto bukti transfer terbaca",
-                  style: GoogleFonts.montserrat(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const VerificationPaymentScreen(),
+                          builder: (context) =>
+                              const VerificationPaymentScreen(),
                         ));
                       },
                       style: ElevatedButton.styleFrom(
@@ -284,7 +293,10 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                       ),
                       child: Text(
                         "Konfirmasi Pembayaran",
-                        style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+                        style: GoogleFonts.montserrat(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       )),
                 ),
                 const SizedBox(height: 16),

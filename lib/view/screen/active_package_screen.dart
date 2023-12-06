@@ -85,36 +85,18 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                         ),
                       ),
                       tabs: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isInstant = true;
-                              tabController.index = 0;
-                            });
-                          },
-                          child: Text(
-                            'Instant',
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                            ),
+                        Text(
+                          'Instant',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            if (tabController.index != 1) {
-                              setState(() {
-                              isInstant = false;
-                              tabController.index = 1;
-                            });
-                            }
-                          },
-                          child: Text(
-                            'Premium',
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                            ),
+                        Text(
+                          'Premium',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
                           ),
                         ),
                       ],

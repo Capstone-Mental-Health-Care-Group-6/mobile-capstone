@@ -6,11 +6,11 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double _fabBottomPosition = 16.0;
+  final double _fabBottomPosition = 16.0;
 
   @override
   Widget build(BuildContext context) {
@@ -99,17 +99,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     height: 183.0,
                   ),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0, left: 15),
-                      child: Text(
-                        'Ayo tukar kupon diskon!',
-                        style:
-                            GoogleFonts.montserrat(fontWeight: FontWeight.bold),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 15),
+                    child: Text(
+                      'Ayo tukar kupon diskon!',
+                      style:
+                          GoogleFonts.montserrat(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 150.0,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
@@ -129,29 +127,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 0, left: 15),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Rekomendasi Artikel',
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, left: 15),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Rekomendasi Artikel',
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: Text(
+                            'Lihat Semua',
                             style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                                fontSize: 12),
                           ),
-                          const Spacer(),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 20),
-                            child: Text(
-                              'Lihat Semua',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                  fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
@@ -176,7 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: Color(0xff000000).withOpacity(0.12),
+                                  color:
+                                      const Color(0xff000000).withOpacity(0.12),
                                   blurRadius: 16,
                                 )
                               ],

@@ -9,7 +9,8 @@ class VerificationPaymentScreen extends StatefulWidget {
   const VerificationPaymentScreen({super.key});
 
   @override
-  State<VerificationPaymentScreen> createState() => _VerificationPaymentScreenState();
+  State<VerificationPaymentScreen> createState() =>
+      _VerificationPaymentScreenState();
 }
 
 class _VerificationPaymentScreenState extends State<VerificationPaymentScreen> {
@@ -20,7 +21,7 @@ class _VerificationPaymentScreenState extends State<VerificationPaymentScreen> {
   }
 
   Future<void> succes() async {
-    await Future.delayed(Duration(seconds: 10)).then((value) {
+    await Future.delayed(const Duration(seconds: 10)).then((value) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const SuccessVerificationScreen(),
       ));
@@ -33,13 +34,14 @@ class _VerificationPaymentScreenState extends State<VerificationPaymentScreen> {
       appBar: AppBar(
         title: Text(
           "Verifikasi",
-          style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
+          style:
+              GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             width: double.infinity,
             height: 317,
             child: Image(
@@ -56,7 +58,7 @@ class _VerificationPaymentScreenState extends State<VerificationPaymentScreen> {
               textAlign: TextAlign.center,
             ),
           ),
-          CountDown()
+          const CountDown()
         ],
       ),
     );

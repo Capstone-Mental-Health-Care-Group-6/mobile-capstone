@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AllArticlesPage extends StatelessWidget {
+  const AllArticlesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -9,7 +11,7 @@ class AllArticlesPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -40,15 +42,15 @@ class AllArticlesPage extends StatelessWidget {
               padding: const EdgeInsets.only(left: 5),
               child: Container(
                 height: 40,
-                padding: EdgeInsets.only(top: 18, left: 20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(top: 18, left: 20),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(12),
                       bottomLeft: Radius.circular(12)),
                 ),
                 child: TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Cari artikel...',
                     border: InputBorder.none,
                   ),
@@ -57,7 +59,7 @@ class AllArticlesPage extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               color: Colors.white,
             ),
@@ -71,7 +73,7 @@ class AllArticlesPage extends StatelessWidget {
   }
 
   Widget _buildGenreCarousel() {
-    return Container(
+    return SizedBox(
       height: 80,
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -88,8 +90,8 @@ class AllArticlesPage extends StatelessWidget {
 
   Widget _buildGenreItem(String genre) {
     return Container(
-      margin: EdgeInsets.only(top: 30, right: 0, bottom: 10, left: 20),
-      padding: EdgeInsets.all(12),
+      margin: const EdgeInsets.only(top: 30, right: 0, bottom: 10, left: 20),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.blue,
         borderRadius: BorderRadius.circular(12),
@@ -97,7 +99,7 @@ class AllArticlesPage extends StatelessWidget {
       child: Center(
         child: Text(
           genre,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
         ),
       ),
@@ -108,7 +110,7 @@ class AllArticlesPage extends StatelessWidget {
     return Expanded(
       child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -153,22 +155,22 @@ class AllArticlesPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 date,
-                style: TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
@@ -179,7 +181,7 @@ class AllArticlesPage extends StatelessWidget {
 
   Widget _buildDivider() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 16),
+      margin: const EdgeInsets.symmetric(vertical: 16),
       height: 1,
       color: Colors.grey,
     );
@@ -188,7 +190,7 @@ class AllArticlesPage extends StatelessWidget {
 
 Widget _buildDividerSearchArtikel() {
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 10),
+    margin: const EdgeInsets.symmetric(vertical: 10),
     height: 1,
     color: Colors.grey,
   );

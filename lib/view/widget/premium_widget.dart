@@ -145,7 +145,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
               BoxShadow(
                 color: Colors.black.withOpacity(0.2),
                 blurRadius: 1.0,
-                offset: Offset(0.0, 1.0),
+                offset: const Offset(0.0, 1.0),
               ),
             ],
           ),

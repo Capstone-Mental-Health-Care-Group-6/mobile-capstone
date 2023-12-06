@@ -32,10 +32,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<NavigationProvider>(
             create: (create) => NavigationProvider(),
           ),
-              create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  CountDownPaymentSuccessProvider()),
+              create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => ChatBotCSProvider()),
           ChangeNotifierProvider(
