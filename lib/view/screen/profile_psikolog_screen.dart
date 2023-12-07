@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:empathi_care/view/screen/payment_method_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -13,11 +14,11 @@ class ProfilePsikologScreen extends StatefulWidget {
   final DateTime? dateKonseling;
   final int? session;
   const ProfilePsikologScreen({
-    Key? key,
+    super.key,
     required this.isInstan,
     this.dateKonseling,
     this.session,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfilePsikologScreen> createState() => _ProfilePsikologScreenState();
@@ -129,6 +130,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
           "Profile Psikolog",
           style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(
         builder: (context) {
@@ -148,7 +150,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                           height: 140,
                           color: const Color(0xffCCE7FF),
                           child: const Align(
-                            child: Image(image: AssetImage("assets/doctors.png")),
+                            child: Image(image: AssetImage("assets/images/doctors.png")),
                           ),
                         ),
                         Padding(
@@ -340,7 +342,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                         CarouselSlider(
                             carouselController: _carouselController,
                             options: CarouselOptions(
-                              aspectRatio: 3,
+                              aspectRatio: 2.5,
                               scrollPhysics: const BouncingScrollPhysics(),
                               initialPage: 0,
                               enableInfiniteScroll: true,
@@ -381,7 +383,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                               decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
-                                                  image: AssetImage("assets/images/image_psikolog.png"),
+                                                  image: AssetImage("assets/images/doctors.png"),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -417,7 +419,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                           element['review'],
                                           textAlign: TextAlign.justify,
                                           style: GoogleFonts.montserrat(fontSize: 12),
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
+                                        
                                       ],
                                     ),
                                   ),
@@ -429,7 +434,9 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 19.5),
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => const PaymentMethodScreen()));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           fixedSize: Size(MediaQuery.of(context).size.width, 40),
@@ -439,7 +446,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                         ),
                         child: Text(
                           "Mulai Chat",
-                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                         )),
                   )
                 ],
@@ -1205,7 +1212,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: selectedDate[indexList] == "" ? "mm/dd/yyyy" : selectedDate[indexList].toString(),
+                hintText: selectedDate[indexList] == "" ? "dd/mm/yyyy" : selectedDate[indexList].toString(),
                 suffixIcon: Icon(
                   MdiIcons.calendar,
                   color: Colors.blue,

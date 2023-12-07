@@ -27,6 +27,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: ListView(
         children: [
@@ -195,7 +196,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
-                              'assets/download.svg',
+                              'assets/icons/download.svg',
                               width: 34.0,
                               height: 34.0,
                             ),

@@ -15,7 +15,7 @@ class CardPsikologWidget extends StatefulWidget {
   String? masaAktif;
   bool? selesai;
   CardPsikologWidget({
-    Key? key,
+    super.key,
     required this.image,
     required this.nama,
     required this.spesialis,
@@ -27,7 +27,7 @@ class CardPsikologWidget extends StatefulWidget {
     this.comment,
     this.masaAktif,
     this.selesai,
-  }) : super(key: key);
+  });
 
   @override
   State<CardPsikologWidget> createState() => _CardPsikologWidgetState();

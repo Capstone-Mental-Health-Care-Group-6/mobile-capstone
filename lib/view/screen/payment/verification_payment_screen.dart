@@ -37,6 +37,7 @@ class _VerificationPaymentScreenState extends State<VerificationPaymentScreen> {
           style:
               GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

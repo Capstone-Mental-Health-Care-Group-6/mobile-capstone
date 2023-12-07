@@ -43,6 +43,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
             fontWeight: FontWeight.w700,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         if (isLoading) {
@@ -148,7 +149,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   image: AssetImage(
-                                                      'assets/doctorEllipse.png'),
+                                                      'assets/images/doctorEllipse.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),

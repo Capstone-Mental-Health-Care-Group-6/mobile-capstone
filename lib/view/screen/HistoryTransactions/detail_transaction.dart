@@ -1,8 +1,11 @@
+import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/chat_history_screen.dart';
 import 'package:empathi_care/view/widget/invoice_rating_widget.dart';
+import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class DetailTransaction extends StatefulWidget {
   const DetailTransaction({super.key});
@@ -16,13 +19,17 @@ class _DetailTransactionState extends State<DetailTransaction> {
 
   @override
   Widget build(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Riwayat Pemesanan',
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 16),
+              
         ),
+        surfaceTintColor: Colors.white,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 5),
@@ -80,7 +87,10 @@ class _DetailTransactionState extends State<DetailTransaction> {
                 borderRadius: BorderRadius.circular(8),
               ),
               elevation: 15.0),
-          onPressed: () {},
+          onPressed: () {
+             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const RoutesScreen()), (route) => false);
+                      navigationProvider.setIndex(1);
+          },
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Text(

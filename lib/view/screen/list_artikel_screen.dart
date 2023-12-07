@@ -8,6 +8,7 @@ class AllArticlesPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
@@ -115,25 +116,25 @@ class AllArticlesPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildArticleListItem(
-                  'Title 1', 'assets/img/article.png', '13 Oktober 2023'),
+                  'Title 1', 'assets/images/article.png', '13 Oktober 2023'),
               _buildDivider(),
               _buildArticleListItem(
-                  'Title 2', 'assets/img/article.png', '14 Oktober 2023'),
+                  'Title 2', 'assets/images/article.png', '14 Oktober 2023'),
               _buildDivider(),
               _buildArticleListItem(
-                  'Title 3', 'assets/img/article.png', '15 Oktober 2023'),
+                  'Title 3', 'assets/images/article.png', '15 Oktober 2023'),
               _buildDivider(),
               _buildArticleListItem(
-                  'Title 3', 'assets/img/article.png', '15 Oktober 2023'),
+                  'Title 3', 'assets/images/article.png', '15 Oktober 2023'),
               _buildDivider(),
               _buildArticleListItem(
-                  'Title 3', 'assets/img/article.png', '15 Oktober 2023'),
+                  'Title 3', 'assets/images/article.png', '15 Oktober 2023'),
               _buildDivider(),
               _buildArticleListItem(
-                  'Title 3', 'assets/img/article.png', '15 Oktober 2023'),
+                  'Title 3', 'assets/images/article.png', '15 Oktober 2023'),
               _buildDivider(),
               _buildArticleListItem(
-                  'Title 3', 'assets/img/article.png', '15 Oktober 2023'),
+                  'Title 3', 'assets/images/article.png', '15 Oktober 2023'),
             ],
           ),
         ),
