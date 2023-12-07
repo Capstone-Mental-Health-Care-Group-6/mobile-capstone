@@ -1,4 +1,5 @@
 import 'package:empathi_care/view/screen/list_artikel_screen.dart';
+import 'package:empathi_care/view/screen/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             color: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>const NotificationScreen()));
+            },
           )
         ],
       ),
