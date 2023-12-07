@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:empathi_care/view/screen/payment_method_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -36,10 +37,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
   List<String> selectedDate = [];
   bool isInstan = false, isLoading = true;
   Map<String, List> scheduleList = {};
-  List<String> listKeahlian = [
-    "Keluarga",
-    "Percintaan",
-    "Kendali Emosi",
+ List<Map<String, dynamic>> listKeahlian = [
+    {"keahlian": "Keluarga", "icon": "assets/icons/home_icon.svg"},
+    {"keahlian": "Percintaan", "icon": "assets/icons/love_icon.svg"},
+    {"keahlian": "Kendali Emosi", "icon": "assets/icons/flame_icon.svg"},
   ];
   List<Map<String, dynamic>> listReview = [
     {
@@ -295,17 +296,19 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
                                 itemCount: listKeahlian.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffCCE7FF),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      listKeahlian[index].toString(),
-                                      style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
-                                    )),
-                                  );
+                                  return Center(
+                                      child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        listKeahlian[index]['icon'],
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        listKeahlian[index]['keahlian'].toString(),
+                                        style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ));
                                 },
                               ),
                               const SizedBox(height: 12),
