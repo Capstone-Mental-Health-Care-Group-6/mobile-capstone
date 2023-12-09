@@ -22,14 +22,13 @@ class _DetailTransactionState extends State<DetailTransaction> {
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Detail Pemesanan',
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 16),
-              
         ),
         surfaceTintColor: Colors.white,
         actions: [
@@ -128,37 +127,31 @@ class _DetailTransactionState extends State<DetailTransaction> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor:
-                      Colors.white, //change background color of button
-                  backgroundColor:
-                      const Color(0xFF0085FF), //change text color of button
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor:
+                        Colors.white, //change background color of button
+                    backgroundColor:
+                        const Color(0xFF0085FF), //change text color of button
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                ),
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Text(
-                    'Pesan Lagi',
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w700, fontSize: 14),
-                  ),
-                ),
-              ),
-              elevation: 15.0),
-          onPressed: () {
-             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const RoutesScreen()), (route) => false);
-                      navigationProvider.setIndex(1);
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(
-              'Beli Lagi',
-              style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.w700, fontSize: 14),
-            ),
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => const RoutesScreen()),
+                        (route) => false);
+                    navigationProvider.setIndex(1);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(
+                      'Pesan Lagi',
+                      style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w700, fontSize: 14),
+                    ),
+                  )),
+            )
           ],
         ),
       ),
