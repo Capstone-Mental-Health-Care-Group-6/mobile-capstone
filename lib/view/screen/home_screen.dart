@@ -1,9 +1,11 @@
+import 'package:empathi_care/view/screen/list_artikel_screen.dart';
+import 'package:empathi_care/view/screen/notification_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -21,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final double itemWidth = size.width / 2;
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.blue,
         leadingWidth: 160,
         leading: Padding(
@@ -33,7 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             color: Colors.white,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>const NotificationScreen()));
+            },
           )
         ],
       ),
@@ -139,12 +144,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Spacer(),
                         Padding(
                           padding: const EdgeInsets.only(right: 20),
-                          child: Text(
-                            'Lihat Semua',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue,
-                                fontSize: 12),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=> const AllArticlesPage()));
+                            },
+                            child: Text(
+                              'Lihat Semua',
+                              style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                  fontSize: 12),
+                            ),
                           ),
                         ),
                       ],
@@ -239,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage('assets/images/chatbot.png'),
+                      image: AssetImage('assets/images/chatbot_home.png'),
                     ),
                   ),
                   child: const Center(

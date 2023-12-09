@@ -1,25 +1,23 @@
+import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view/screen/HistoryTransactions/detail_transaction.dart';
 import 'package:flutter/material.dart';
 
-class KonselingScreen extends StatefulWidget {
-  const KonselingScreen({super.key});
+class ListRiwayatTransaksi extends StatelessWidget {
+  const ListRiwayatTransaksi({super.key});
 
-  @override
-  State<KonselingScreen> createState() => _KonselingScreenState();
-}
-
-class _KonselingScreenState extends State<KonselingScreen> {
-  String? selectedOption;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Buat Janji",
+          "Riwayat Pemesanan",
           style: TextStyle(
-              fontWeight: FontWeight.w900, fontFamily: MyFont.fontMontserrat),
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              fontFamily: MyFont.fontMontserrat),
         ),
-        centerTitle: true,
+        surfaceTintColor: Colors.white,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.5),
           child: Container(
@@ -38,354 +36,174 @@ class _KonselingScreenState extends State<KonselingScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 25, right: 20),
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Alur Konseling",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: MyFont.fontMontserrat),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Ingin tau lebih lanjut ? ",
-                          style: TextStyle(
-                              fontSize: 13,
-                              fontFamily: MyFont.fontMontserrat,
-                              color: Color(0xff636363)),
-                        ),
-                        Text(
-                          "Baca Selengkapnya",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontFamily: MyFont.fontMontserrat,
-                              color: Color(0xff6C8AF7),
-                              fontSize: 13),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                buildListAlurKonseling(
-                    "Topik Konseling",
-                    "Pilih Topik masalah yang ingin kamu ceritakan ke psikolog",
-                    "assets/images/icon list.png"),
-                buildListAlurKonseling(
-                    "Alur Detail layanan Konseling",
-                    "Pilih paket, sesi, metode, durasi dan psikolog",
-                    "assets/images/icon phone.png"),
-                buildListAlurKonseling(
-                    "Konfirmasi Jadwal & Pembayaran",
-                    "Pilih jadwal yang tersedia dari psikolog pilihanmu, dan lakukan pembayaran",
-                    "assets/images/icon konfirm.png")
-              ],
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 30),
-              height: 110,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: const Color(0xFFCCE7FF),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Text(
-                      "Ceritakan masalahmu dengan psikolog profesional",
-                      style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: MyFont.fontMontserrat),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _showOptionsDialog(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 10,
-                        ),
-                        backgroundColor: const Color(0xFF0085FF),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        "Mulai Sekarang",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: MyFont.fontMontserrat,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildListAlurKonseling(String title, String subtitle, String img) {
-    return Container(
-      padding: const EdgeInsets.only(top: 30),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: SingleChildScrollView(
+          child: Column(
         children: [
-          Container(
-            width: 70,
-            height: 72,
-            decoration: BoxDecoration(
-              color: const Color(0xFFCCE7FF),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Image.asset(
-                img,
-                width: 25,
-                height: 25,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: MyFont.fontMontserrat),
-                ),
-                Text(
-                  subtitle,
-                  style: const TextStyle(
-                      color: Colors.grey, fontFamily: MyFont.fontMontserrat),
-                ),
-              ],
-            ),
-          ),
+          buildListDokter(
+              "assets/images/Dokter 1.png",
+              "Rangga S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30)),
+              true, context),
+          buildListDokter(
+              "assets/images/Dokter 2.png",
+              "Melani S.Psi., M.Psi",
+              "Rp.40.000",
+              getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00)),
+              true, context),
+          buildListDokter(
+              "assets/images/Dokter 3.png",
+              "Seto Mulyadi S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30)),
+              true, context),
+          buildListDokter(
+              "assets/images/Dokter 4.png",
+              "Roslina Vearuli S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)),
+              false, context)
         ],
-      ),
+      )),
     );
   }
 
-  Widget buildPilihTopik(String title, String subtitle, String img) {
-    return Container(
-      padding: EdgeInsets.zero,
-      child: Row(
+  Widget buildListDokter(
+      String img, String name, String harga, String tgl, bool berirating, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            img,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      fontFamily: MyFont.fontMontserrat),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    subtitle,
-                    style: const TextStyle(
-                        fontSize: 11, fontFamily: MyFont.fontMontserrat),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showOptionsDialog(BuildContext context) {
-    List<String> options = [
-      "Pekerjaan",
-      "Kendali Emosi",
-      "Percintaan",
-      "Pendidikan",
-      "Keluarga",
-      "Kecanduan",
-      "Kesepian",
-      'Sosial',
-      "Lainnya",
-    ];
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(13),
-          ),
-          backgroundColor: Colors.transparent,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(13),
-            ),
+          Padding(
             padding: const EdgeInsets.only(left: 8),
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: Text(tgl.toString(),
+                style: const TextStyle(
+                    fontFamily: MyFont.fontMontserrat,
+                    fontWeight: FontWeight.w600)),
+          ),
+          ListTile(
+            leading: ClipOval(
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.transparent,
+                child: Image.asset(img),
+              ),
+            ),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.zero,
-                          child: Icon(Icons.close),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-                  child: buildPilihTopik(
-                    "Pilih Topik",
-                    "Permasalahan apa yang ingin anda diskusikan ?",
-                    "assets/images/Select-rafiki 2.png",
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 10, right: 15),
-                  child: Divider(
-                    thickness: 2.3,
-                    color: Color(0xff6C8AF7),
-                  ),
-                ),
-                SizedBox(
-                  height: 200,
-                  child: Scrollbar(
-                    controller: ScrollController(),
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemExtent: 30,
-                      children: options.map((option) {
-                        return ListTile(
-                          contentPadding: EdgeInsets.zero,
-                          title: Row(
-                            children: [
-                              Transform.scale(
-                                scale: 1.15,
-                                child: Radio<String>(
-                                  value: option,
-                                  groupValue: selectedOption,
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      selectedOption = value;
-                                    });
-                                  },
-                                  activeColor: Colors.black,
-                                  materialTapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                ),
-                              ),
-                              const SizedBox(width: 3),
-                              Text(
-                                option,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
-                          backgroundColor: const Color(0xFF0085FF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "Pilih Topik",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: MyFont.fontMontserrat,
-                          ),
-                        ),
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      harga,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 2),
+                  child: Text(
+                    'Spesialis psikolog',
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
               ],
             ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Row(children: [
+                    const Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'Konsultasi Selesai',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    berirating
+                        ? ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=> const DetailTransaction()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 3,
+                                vertical: 10,
+                              ),
+                              backgroundColor: const Color(0xFF0085FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text(
+                              "Detail",
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: MyFont.fontMontserrat,
+                              ),
+                            ),
+                          )
+                        : OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                color: Color(0xFF0085FF),
+                                width: 1.3,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 7,
+                                vertical: 2,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(13),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: const Text(
+                              "Beri Rating",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: MyFont.fontMontserrat,
+                              ),
+                            ),
+                          ),
+                  ]),
+                )
+              ],
+            ),
+            contentPadding: const EdgeInsets.only(left: 10, right: 15),
           ),
-        );
-      },
+          Container(
+            padding: EdgeInsets.zero,
+            height: 1.2,
+            color: Colors.grey,
+          ),
+        ],
+      ),
     );
   }
 }

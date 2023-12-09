@@ -1,4 +1,5 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:empathi_care/view/screen/payment/pembayaran_manual_screen.dart';
 import 'package:empathi_care/view/widget/card_invoice_widget.dart';
 import 'package:empathi_care/view/widget/card_method_payment.dart';
 import 'package:empathi_care/view/widget/card_psikolog_on_payment_method.dart';
@@ -139,7 +140,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     elevation: 15.0),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PembayaranManualScreen()));
+                },
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 0),

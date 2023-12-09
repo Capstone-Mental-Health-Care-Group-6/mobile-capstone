@@ -3,7 +3,7 @@ import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
 class CardInvoicePayment extends StatelessWidget {
-  const CardInvoicePayment({Key? key}) : super(key: key);
+  const CardInvoicePayment({super.key});
   
   @override
   Widget build(BuildContext context) {
