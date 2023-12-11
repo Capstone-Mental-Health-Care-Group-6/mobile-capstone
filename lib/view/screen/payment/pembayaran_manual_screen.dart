@@ -127,13 +127,11 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                         color: Colors.yellow,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Expanded(
-                        child: Text(
-                          "Menunggu Pembayaran",
-                          textAlign: TextAlign.end,
-                          style: GoogleFonts.montserrat(
-                            fontSize: 14,
-                          ),
+                      child: Text(
+                        "Menunggu Pembayaran",
+                        textAlign: TextAlign.end,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 14,
                         ),
                       ),
                     ),
