@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RiwayatPemesananIsnone extends StatelessWidget {
-  const RiwayatPemesananIsnone({Key? key}) : super(key: key);
+  const RiwayatPemesananIsnone({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +13,7 @@ class RiwayatPemesananIsnone extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
+        surfaceTintColor: Colors.white,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(2.0),
           child: Container(

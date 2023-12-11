@@ -43,6 +43,7 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
             fontWeight: FontWeight.w700,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         if (isLoading) {
@@ -111,7 +112,7 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   image: AssetImage(
-                                                      'assets/doctorEllipse.png'),
+                                                      'assets/images/doctorEllipse.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -138,7 +139,7 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
                                                 ),
                                                 SizedBox(height: 3),
                                                 Text(
-                                                  "Tersedia",
+                                                  "Online",
                                                   style:
                                                       TextStyle(
                                                         fontSize: 14,
