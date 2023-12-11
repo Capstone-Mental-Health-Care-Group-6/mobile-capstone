@@ -90,6 +90,7 @@ class _AllArticlesPageState extends State<AllArticlesPage> {
                   title: 'Mengenal Mental Health Lebih Dalam',
                   date: '13 Oktober 2023',
                   category: 'Umum',
+                  titleParagraf: '',
                 ),
                 ArticleWidget(
                   imagePath: 'assets/images/article.png',

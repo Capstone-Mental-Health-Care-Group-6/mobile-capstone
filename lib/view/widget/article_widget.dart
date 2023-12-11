@@ -28,9 +28,8 @@ class ArticleWidget extends StatelessWidget {
           date: date,
           imagePath: imagePath,
           category: category,
-          titleParagraf: titleParagraf,
           content:
-              'Apa itu Kesehatan Mental (Mental Health)? Good mental health atau kesehatan mental yang baik adalah kondisi ketika kejiwaan dan pikiran dalam keadaan tenang dan damai. Kondisi ini memungkinkan seseorang untuk berpikir lebih jernih dan fokus saat beraktivitas. Sama halnya dengan kesehatan fisik, kesehatan mental juga penting untuk dijaga. ',
+              ' Good mental health atau kesehatan mental yang baik adalah kondisi ketika kejiwaan dan pikiran dalam keadaan tenang dan damai. Kondisi ini memungkinkan seseorang untuk berpikir lebih jernih dan fokus saat beraktivitas. Sama halnya dengan kesehatan fisik, kesehatan mental juga penting untuk dijaga. ',
         ),
       ),
     );
@@ -76,11 +75,6 @@ class ArticleWidget extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        date,
-                        style: const TextStyle(color: Colors.grey),
-                      ),
                       const SizedBox(height: 5),
                       Container(
                         padding: const EdgeInsets.all(5),
@@ -92,6 +86,11 @@ class ArticleWidget extends StatelessWidget {
                           category,
                           style: const TextStyle(color: Colors.blue),
                         ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        date,
+                        style: const TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(height: 20),
                     ],

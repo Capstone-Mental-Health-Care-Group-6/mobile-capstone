@@ -55,8 +55,48 @@ class ArticleDetailPage extends StatelessWidget {
                     style: const TextStyle(
                         fontSize: 26, fontWeight: FontWeight.w500),
                   ),
-                  const SizedBox(height: 16),
-                  Text('Ditinjau oleh Udin | $date | 7 menit'),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(2.0),
+                    ),
+                    child: Text(
+                      category,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  RichText(
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: [
+                        TextSpan(
+                            text: 'Ditinjau oleh',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300)),
+                        TextSpan(
+                            text: ' Udin',
+                            style: GoogleFonts.montserrat(
+                                fontSize: 12,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w300)),
+                        TextSpan(
+                            text: ' | $date | 7 menit',
+                            style: GoogleFonts.montserrat(
+                                fontSize: 12,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300)),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Image.asset(
                     imagePath,
@@ -64,19 +104,14 @@ class ArticleDetailPage extends StatelessWidget {
                     height: 200,
                     fit: BoxFit.cover,
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    category,
-                    style: const TextStyle(
-                      color: Colors.blue,
-                      fontSize: 16,
-                    ),
-                  ),
                   const SizedBox(height: 8),
-                  Text(
-                    content,
+                  RichText(
                     textAlign: TextAlign.justify,
-                  ),
+                    text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: _buildTextSpans(content),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -85,4 +120,34 @@ class ArticleDetailPage extends StatelessWidget {
       ),
     );
   }
+}
+
+List<TextSpan> _buildTextSpans(String content) {
+  List<TextSpan> textSpans = [];
+
+  List<String> wordsToBold = ['Mental', 'Apa itu Kesehatan MentalHealth'];
+
+  List<String> words = content.split(' ');
+
+  for (String word in words) {
+    if (wordsToBold.contains(word)) {
+      textSpans.add(
+        TextSpan(
+          text: '$word ',
+          style: GoogleFonts.montserrat(
+            color: Colors.black,
+            fontSize: 12,
+          ),
+        ),
+      );
+    } else {
+      textSpans.add(
+        TextSpan(
+            text: '$word ',
+            style: GoogleFonts.montserrat(fontSize: 12, color: Colors.black54)),
+      );
+    }
+  }
+
+  return textSpans;
 }
