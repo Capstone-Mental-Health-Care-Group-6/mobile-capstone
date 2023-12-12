@@ -36,6 +36,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 16),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Form(
         key: _formKey,

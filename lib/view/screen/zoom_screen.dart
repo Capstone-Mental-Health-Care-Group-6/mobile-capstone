@@ -17,10 +17,7 @@ class ZoomScreen extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        leading: const Icon(
-          Icons.arrow_back,
-          color: Colors.black,
-        ),
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         actions: [
           PopupMenuButton(
@@ -250,7 +247,7 @@ class ZoomScreen extends StatelessWidget {
                     height: 25.0,
                   ),
                   Text(
-                    'Konsultasi Via Zoom',
+                    'Konsultasi Via Gmeet',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
                       fontSize: 12.0,
@@ -342,7 +339,7 @@ class ZoomScreen extends StatelessWidget {
                     '(*) Jadwal, topik, dan Tanggal bersifat absolut ( Tidak dapat berubah-ubah)',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w400,
-                      fontSize: 8.0,
+                      fontSize: 9.5,
                     ),
                   )
                 ],

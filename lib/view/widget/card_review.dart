@@ -19,7 +19,7 @@ class _CardReviewState extends State<CardReview> {
       ),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             // height: 100,
             child: ListTile(
@@ -48,7 +48,6 @@ class _CardReviewState extends State<CardReview> {
                   children: [
                     SvgPicture.asset(
                       'assets/icons/star.svg',
-                      color: const Color(0xFFFFBB00),
                       width: 20,
                     ),
                     Text(

@@ -1,7 +1,7 @@
-import 'package:empathi_care/view/screen/OnBoarding/screen_dua.dart';
-import 'package:empathi_care/view/screen/OnBoarding/screen_tiga.dart';
 import 'package:empathi_care/view/screen/Profile/profile_screen.dart';
+import 'package:empathi_care/view/screen/active_package_screen.dart';
 import 'package:empathi_care/view/screen/home_screen.dart';
+import 'package:empathi_care/view/screen/konseling_screen.dart';
 import 'package:empathi_care/view/screen/list_riwayat_transaksi_screen.dart';
 import 'package:empathi_care/view/widget/navigation_bottom_bar.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
@@ -25,8 +25,8 @@ class _RoutesScreenState extends State<RoutesScreen> {
         index: navigationProvider.currentIndex,
         children: const [
           HomeScreen(),
-          ScreenDua(),
-          ScreenTiga(),
+          KonselingScreen(),
+          ActivePacketScreen(),
           ListRiwayatTransaksi(),
           ProfileScreen(),
         ],
