@@ -12,7 +12,7 @@ class RekomendasiPsikolog extends StatefulWidget {
 class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
   final _formKey = GlobalKey<FormState>();
   String dataSearch = "wow";
-  bool isLoading = true;
+  bool isLoading = true, tersedia = false;
 
   Future<void> delayLoading() async {
     Future.delayed(const Duration(seconds: 5)).then((value) {
@@ -43,6 +43,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
             fontWeight: FontWeight.w700,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         if (isLoading) {
@@ -148,7 +149,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
                                                   image: AssetImage(
-                                                      'assets/doctorEllipse.png'),
+                                                      'assets/images/doctorEllipse.png'),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -216,24 +217,56 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                               ],
                                             ),
                                             const Spacer(),
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10),
-                                                  backgroundColor: Colors.blue,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                                onPressed: () {},
-                                                child: buildShimmerText(
-                                                  "Mulai Chat",
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                )),
+                                            tersedia != true
+                                                ? ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        10),
+                                                            backgroundColor:
+                                                                Colors.white,
+                                                            side:
+                                                                const BorderSide(
+                                                                    width: 1,
+                                                                    color: Colors
+                                                                        .blue),
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                              8,
+                                                            ))),
+                                                    onPressed: () {},
+                                                    child: buildShimmerText(
+                                                      "Mulai Chat",
+                                                      fontSize: 16,
+                                                      color: Colors.blue,
+                                                    ))
+                                                : ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 10),
+                                                      backgroundColor:
+                                                          Colors.blue,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {},
+                                                    child: buildShimmerText(
+                                                      "Mulai Chat",
+                                                      fontSize: 16,
+                                                      color: Colors.white,
+                                                    )),
                                           ],
                                         ),
                                       ],
@@ -254,7 +287,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                   textAlign: TextAlign.center,
                                 ),
                                 Image.asset(
-                                  "assets/image/404.png",
+                                  "assets/images/Reminders-rafiki 1.png",
                                   width: 305,
                                   height: 305,
                                 )

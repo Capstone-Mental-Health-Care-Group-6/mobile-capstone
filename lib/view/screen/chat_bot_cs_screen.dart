@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatMenuScreen extends StatefulWidget {
-  const ChatMenuScreen({Key? key}) : super(key: key);
+  const ChatMenuScreen({super.key});
 
   @override
   State<ChatMenuScreen> createState() => _ChatMenuScreenState();
@@ -36,6 +36,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           'HelpBot',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        surfaceTintColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -79,23 +80,16 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                         alignment: message.isUser
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!message.isUser) {
-                              provider.handleMenuButtonPress(index);
-                            }
-                          },
-                          child: message.isUser
-                              ? _buildUserMessageContainer(message)
-                              : (message.text.contains("Selamat") ||
-                                      message.text.contains("1") ||
-                                      message.text.startsWith('Explanation') ||
-                                      message.text.contains("Bagaimanakah") ||
-                                      message.text.contains("Terimakasih"))
-                                  ? _buildBotMessageContainer(message)
-                                  : _buildMenuResponseButton(
-                                      message, index, buttonKey, provider),
-                        ),
+                        child: message.isUser
+                            ? _buildUserMessageContainer(message)
+                            : (message.text.contains("Selamat") ||
+                                    message.text.contains("1") ||
+                                    message.text.startsWith('Explanation') ||
+                                    message.text.contains("Bagaimanakah") ||
+                                    message.text.contains("Terimakasih"))
+                                ? _buildBotMessageContainer(message)
+                                : _buildMenuResponseButton(
+                                    message, index, buttonKey, provider),
                       );
                     },
                   );

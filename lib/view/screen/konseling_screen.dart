@@ -1,6 +1,7 @@
 import 'package:empathi_care/model/konseling_model.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
+import 'package:empathi_care/view/screen/paket_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
           style: TextStyle(
               fontWeight: FontWeight.w900, fontFamily: MyFont.fontMontserrat),
         ),
+        surfaceTintColor: Colors.white,
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1.5),
@@ -360,7 +362,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
                       padding: const EdgeInsets.all(10),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pop();
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> const PaketScreen()));
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
