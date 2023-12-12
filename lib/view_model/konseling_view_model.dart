@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class KonselingProvider extends ChangeNotifier {
   final KonsellingApiService _apiService = KonsellingApiService();
-  KonselingData _topikKonseling = KonselingData(); 
+  KonselingData _topikKonseling = KonselingData();
 
   KonselingData get topikKonseling => _topikKonseling;
 
@@ -34,5 +34,14 @@ class KonselingProvider extends ChangeNotifier {
       case 6:
         return "Jika ada keterlambatan pesan atau notifikasi yang tidak muncul, coba tutup sementara aplikasi Riliv dan buka kembali.";
     }
+  }
+
+  String? _selectedOption;
+
+  String? get selectedOption => _selectedOption;
+
+  void setSelectedOption(String value) {
+    _selectedOption = value;
+    notifyListeners();
   }
 }

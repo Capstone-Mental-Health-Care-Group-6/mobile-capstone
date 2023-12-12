@@ -1,5 +1,6 @@
 import 'package:empathi_care/model/konseling_model.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view/screen/paket_screen.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,6 @@ class _KonselingScreenState extends State<KonselingScreen> {
         .fetchTopikKonseling(token);
   }
 
-  String? selectedOption;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -259,65 +259,69 @@ class _KonselingScreenState extends State<KonselingScreen> {
   void _showOptionsDialog(BuildContext context) {
     final konselingProvider =
         Provider.of<KonselingProvider>(context, listen: false);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          insetPadding: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(13),
-          ),
-          backgroundColor: Colors.transparent,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
+
+    void showOptionsDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            insetPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(13),
             ),
-            padding: const EdgeInsets.only(left: 8),
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, right: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.zero,
-                          child: Icon(Icons.close),
-                        ),
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              padding: const EdgeInsets.only(left: 8),
+              width: MediaQuery.of(context).size.width * 0.9,
+              child:
+                  Consumer<KonselingProvider>(builder: (context, value, child) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.zero,
+                              child: Icon(Icons.close),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-                  child: buildPilihTopik(
-                    "Pilih Topik",
-                    "Permasalahan apa yang ingin anda diskusikan ?",
-                    "assets/images/Select-rafiki 2.png",
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 10, right: 15),
-                  child: Divider(
-                    thickness: 2.3,
-                    color: Color(0xff6C8AF7),
-                  ),
-                ),
-                SizedBox(
-                  height: 205,
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemExtent: 35,
-                    children:
-                        konselingProvider.topikKonseling.data?.map((datum) {
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                      child: buildPilihTopik(
+                        "Pilih Topik",
+                        "Permasalahan apa yang ingin anda diskusikan ?",
+                        "assets/images/Select-rafiki 2.png",
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10, right: 15),
+                      child: Divider(
+                        thickness: 2.3,
+                        color: Color(0xff6C8AF7),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 205,
+                      child: ListView(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemExtent: 35,
+                        children: konselingProvider.topikKonseling.data
+                                ?.map((datum) {
                               return ListTile(
                                 contentPadding: EdgeInsets.zero,
                                 title: Row(
@@ -326,15 +330,16 @@ class _KonselingScreenState extends State<KonselingScreen> {
                                       scale: 1.19,
                                       child: Radio<String>(
                                         value: datum.name ?? "",
-                                        groupValue: selectedOption,
+                                        groupValue:
+                                            konselingProvider.selectedOption,
                                         onChanged: (String? value) {
-                                          setState(() {
-                                            selectedOption = value;
-                                          });
+                                          konselingProvider
+                                              .setSelectedOption(value!);
                                         },
                                         activeColor: Colors.black,
                                         materialTapTargetSize:
                                             MaterialTapTargetSize.shrinkWrap,
+                                        toggleable: true,
                                       ),
                                     ),
                                     const SizedBox(width: 3),
@@ -350,47 +355,55 @@ class _KonselingScreenState extends State<KonselingScreen> {
                               );
                             }).toList() ??
                             [],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
-                          backgroundColor: const Color(0xFF0085FF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "Pilih Topik",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: MyFont.fontMontserrat,
-                          ),
-                        ),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const PaketScreen()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              backgroundColor: const Color(0xFF0085FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text(
+                              "Pilih Topik",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
-                ),
-              ],
+                );
+              }),
             ),
-          ),
-        );
-      },
-    );
+          );
+        },
+      );
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showOptionsDialog();
+    });
   }
 
   void _showAlurKonseling(BuildContext context) {
