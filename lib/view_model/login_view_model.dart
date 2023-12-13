@@ -11,6 +11,7 @@ class LoginViewModel extends ChangeNotifier {
   final loginFormKey = GlobalKey<FormState>();
   Login? login;
   MyState myState = MyState.initial;
+  late String message;
 
   Future loginAuth() async {
     try {
@@ -20,6 +21,8 @@ class LoginViewModel extends ChangeNotifier {
       login = await loginService.login(
           emailController.text, passwordController.text);
       myState = MyState.loaded;
+      message = loginService.message;
+
       notifyListeners();
     } catch (e) {
       if (e is DioException) {

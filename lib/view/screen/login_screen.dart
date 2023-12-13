@@ -40,10 +40,15 @@ class _LoginScreenState extends State<LoginScreen> {
         try {
           await loginViewModel.loginAuth();
           if (mounted) {
+            final snackBar = SnackBar(
+              content: Text(loginViewModel.message),
+              backgroundColor: const Color(0XFF0085FF),
+            );
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const RoutesScreen()),
                 (route) => false);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
             navigationProvider.setIndex(0);
           }
         } on DioException catch (e) {
