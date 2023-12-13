@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:empathi_care/model/mystate_model.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
@@ -191,24 +192,30 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
-                child: Consumer<LoginViewModel>(
-                  builder: (context, loginViewModel, _) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(370, 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          backgroundColor: const Color(0XFF0085FF),
-                          foregroundColor: Colors.white),
-                      onPressed: handleLogin,
-                      child: Text(
-                        'Login',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700, fontSize: 16),
-                      ),
-                    );
-                  },
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(370, 40),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: const Color(0XFF0085FF),
+                      foregroundColor: Colors.white),
+                  onPressed: handleLogin,
+                  child: Consumer<LoginViewModel>(
+                    builder:
+                        (context, loginViewModel, circularProgressIndicator) {
+                      if (loginViewModel.myState == MyState.loading) {
+                        return circularProgressIndicator!;
+                      } else {
+                        return Text(
+                          'Login',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700, fontSize: 16),
+                        );
+                      }
+                    },
+                    child: const CircularProgressIndicator(),
+                  ),
                 ),
               ),
               Padding(
