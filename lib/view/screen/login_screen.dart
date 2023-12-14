@@ -9,6 +9,7 @@ import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +21,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
   late LoginViewModel loginViewModel;
+  late SharedPreferences loginData;
+  late bool user;
 
   @override
   void initState() {
@@ -28,7 +31,20 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordProvider.visiblePassword = true;
     loginViewModel.emailController.clear();
     loginViewModel.passwordController.clear();
+    checkLogin(context);
     super.initState();
+  }
+
+  void checkLogin(context) async {
+    loginData = await SharedPreferences.getInstance();
+    user = loginData.getBool('login') ?? true;
+
+    if (user == false) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const RoutesScreen()),
+          (route) => false);
+    }
   }
 
   @override
@@ -40,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         try {
           await loginViewModel.loginAuth();
           if (mounted) {
+            loginData.setBool('login', false);
             final snackBar = SnackBar(
               content: Text(loginViewModel.message),
               backgroundColor: const Color(0XFF0085FF),

@@ -6,11 +6,19 @@ import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view/screen/chat_bot_cs_screen.dart';
 import 'package:empathi_care/view/widget/DeleteLogOutProfile/delete_widget.dart';
 import 'package:empathi_care/view/widget/DeleteLogOutProfile/logout_widget.dart';
+import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  late LoginViewModel loginViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +100,11 @@ class ProfileScreen extends StatelessWidget {
                         top: 10, right: 10, left: 10, bottom: 8),
                     child: GestureDetector(
                       onTap: () {
-                        logOutWidget(context);
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const LogOutWidget();
+                            });
                       },
                       child: Container(
                         decoration:
