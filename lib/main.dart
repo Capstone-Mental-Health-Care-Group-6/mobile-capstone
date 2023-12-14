@@ -1,10 +1,10 @@
-import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
+import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
-import 'package:empathi_care/view/screen/splash_screen.dart';
+
 import 'package:empathi_care/view_model/filling_provider.dart';
-import 'package:empathi_care/view_model/logreg_provider.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
+import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -25,19 +25,17 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-              create: (BuildContext context) => LogRegProvider()),
-          ChangeNotifierProvider(
               create: (BuildContext context) =>
                   CountDownPaymentSuccessProvider()),
           ChangeNotifierProvider<NavigationProvider>(
             create: (create) => NavigationProvider(),
-          )
+          ),
+          ChangeNotifierProvider(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  CountDownPaymentSuccessProvider()),
-          ChangeNotifierProvider(
               create: (BuildContext context) => ChatBotCSProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => RiwayatTransaksiProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
@@ -47,11 +45,11 @@ class MyApp extends StatelessWidget {
               colorScheme:
                   ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
               useMaterial3: true,
+              fontFamily: GoogleFonts.montserrat().fontFamily,
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all(
-                    TextStyle(
-                        fontFamily: GoogleFonts.montserrat().fontFamily,
+                    const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700),
                   ),

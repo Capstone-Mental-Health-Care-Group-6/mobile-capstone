@@ -1,73 +1,91 @@
+import 'package:empathi_care/model/riwayat_transaksi_model.dart';
+import 'package:empathi_care/utils/constant/currency.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ListRiwayatTransaksi extends StatelessWidget {
+class ListRiwayatTransaksi extends StatefulWidget {
   const ListRiwayatTransaksi({super.key});
 
   @override
+  State<ListRiwayatTransaksi> createState() => _ListRiwayatTransaksiState();
+}
+
+class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<RiwayatTransaksiProvider>(context, listen: false)
+        .getData(token);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final riwayatTransaksiProvider =
+        Provider.of<RiwayatTransaksiProvider>(context, listen: false);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Riwayat Pemesanan",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              fontFamily: MyFont.fontMontserrat),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.5),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 185, 185, 185),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  spreadRadius: 0.2,
-                  blurRadius: 1,
-                  offset: const Offset(0, 1),
-                ),
-              ],
+        appBar: AppBar(
+          title: const Text(
+            "Riwayat Pemesanan",
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                fontFamily: MyFont.fontMontserrat),
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(1.5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 185, 185, 185),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    spreadRadius: 0.2,
+                    blurRadius: 1,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
+              ),
+              height: 1,
             ),
-            height: 1,
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-          child: Column(
-        children: [
-          buildListDokter(
-              "assets/images/Dokter 1.png",
-              "Rangga S.Psi., M.Psi",
-              "Rp.50.000",
-              getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30)),
-              true),
-          buildListDokter(
-              "assets/images/Dokter 2.png",
-              "Melani S.Psi., M.Psi",
-              "Rp.40.000",
-              getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00)),
-              true),
-          buildListDokter(
-              "assets/images/Dokter 3.png",
-              "Seto Mulyadi S.Psi., M.Psi",
-              "Rp.50.000",
-              getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30)),
-              true),
-          buildListDokter(
-              "assets/images/Dokter 4.png",
-              "Roslina Vearuli S.Psi., M.Psi",
-              "Rp.50.000",
-              getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)),
-              false)
-        ],
-      )),
-    );
+        body: FutureBuilder<RiwayatTransaksi>(
+          future: riwayatTransaksiProvider.getData(token),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              final riwayatTransaksi = snapshot.data!;
+
+              return ListView.builder(
+                itemCount: riwayatTransaksi.data?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return buildListDokter(
+                      riwayatTransaksi.data![index], context);
+                },
+              );
+            }
+          },
+        ));
   }
 
   Widget buildListDokter(
-      String img, String name, String harga, String tgl, bool berirating) {
+      DataRiwayatTransaksi transaction, BuildContext context) {
+    final tgl = transaction.createdAt != null
+        ? getFormattedDateRiwayat(transaction.createdAt!)
+        : '';
+
+    final img = transaction.patientAvatar ?? '';
+    final name = transaction.doctorName ?? '';
+    final harga = formatRupiah(transaction.priceResult as double);
+    final berirating = transaction.doctorStarRating! > 0;
+
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(
@@ -81,12 +99,9 @@ class ListRiwayatTransaksi extends StatelessWidget {
                     fontWeight: FontWeight.w600)),
           ),
           ListTile(
-            leading: ClipOval(
-              child: CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.transparent,
-                child: Image.asset(img),
-              ),
+            leading: CircleAvatar(
+              radius: 30,
+              backgroundImage: NetworkImage(img),
             ),
             title: Column(
               mainAxisAlignment: MainAxisAlignment.start,
