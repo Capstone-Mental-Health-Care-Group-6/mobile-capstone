@@ -1,5 +1,7 @@
+import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
+import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
-import 'package:empathi_care/view_model/logreg_provider.dart';
+import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,14 +14,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late LogRegProvider logRegProvider;
+  late PasswordProvider passwordProvider;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   void initState() {
-    logRegProvider = Provider.of<LogRegProvider>(context, listen: false);
-    logRegProvider.visiblePassword = true;
+    passwordProvider = Provider.of<PasswordProvider>(context, listen: false);
+    passwordProvider.visiblePassword = true;
     emailController.clear();
     passwordController.clear();
     super.initState();
@@ -101,11 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 13, right: 20),
-                child: Consumer<LogRegProvider>(
-                  builder: (context, loginProvider, _) {
+                child: Consumer<PasswordProvider>(
+                  builder: (context, passwordProvider, _) {
                     return TextFormField(
                       controller: passwordController,
-                      obscureText: loginProvider.visiblePassword,
+                      obscureText: passwordProvider.visiblePassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
                           contentPadding:
@@ -118,11 +120,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Icon(Icons.lock_outline),
                           ),
                           suffixIcon: IconButton(
-                            icon: loginProvider.visiblePassword
+                            icon: passwordProvider.visiblePassword
                                 ? const Icon(Icons.visibility)
                                 : const Icon(Icons.visibility_off_outlined),
                             onPressed: () {
-                              loginProvider.changeVisible();
+                              passwordProvider.changeVisible();
                             },
                           ),
                           label: const Text('Password')),
@@ -151,7 +153,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   onTap: () {
-                    Feedback.forTap(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const ConfirmationEmailScreen()));
                   },
                 ),
               ),
@@ -165,8 +168,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: const Color(0XFF0085FF),
                       foregroundColor: Colors.white),
                   onPressed: () {
-                    // Navigator.of(context)
-                    //     .push(MaterialPageRoute(builder: (_) => Dummy()));
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const RoutesScreen()),
+                      (route) => false,
+                    );
                   },
                   child: Text(
                     'Login',

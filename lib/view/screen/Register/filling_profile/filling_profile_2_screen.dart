@@ -12,7 +12,7 @@ class FillingProfile2 extends StatefulWidget {
 }
 
 class _FillingProfile1State extends State<FillingProfile2> {
-  final namaLengkap = TextEditingController();
+  final nomorPonsel = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -50,8 +50,8 @@ class _FillingProfile1State extends State<FillingProfile2> {
             Padding(
               padding: const EdgeInsets.only(left: 25, top: 20, right: 25),
               child: TextFormField(
-                controller: namaLengkap,
-                keyboardType: TextInputType.emailAddress,
+                controller: nomorPonsel,
+                keyboardType: TextInputType.phone,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],
