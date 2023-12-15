@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InstantWidget extends StatefulWidget {
-  const InstantWidget({Key? key}) : super(key: key);
+  const InstantWidget({super.key});
 
   @override
   State<InstantWidget> createState() => _InstantWidgetState();
@@ -283,7 +283,9 @@ class _InstantWidgetState extends State<InstantWidget> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              
+                            },
                             child: Text(
                               listPaket[index]['textButton']!,
                               style: GoogleFonts.montserrat(

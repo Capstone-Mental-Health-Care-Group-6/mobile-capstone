@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:empathi_care/view/screen/payment_method_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -13,11 +15,11 @@ class ProfilePsikologScreen extends StatefulWidget {
   final DateTime? dateKonseling;
   final int? session;
   const ProfilePsikologScreen({
-    Key? key,
+    super.key,
     required this.isInstan,
     this.dateKonseling,
     this.session,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfilePsikologScreen> createState() => _ProfilePsikologScreenState();
@@ -35,10 +37,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
   List<String> selectedDate = [];
   bool isInstan = false, isLoading = true;
   Map<String, List> scheduleList = {};
-  List<String> listKeahlian = [
-    "Keluarga",
-    "Percintaan",
-    "Kendali Emosi",
+ List<Map<String, dynamic>> listKeahlian = [
+    {"keahlian": "Keluarga", "icon": "assets/icons/home_icon.svg"},
+    {"keahlian": "Percintaan", "icon": "assets/icons/love_icon.svg"},
+    {"keahlian": "Kendali Emosi", "icon": "assets/icons/flame_icon.svg"},
   ];
   List<Map<String, dynamic>> listReview = [
     {
@@ -129,6 +131,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
           "Profile Psikolog",
           style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(
         builder: (context) {
@@ -148,7 +151,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                           height: 140,
                           color: const Color(0xffCCE7FF),
                           child: const Align(
-                            child: Image(image: AssetImage("assets/doctors.png")),
+                            child: Image(image: AssetImage("assets/images/doctors.png")),
                           ),
                         ),
                         Padding(
@@ -293,17 +296,19 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
                                 itemCount: listKeahlian.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffCCE7FF),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      listKeahlian[index].toString(),
-                                      style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
-                                    )),
-                                  );
+                                  return Center(
+                                      child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        listKeahlian[index]['icon'],
+                                      ),
+                                      const SizedBox(width: 6),
+                                      Text(
+                                        listKeahlian[index]['keahlian'].toString(),
+                                        style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ));
                                 },
                               ),
                               const SizedBox(height: 12),
@@ -340,7 +345,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                         CarouselSlider(
                             carouselController: _carouselController,
                             options: CarouselOptions(
-                              aspectRatio: 3,
+                              aspectRatio: 2.5,
                               scrollPhysics: const BouncingScrollPhysics(),
                               initialPage: 0,
                               enableInfiniteScroll: true,
@@ -381,7 +386,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                               decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
-                                                  image: AssetImage("assets/images/image_psikolog.png"),
+                                                  image: AssetImage("assets/images/doctors.png"),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -417,7 +422,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                           element['review'],
                                           textAlign: TextAlign.justify,
                                           style: GoogleFonts.montserrat(fontSize: 12),
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
+                                        
                                       ],
                                     ),
                                   ),
@@ -429,7 +437,9 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 19.5),
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => const PaymentMethodScreen()));
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
                           fixedSize: Size(MediaQuery.of(context).size.width, 40),
@@ -439,7 +449,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                         ),
                         child: Text(
                           "Mulai Chat",
-                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                         )),
                   )
                 ],
@@ -1205,7 +1215,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: selectedDate[indexList] == "" ? "mm/dd/yyyy" : selectedDate[indexList].toString(),
+                hintText: selectedDate[indexList] == "" ? "dd/mm/yyyy" : selectedDate[indexList].toString(),
                 suffixIcon: Icon(
                   MdiIcons.calendar,
                   color: Colors.blue,

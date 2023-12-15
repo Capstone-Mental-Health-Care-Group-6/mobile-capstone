@@ -307,7 +307,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                     )
                                   : listPaket[index]['textButton'] ==
                                           'Mulai Chat'
-                                      ? Navigator.pop(context)
+                                      ? Navigator.push(context, MaterialPageRoute(builder: (_)=> const ZoomScreen()))
                                       : const SizedBox();
                             },
                             child: Text(

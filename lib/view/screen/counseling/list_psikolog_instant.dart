@@ -1,5 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog_instant.dart';
+import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +19,15 @@ class ListPsikologInstant extends StatefulWidget {
 class _ListPsikologInstantState extends State<ListPsikologInstant> {
   bool tersedia = false;
   late PsikologProvider provider;
+  bool isLoading = true, tersedia = true;
+
+  Future<void> delayLoading() async {
+    Future.delayed(const Duration(seconds: 5)).then((value) {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   void initState() {
@@ -42,6 +52,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
             fontWeight: FontWeight.w700,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         return Consumer<PsikologProvider>(builder: (context, value, child) {
@@ -214,12 +225,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (_) =>
-                                          //             const ProfilePsikologScreen(
-                                          //                 isInstan: true)));
+                                         Navigator.push(context, MaterialPageRoute(builder: (_)=>const ProfilePsikologScreen(isInstan: true)));
                                         },
                                         child: Text(
                                           "Mulai Chat",

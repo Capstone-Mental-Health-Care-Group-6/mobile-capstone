@@ -48,9 +48,10 @@ dependencies:
   animate_do: ^3.1.2
   material_design_icons_flutter: ^7.0.7296
   file_picker: ^6.1.1
+  animation_search_bar: ^0.0.10
 
 dev_dependencies:
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
 

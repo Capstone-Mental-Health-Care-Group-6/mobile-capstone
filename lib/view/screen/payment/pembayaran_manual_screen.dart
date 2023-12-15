@@ -27,6 +27,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: ListView(
         children: [
@@ -126,13 +127,11 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                         color: Colors.yellow,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Expanded(
-                        child: Text(
-                          "Menunggu Pembayaran",
-                          textAlign: TextAlign.end,
-                          style: GoogleFonts.montserrat(
-                            fontSize: 14,
-                          ),
+                      child: Text(
+                        "Menunggu Pembayaran",
+                        textAlign: TextAlign.end,
+                        style: GoogleFonts.montserrat(
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -195,7 +194,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SvgPicture.asset(
-                              'assets/download.svg',
+                              'assets/icons/download.svg',
                               width: 34.0,
                               height: 34.0,
                             ),

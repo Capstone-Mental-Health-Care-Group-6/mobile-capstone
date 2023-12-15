@@ -31,6 +31,7 @@ class _EditProfileState extends State<EditProfile> {
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 16),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Form(
         key: _formKey,

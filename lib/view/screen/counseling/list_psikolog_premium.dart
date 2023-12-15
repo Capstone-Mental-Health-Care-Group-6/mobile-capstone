@@ -1,6 +1,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog.dart';
+import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
@@ -218,12 +219,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            // Navigator.push(
-                                            //     context,
-                                            //     MaterialPageRoute(
-                                            //         builder: (_) =>
-                                            //             const ProfilePsikologScreen(
-                                            //                 isInstan: true)));
+                                            Navigator.push(context, MaterialPageRoute(builder: (_)=> const ProfilePsikologScreen(isInstan: false, session: 2)));
                                           },
                                           child: Text(
                                             "Mulai Chat",
@@ -566,12 +562,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                             8,
                                           ))),
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (_) =>
-                                        //             const ProfilePsikologScreen(
-                                        //                 isInstan: false)));
+                                        
                                       },
                                       child: SizedBox(
                                         width: getTextWidth(
@@ -632,11 +623,6 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                           ),
                                         ),
                                       )
-                                      // child: buildShimmerText(
-                                      //   "Mulai Chat",
-                                      //   fontSize: 16,
-                                      //   color: Colors.white,
-                                      // )
                                       ),
                             ],
                           ),
@@ -662,39 +648,4 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
 
     return textPainter.width;
   }
-
-  // Widget buildShimmerText(
-  //   String text, {
-  //   double? fontSize,
-  //   FontWeight? fontWeight,
-  //   Color? color,
-  // }) {
-  //   return isLoading
-  //       ? SizedBox(
-  //           width: getTextWidth(
-  //               text, TextStyle(fontSize: fontSize, fontWeight: fontWeight)),
-  //           height: 10,
-  //           child: Shimmer.fromColors(
-  //             baseColor: const Color(0xffDBDBDB),
-  //             highlightColor: const Color(0xffDBDBDB),
-  //             child: Container(
-  //               decoration: BoxDecoration(
-  //                 color: Colors.grey.withOpacity(0.5),
-  //                 borderRadius: BorderRadius.circular(
-  //                   20.0,
-  //                 ),
-  //                 shape: BoxShape.rectangle,
-  //               ),
-  //             ),
-  //           ),
-  //         )
-  //       : Text(
-  //           text,
-  //           style: TextStyle(
-  //             fontSize: fontSize,
-  //             fontWeight: fontWeight,
-  //             color: color,
-  //           ),
-  //         );
-  // }
 }

@@ -1,24 +1,24 @@
-import 'package:empathi_care/model/chat_bot_cs_model.dart';
+import 'package:empathi_care/model/chat_bot_ai_model.dart';
 import 'package:empathi_care/utils/constant/date.dart';
-import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
+import 'package:empathi_care/view_model/chat_bot_ai_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ChatMenuScreen extends StatefulWidget {
-  const ChatMenuScreen({super.key});
+class ChatAIScreen extends StatefulWidget {
+  const ChatAIScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChatMenuScreen> createState() => _ChatMenuScreenState();
+  State<ChatAIScreen> createState() => _ChatAIScreenState();
 }
 
-class _ChatMenuScreenState extends State<ChatMenuScreen> {
-  late ChatBotCSProvider _chatBotProvider;
+class _ChatAIScreenState extends State<ChatAIScreen> {
+  late ChatBotAIProvider _chatBotProvider;
 
   @override
   void initState() {
     super.initState();
 
-    _chatBotProvider = Provider.of<ChatBotCSProvider>(context, listen: false);
+    _chatBotProvider = Provider.of<ChatBotAIProvider>(context, listen: false);
     _chatBotProvider.addInitialMessages();
   }
 
@@ -36,7 +36,6 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           'HelpBot',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        surfaceTintColor: Colors.white,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -68,28 +67,37 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           children: [
             Text('$formattedDate $formattedHour'),
             Expanded(
-              child: Consumer<ChatBotCSProvider>(
+              child: Consumer<ChatBotAIProvider>(
                 builder: (context, provider, child) {
                   return ListView.builder(
-                    itemCount: provider.chatBotCs.length,
+                    itemCount: provider.chatBotAi.length,
                     itemBuilder: (context, index) {
-                      final message = provider.chatBotCs[index];
+                      final message = provider.chatBotAi[index];
                       var buttonKey = index;
 
                       return Align(
                         alignment: message.isUser
                             ? Alignment.centerRight
                             : Alignment.centerLeft,
-                        child: message.isUser
-                            ? _buildUserMessageContainer(message)
-                            : (message.text.contains("Selamat") ||
-                                    message.text.contains("1") ||
-                                    message.text.startsWith('Explanation') ||
-                                    message.text.contains("Bagaimanakah") ||
-                                    message.text.contains("Terimakasih"))
-                                ? _buildBotMessageContainer(message)
-                                : _buildMenuResponseButton(
-                                    message, index, buttonKey, provider),
+                        child: GestureDetector(
+                          onTap: () {
+                            if (!message.isUser) {
+                              provider.handleMenuButtonPress(index);
+                            }
+                          },
+                          child: message.isUser
+                              ? _buildUserMessageContainer(message)
+                              : (message.text.contains("Selamat") ||
+                                      message.text.contains("Manusia") ||
+                                      message.text.contains("Uninstall") ||
+                                      message.text.contains("Ibadah") ||
+                                      message.text.contains('keluarga') ||
+                                      message.text.contains("Bagaimanakah") ||
+                                      message.text.contains("Terimakasih"))
+                                  ? _buildBotMessageContainer(message)
+                                  : _buildMenuResponseButton(
+                                      message, index, buttonKey, provider),
+                        ),
                       );
                     },
                   );
@@ -102,7 +110,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
     );
   }
 
-  Widget _buildUserMessageContainer(ChatBotCS message) {
+  Widget _buildUserMessageContainer(ChatBotAI message) {
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: Row(
@@ -133,7 +141,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
     );
   }
 
-  Widget _buildBotMessageContainer(ChatBotCS message) {
+  Widget _buildBotMessageContainer(ChatBotAI message) {
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: Row(
@@ -164,10 +172,10 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
   }
 
   Widget _buildMenuResponseButton(
-    ChatBotCS message,
+    ChatBotAI message,
     int index,
     int buttonKey,
-    ChatBotCSProvider provider,
+    ChatBotAIProvider provider,
   ) {
     bool processingTap = false;
 

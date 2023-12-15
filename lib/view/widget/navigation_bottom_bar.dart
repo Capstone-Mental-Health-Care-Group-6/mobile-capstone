@@ -56,7 +56,7 @@ Widget buildBottomNavigationBar(BuildContext context) {
                   ? const ColorFilter.mode(Color(0xff0085FF), BlendMode.srcIn)
                   : const ColorFilter.mode(Colors.black, BlendMode.srcIn),
             )),
-        label: 'Chating',
+        label: 'Konseling',
       ),
       BottomNavigationBarItem(
         icon: Padding(

@@ -20,6 +20,7 @@ class _FillingProfile1State extends State<FillingProfile3> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 13),

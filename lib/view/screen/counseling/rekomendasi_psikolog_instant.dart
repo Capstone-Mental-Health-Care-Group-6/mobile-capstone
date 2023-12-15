@@ -529,39 +529,4 @@ class _RekomendasiPsikologInstantState
 
     return textPainter.width;
   }
-
-  // Widget buildShimmerText(
-  //   String text, {
-  //   double? fontSize,
-  //   FontWeight? fontWeight,
-  //   Color? color,
-  // }) {
-  //   return isLoading
-  //       ? SizedBox(
-  //           width: getTextWidth(
-  //               text, TextStyle(fontSize: fontSize, fontWeight: fontWeight)),
-  //           height: 10,
-  //           child: Shimmer.fromColors(
-  //             baseColor: const Color(0xffDBDBDB),
-  //             highlightColor: const Color(0xffDBDBDB),
-  //             child: Container(
-  //               decoration: BoxDecoration(
-  //                 color: Colors.grey.withOpacity(0.5),
-  //                 borderRadius: BorderRadius.circular(
-  //                   20.0,
-  //                 ),
-  //                 shape: BoxShape.rectangle,
-  //               ),
-  //             ),
-  //           ),
-  //         )
-  //       : Text(
-  //           text,
-  //           style: TextStyle(
-  //             fontSize: fontSize,
-  //             fontWeight: fontWeight,
-  //             color: color,
-  //           ),
-  //         );
-  // }
 }
