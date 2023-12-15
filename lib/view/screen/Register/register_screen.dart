@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/Register/verification_screen.dart';
+import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_1_screen.dart';
 import 'package:empathi_care/view/screen/login_screen.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
@@ -222,9 +222,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         );
                       } else {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => VerificationScreen(
-                                  email: emailController.text,
-                                )));
+                            builder: (_) => FillingProfile1()));
                       }
                     }
                   },

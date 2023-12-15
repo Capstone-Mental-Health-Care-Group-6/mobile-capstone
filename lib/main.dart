@@ -4,6 +4,7 @@ import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view_model/enabled_button_provider.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
@@ -42,7 +43,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => LoginViewModel()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => ChangePasswordViewModel())
+              create: (BuildContext context) => ChangePasswordViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => GetPatientByIdViewModel()),
         ],
         builder: (context, child) {
           return MaterialApp(

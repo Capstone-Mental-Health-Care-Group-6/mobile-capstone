@@ -207,8 +207,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const ConfirmationEmailScreen()));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (_) => const ConfirmationEmailScreen()),
+                        (route) => false);
                   },
                 ),
               ),
