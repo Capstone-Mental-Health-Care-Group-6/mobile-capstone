@@ -64,7 +64,6 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               final riwayatTransaksi = snapshot.data!;
-              print(riwayatTransaksi.message!.contains("data"));
               return riwayatTransaksi.message!.contains("data")? 
                const RiwayatPemesananIsnone() :ListView.builder(
                 itemCount: riwayatTransaksi.data?.length ?? 0,
