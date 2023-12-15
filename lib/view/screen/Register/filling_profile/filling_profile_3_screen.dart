@@ -126,7 +126,6 @@ class _FillingProfile1State extends State<FillingProfile3> {
                           foregroundColor: Colors.white),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          print('~~~~~here${selectDate.toString()}');
                           registerViewModel.birthDate = selectDate;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => const FillingProfile4()));
