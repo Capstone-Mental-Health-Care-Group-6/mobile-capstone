@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CountDown extends StatefulWidget {
-  const CountDown({Key? key}) : super(key: key);
+  const CountDown({super.key});
 
   @override
   State<CountDown> createState() => _CountDownState();
@@ -29,11 +29,27 @@ class _CountDownState extends State<CountDown> {
         Container(
           color: ColorBase.primaryColor,
           width: MediaQuery.of(context).size.width,
-          height: 120,
+          height: 125,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+
             children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: Center(
+                  child: Text(
+                    'Segera lakukan pembayaran dalam waktu',
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.black,
+                      decoration: TextDecoration.none,
+                      fontFamily: MyFont.fontMontserrat,
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+              ),
               const SizedBox(height: 10),
               const CountdownDisplay(),
               const SizedBox(height: 10),
@@ -43,10 +59,11 @@ class _CountDownState extends State<CountDown> {
                   child: Text(
                     'Sebelum ${countdownProvider.formattedDate}, ${countdownProvider.formattedStartTime} WIB',
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 13,
                       color: Colors.black,
                       decoration: TextDecoration.none,
                       fontFamily: MyFont.fontMontserrat,
+                      fontWeight: FontWeight.w500
                     ),
                   ),
                 ),
@@ -60,7 +77,7 @@ class _CountDownState extends State<CountDown> {
 }
 
 class CountdownDisplay extends StatelessWidget {
-  const CountdownDisplay({Key? key}) : super(key: key);
+  const CountdownDisplay({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +97,7 @@ class CountdownDisplay extends StatelessWidget {
                   text: '${timeLeft.inMinutes.remainder(60)}',
                   style: const TextStyle(
                     fontSize: 25,
+                    color: Colors.black,
                     fontFamily: MyFont.fontMontserrat,
                   ),
                 ),
@@ -87,6 +105,7 @@ class CountdownDisplay extends StatelessWidget {
                   text: ' Menit  ',
                   style: TextStyle(
                     fontSize: 15,
+                    color: Colors.black,
                     fontFamily: MyFont.fontMontserrat,
                   ),
                 ),
@@ -94,6 +113,7 @@ class CountdownDisplay extends StatelessWidget {
                   text: '${timeLeft.inSeconds.remainder(60)}',
                   style: const TextStyle(
                     fontSize: 25,
+                    color: Colors.black,
                     fontFamily: MyFont.fontMontserrat,
                   ),
                 ),
@@ -101,6 +121,7 @@ class CountdownDisplay extends StatelessWidget {
                   text: ' detik',
                   style: TextStyle(
                     fontSize: 15,
+                    color: Colors.black,
                     fontFamily: MyFont.fontMontserrat,
                   ),
                 ),

@@ -11,14 +11,14 @@ class CardKonselingWidget extends StatefulWidget {
   VoidCallback? onPressed;
 
   CardKonselingWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.tanggal,
     required this.jamMulai,
     required this.jamSelsai,
     required this.selsai,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   State<CardKonselingWidget> createState() => _CardKonselingWidgetState();

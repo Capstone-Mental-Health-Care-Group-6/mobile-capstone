@@ -1,6 +1,7 @@
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
+import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -168,10 +170,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor: const Color(0XFF0085FF),
                       foregroundColor: Colors.white),
                   onPressed: () {
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => const RoutesScreen()),
-                      (route) => false,
-                    );
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const RoutesScreen()), (route) => false);
+                      navigationProvider.setIndex(0);
                   },
                   child: Text(
                     'Login',

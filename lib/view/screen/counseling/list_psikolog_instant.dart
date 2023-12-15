@@ -1,20 +1,20 @@
 import 'package:dotted_line/dotted_line.dart';
-import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog.dart';
+import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog_instant.dart';
 import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ListPsikologPremium extends StatefulWidget {
-  const ListPsikologPremium({super.key});
+class ListPsikologInstant extends StatefulWidget {
+  const ListPsikologInstant({super.key});
 
   @override
-  State<ListPsikologPremium> createState() => _ListPsikologPremiumState();
+  State<ListPsikologInstant> createState() => _ListPsikologInstantState();
 }
 
-class _ListPsikologPremiumState extends State<ListPsikologPremium> {
-  bool isLoading = true, tersedia = false;
+class _ListPsikologInstantState extends State<ListPsikologInstant> {
+  bool isLoading = true, tersedia = true;
 
   Future<void> delayLoading() async {
     Future.delayed(const Duration(seconds: 5)).then((value) {
@@ -34,18 +34,18 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 5,
-          shadowColor: Colors.black,
-          title: Text(
-            "Psikolog",
-            style: GoogleFonts.montserrat(
-              fontSize: 16.0,
-              color: const Color(0xff393938),
-              fontWeight: FontWeight.w700,
-            ),
+        backgroundColor: Colors.white,
+        elevation: 5,
+        shadowColor: Colors.black,
+        title: Text(
+          "Psikolog",
+          style: GoogleFonts.montserrat(
+            fontSize: 16.0,
+            color: const Color(0xff393938),
+            fontWeight: FontWeight.w700,
           ),
-          surfaceTintColor: Colors.white,
+        ),
+        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         if (isLoading) {
@@ -80,7 +80,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) {
-                                    return const RekomendasiPsikolog();
+                                    return const RekomendasiPsikologInstant();
                                   }),
                                 );
                               },
@@ -142,28 +142,37 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                       ),
                                     ),
                                     const SizedBox(width: 9),
-                                    const Column(
+                                    Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Rangga S.Psi., M.Psi",
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        SizedBox(height: 5),
-                                        Text(
+                                        const SizedBox(height: 5),
+                                        const Text(
                                           "Spesialis Positive psychology",
                                           style: TextStyle(fontSize: 14),
                                         ),
-                                        SizedBox(height: 3),
-                                        Text(
-                                          "Pengalaman 1-3 Tahun",
-                                          style: TextStyle(fontSize: 14),
-                                        )
+                                        const SizedBox(height: 3),
+                                        tersedia != true
+                                            ? const Text(
+                                                "Sibuk",
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.yellow),
+                                              )
+                                            : const Text("Online",
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green)),
                                       ],
                                     ),
                                   ],
@@ -201,24 +210,46 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                       ],
                                     ),
                                     const Spacer(),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          backgroundColor: Colors.blue,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (_)=> const ProfilePsikologScreen(isInstan: false, session: 2)));
-                                        },
-                                        child: buildShimmerText(
-                                          "Mulai Chat",
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                        )),
+                                    tersedia != true
+                                        ? ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                backgroundColor: Colors.white,
+                                                side: const BorderSide(
+                                                    width: 1,
+                                                    color: Colors.blue),
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                  8,
+                                                ))),
+                                            onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (_)=>const ProfilePsikologScreen(isInstan: true)));},
+                                            child: buildShimmerText(
+                                              "Mulai Chat",
+                                              fontSize: 16,
+                                              color: Colors.blue,
+                                            ))
+                                        : ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              backgroundColor: Colors.blue,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (_)=>const ProfilePsikologScreen(isInstan: true)));
+                                            },
+                                            child: buildShimmerText(
+                                              "Mulai Chat",
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                            )),
                                   ],
                                 ),
                               ],
@@ -540,41 +571,21 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                 ],
                               ),
                               const Spacer(),
-                              tersedia != true
-                                  ? ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          backgroundColor: Colors.white,
-                                          side: const BorderSide(
-                                              width: 1, color: Colors.blue),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                            8,
-                                          ))),
-                                      onPressed: () {},
-                                      child: buildShimmerText(
-                                        "Mulai Chat",
-                                        fontSize: 16,
-                                        color: Colors.blue,
-                                      ))
-                                  : ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        backgroundColor: Colors.blue,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                      onPressed: () {},
-                                      child: buildShimmerText(
-                                        "Mulai Chat",
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                      )),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    backgroundColor: Colors.blue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: buildShimmerText(
+                                    "Mulai Chat",
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  )),
                             ],
                           ),
                         ],

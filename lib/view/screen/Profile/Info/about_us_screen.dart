@@ -13,6 +13,7 @@ class AboutUsScreen extends StatelessWidget {
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 16),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: SingleChildScrollView(
           child: Padding(
