@@ -13,6 +13,7 @@ class TermsScreen extends StatelessWidget {
           style:
               GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w700),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -94,20 +94,24 @@ class ProfileScreen extends StatelessWidget {
                       onTap: () {
                         logOutWidget(context);
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Keluar',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12, fontWeight: FontWeight.w600),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 18,
-                            color: Color(0xFF858C94),
-                          ),
-                        ],
+                      child: Container(
+                        decoration:
+                            const BoxDecoration(color: Colors.transparent),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Keluar',
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 12, fontWeight: FontWeight.w600),
+                            ),
+                            const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 18,
+                              color: Color(0xFF858C94),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -141,15 +145,16 @@ class ProfileScreen extends StatelessWidget {
   }
 
   Widget dataProfil(BuildContext context, String text, Widget route) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 5),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => route),
-          );
-        },
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => route),
+        );
+      },
+      child: Container(
+        decoration: const BoxDecoration(color: Colors.transparent),
+        padding: const EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

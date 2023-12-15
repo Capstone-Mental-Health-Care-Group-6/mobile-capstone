@@ -81,38 +81,22 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                           color: Color(0xff0085FF),
                         ),
                         insets: EdgeInsets.symmetric(
-                          horizontal: 132.5,
+                          horizontal: 131.35,
                         ),
                       ),
                       tabs: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isInstant = true;
-                              tabController.index = 0;
-                            });
-                          },
-                          child: Text(
-                            'Instant',
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                            ),
+                        Text(
+                          'Instant',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isInstant = false;
-                              tabController.index = 1;
-                            });
-                          },
-                          child: Text(
-                            'Premium',
-                            style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16.0,
-                            ),
+                        Text(
+                          'Premium',
+                          style: GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.0,
                           ),
                         ),
                       ],
