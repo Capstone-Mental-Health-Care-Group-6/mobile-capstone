@@ -13,11 +13,8 @@ class RegisterViewModel extends ChangeNotifier {
 
   Future registerAuth() async {
     dateFix = DateFormat('yyyy-MM-dd').format(birthDate);
-    print('hello$name .$email .$password .$gender .$phone .$dateFix');
 
     try {
-      // register = await registerService.register(
-      //     name, email, password, dateFix, gender, phone);
       register = await registerService.register(
           name, email, password, dateFix, gender, phone);
       notifyListeners();

@@ -18,7 +18,7 @@ class _FillingProfile1State extends State<FillingProfile4> {
   late RegisterViewModel registerViewModel;
   final gender = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  List jenisKelamin = ['Laki - laki', 'Perempuan'];
+  List jenisKelamin = ['Laki-laki', 'Perempuan'];
   late FillingProvider fillingProvider = Provider.of(context, listen: false);
   @override
   void initState() {
@@ -35,7 +35,6 @@ class _FillingProfile1State extends State<FillingProfile4> {
         try {
           await registerViewModel.registerAuth();
           if (mounted) {
-            print('~~~~Testingin 123');
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (_) => const CreateSuccessAccountScreen()));
           }
@@ -146,7 +145,6 @@ class _FillingProfile1State extends State<FillingProfile4> {
                           backgroundColor: const Color(0XFF0085FF),
                           foregroundColor: Colors.white),
                       onPressed: () {
-                        print(gender.text);
                         handleRegister();
                       },
                       child: Text(
