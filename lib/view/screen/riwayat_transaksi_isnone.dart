@@ -1,33 +1,11 @@
 import 'package:flutter/material.dart';
 
 class RiwayatPemesananIsnone extends StatelessWidget {
-  const RiwayatPemesananIsnone({Key? key}) : super(key: key);
+  const RiwayatPemesananIsnone({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Transaksi saya",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
-          child: Container(
-            color: const Color.fromRGBO(0, 0, 0, 0.25),
-            height: 1,
-          ),
-        ),
-      ),
-      body: Stack(
+    return Stack(
         children: [
           Container(
             alignment: Alignment.topLeft,
@@ -76,7 +54,6 @@ class RiwayatPemesananIsnone extends StatelessWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }

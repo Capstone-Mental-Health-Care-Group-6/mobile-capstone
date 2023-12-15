@@ -167,5 +167,5 @@ class DataRiwayatTransaksi {
 }
 
 
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI1NzEzNzcsImlhdCI6MTcwMjU2Nzc3NywiaWQiOjE1LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.f_ay96W_D2M53vpdWD7ehfzbRXc9jOXUWnLW-agFCgQ";
+String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI2MTA1NjEsImlhdCI6MTcwMjYwNjk2MSwiaWQiOjE1LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.YomPai1CEVabjSyFJdsxeZdfCfCYw7vPLA1F0Y08KzA";
 

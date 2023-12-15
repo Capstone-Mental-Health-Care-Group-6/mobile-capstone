@@ -2,6 +2,7 @@ import 'package:empathi_care/model/riwayat_transaksi_model.dart';
 import 'package:empathi_care/utils/constant/currency.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view/screen/riwayat_transaksi_isnone.dart';
 import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -56,14 +57,16 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
         body: FutureBuilder<RiwayatTransaksi>(
           future: riwayatTransaksiProvider.getData(token),
           builder: (context, snapshot) {
+            
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               final riwayatTransaksi = snapshot.data!;
-
-              return ListView.builder(
+              print(riwayatTransaksi.message!.contains("data"));
+              return riwayatTransaksi.message!.contains("data")? 
+               const RiwayatPemesananIsnone() :ListView.builder(
                 itemCount: riwayatTransaksi.data?.length ?? 0,
                 itemBuilder: (context, index) {
                   return buildListDokter(
