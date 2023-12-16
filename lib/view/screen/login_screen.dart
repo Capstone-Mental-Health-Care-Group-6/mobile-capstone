@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:empathi_care/model/mystate_model.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
@@ -8,6 +9,7 @@ import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,6 +21,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
   late LoginViewModel loginViewModel;
+  late SharedPreferences loginData;
+  late bool user;
 
   @override
   void initState() {
@@ -27,7 +31,20 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordProvider.visiblePassword = true;
     loginViewModel.emailController.clear();
     loginViewModel.passwordController.clear();
+    checkLogin(context);
     super.initState();
+  }
+
+  void checkLogin(context) async {
+    loginData = await SharedPreferences.getInstance();
+    user = loginData.getBool('login') ?? true;
+
+    if (user == false) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const RoutesScreen()),
+          (route) => false);
+    }
   }
 
   @override
@@ -39,10 +56,16 @@ class _LoginScreenState extends State<LoginScreen> {
         try {
           await loginViewModel.loginAuth();
           if (mounted) {
+            loginData.setBool('login', false);
+            final snackBar = SnackBar(
+              content: Text(loginViewModel.message),
+              backgroundColor: const Color(0XFF0085FF),
+            );
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const RoutesScreen()),
                 (route) => false);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
             navigationProvider.setIndex(0);
           }
         } on DioException catch (e) {
@@ -191,24 +214,30 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 12, right: 20),
-                child: Consumer<LoginViewModel>(
-                  builder: (context, loginViewModel, _) {
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(370, 40),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          backgroundColor: const Color(0XFF0085FF),
-                          foregroundColor: Colors.white),
-                      onPressed: handleLogin,
-                      child: Text(
-                        'Login',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700, fontSize: 16),
-                      ),
-                    );
-                  },
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(370, 40),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: const Color(0XFF0085FF),
+                      foregroundColor: Colors.white),
+                  onPressed: handleLogin,
+                  child: Consumer<LoginViewModel>(
+                    builder:
+                        (context, loginViewModel, circularProgressIndicator) {
+                      if (loginViewModel.myState == MyState.loading) {
+                        return circularProgressIndicator!;
+                      } else {
+                        return Text(
+                          'Login',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700, fontSize: 16),
+                        );
+                      }
+                    },
+                    child: const CircularProgressIndicator(),
+                  ),
                 ),
               ),
               Padding(
