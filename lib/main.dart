@@ -3,6 +3,7 @@ import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view_model/enabled_button_provider.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
+import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
@@ -30,10 +31,15 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => PasswordProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) =>
-                  CountDownPaymentSuccessProvider()),
-          ChangeNotifierProvider<NavigationProvider>(
-            create: (create) => NavigationProvider()),
+              create: (BuildContext context) => CountDownPaymentSuccessProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => NavigationProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => FillingProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => PaketProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => NavigationProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
@@ -46,23 +52,20 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => KonselingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => LoginViewModel())
+
         ],
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
-              colorScheme:
-                  ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
+              colorScheme: ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
               useMaterial3: true,
               fontFamily: GoogleFonts.montserrat().fontFamily,
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all(
-                    TextStyle(
-                        fontFamily: GoogleFonts.montserrat().fontFamily,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700),
+                    TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily, fontSize: 16, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
