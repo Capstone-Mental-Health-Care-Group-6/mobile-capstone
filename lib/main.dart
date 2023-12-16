@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 
 void main() {
   initializeDateFormatting('id', null).then((_) {
@@ -47,6 +48,8 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => ChatBotCSProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => RiwayatTransaksiProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => ChangePasswordViewModel()),
           ChangeNotifierProvider(
