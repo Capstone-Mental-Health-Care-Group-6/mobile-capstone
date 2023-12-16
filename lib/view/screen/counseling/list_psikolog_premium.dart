@@ -234,7 +234,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                                             isInstan: false,
                                                             session: 2)));
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             "Mulai Chat",
                                             style: TextStyle(
                                               fontSize: 16,

@@ -238,7 +238,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                                       const ProfilePsikologScreen(
                                                           isInstan: true)));
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           "Mulai Chat",
                                           style: TextStyle(
                                             fontSize: 16,

@@ -222,7 +222,7 @@ class _RekomendasiPsikologInstantState
                                                     //                 isInstan:
                                                     //                     true)));
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Mulai Chat",
                                                     style: TextStyle(
                                                       fontSize: 16,

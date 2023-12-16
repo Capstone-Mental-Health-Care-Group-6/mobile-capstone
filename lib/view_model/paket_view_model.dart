@@ -25,7 +25,8 @@ class PaketProvider extends ChangeNotifier {
 
   Future getPaket(String metode, BuildContext context) async {
     try {
-      listPaket = await paketService.getPaket(metode, selectedMetode.toString(), selectedDuration.toString());
+      listPaket = await paketService.getPaket(
+          metode, selectedMetode.toString(), selectedDuration.toString());
       isLoading = false;
 
       // log(jsonDecode(response.data));

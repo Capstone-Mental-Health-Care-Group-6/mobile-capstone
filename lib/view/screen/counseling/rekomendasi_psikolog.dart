@@ -257,7 +257,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                     //                 isInstan:
                                                     //                     false)));
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Mulai Chat",
                                                     style: TextStyle(
                                                       fontSize: 16,
