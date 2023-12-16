@@ -6,6 +6,7 @@ import 'package:empathi_care/view_model/filling_provider.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
+import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,8 +33,7 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) =>
                   CountDownPaymentSuccessProvider()),
           ChangeNotifierProvider<NavigationProvider>(
-            create: (create) => NavigationProvider(),
-          ),
+            create: (create) => NavigationProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
@@ -41,11 +41,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
           ChangeNotifierProvider(
-
+              create: (BuildContext context) => PsikologProvider()),
+          ChangeNotifierProvider(
               create: (BuildContext context) => KonselingProvider()),
- ChangeNotifierProvider(
+          ChangeNotifierProvider(
               create: (BuildContext context) => LoginViewModel())
-
         ],
         builder: (context, child) {
           return MaterialApp(
