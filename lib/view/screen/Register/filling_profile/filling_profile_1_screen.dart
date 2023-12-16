@@ -1,8 +1,10 @@
 import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_2_screen.dart';
 import 'package:empathi_care/view/widget/timeline_widget.dart';
+import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class FillingProfile1 extends StatefulWidget {
   const FillingProfile1({super.key});
@@ -12,10 +14,12 @@ class FillingProfile1 extends StatefulWidget {
 }
 
 class _FillingProfile1State extends State<FillingProfile1> {
+  late RegisterViewModel registerViewModel;
   final namaLengkap = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    registerViewModel = Provider.of(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
@@ -89,6 +93,7 @@ class _FillingProfile1State extends State<FillingProfile1> {
                           foregroundColor: Colors.white),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          registerViewModel.name = namaLengkap.text;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => const FillingProfile2()));
                         }
