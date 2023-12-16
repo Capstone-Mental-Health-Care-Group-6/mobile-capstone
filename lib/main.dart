@@ -35,7 +35,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => PasswordProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => CountDownPaymentSuccessProvider()),
+              create: (BuildContext context) =>
+                  CountDownPaymentSuccessProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => NavigationProvider()),
           ChangeNotifierProvider(
@@ -61,23 +62,26 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => KonselingProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => LoginViewModel())
+              create: (BuildContext context) => LoginViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => GetPatientByIdViewModel()),
-
         ],
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
+              colorScheme:
+                  ColorScheme.fromSeed(seedColor: const Color(0XFF0085FF)),
               useMaterial3: true,
               fontFamily: GoogleFonts.montserrat().fontFamily,
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   textStyle: MaterialStateProperty.all(
-                    TextStyle(fontFamily: GoogleFonts.montserrat().fontFamily, fontSize: 16, fontWeight: FontWeight.w700),
+                    TextStyle(
+                        fontFamily: GoogleFonts.montserrat().fontFamily,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
