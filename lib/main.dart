@@ -10,6 +10,7 @@ import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
+import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
           ChangeNotifierProvider(
+              create: (BuildContext context) => RegisterViewModel()),
+          ChangeNotifierProvider(
               create: (BuildContext context) => RiwayatTransaksiProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => ChangePasswordViewModel()),
@@ -57,7 +60,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => KonselingProvider()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => LoginViewModel()),
+              create: (BuildContext context) => LoginViewModel())
         ],
         builder: (context, child) {
           return MaterialApp(

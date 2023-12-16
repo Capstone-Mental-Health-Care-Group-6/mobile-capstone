@@ -49,7 +49,6 @@ dependencies:
   animation_search_bar: ^0.0.10
   shared_preferences: ^2.2.2
 
-
 dev_dependencies:
   flutter_lints: ^3.0.1
   flutter_test:
