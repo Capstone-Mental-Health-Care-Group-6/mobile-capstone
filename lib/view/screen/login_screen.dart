@@ -3,6 +3,7 @@ import 'package:empathi_care/model/mystate_model.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
   late LoginViewModel loginViewModel;
   late SharedPreferences loginData;
+  late GetPatientByIdViewModel getPatientByIdViewModel;
   late bool user;
 
   @override
@@ -31,6 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordProvider.visiblePassword = true;
     loginViewModel.emailController.clear();
     loginViewModel.passwordController.clear();
+    getPatientByIdViewModel =
+        Provider.of<GetPatientByIdViewModel>(context, listen: false);
+    getPatientByIdViewModel.getPatientbyID();
     checkLogin(context);
     super.initState();
   }
@@ -61,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
               content: Text(loginViewModel.message),
               backgroundColor: const Color(0XFF0085FF),
             );
+            getPatientByIdViewModel.getPatientbyID();
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const RoutesScreen()),

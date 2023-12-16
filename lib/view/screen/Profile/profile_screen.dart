@@ -1,4 +1,3 @@
-import 'package:empathi_care/model/services/get_all_patient_services.dart';
 import 'package:empathi_care/view/screen/Profile/ChangePassword/change_password_screen.dart';
 import 'package:empathi_care/view/screen/Profile/EditProfile/edit_profile_screen.dart';
 import 'package:empathi_care/view/screen/Profile/Info/about_us_screen.dart';
@@ -21,13 +20,11 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late GetPatientByIdViewModel getPatientByIdViewModel;
-  late GetAllPatientService getAllPatientService;
 
   @override
   void initState() {
     getPatientByIdViewModel =
         Provider.of<GetPatientByIdViewModel>(context, listen: false);
-    getPatientByIdViewModel.getPatientbyID();
     super.initState();
   }
 
