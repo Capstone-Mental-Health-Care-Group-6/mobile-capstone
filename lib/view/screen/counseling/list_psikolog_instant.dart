@@ -57,6 +57,25 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
         return Consumer<PsikologProvider>(builder: (context, value, child) {
           if (provider.isLoading == true) {
             return shimmerLoading();
+          } else if (provider.notFound != false) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Tidak menemukan hasil yang sesuai. Silakan coba kata kunci lainnya.",
+                      textAlign: TextAlign.center,
+                    ),
+                    Image.asset(
+                      "assets/images/Reminders-rafiki 1.png",
+                      width: 305,
+                      height: 305,
+                    )
+                  ],
+                ),
+              ),
+            );
           } else {
             return SingleChildScrollView(
               child: Column(
@@ -183,29 +202,29 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                 const SizedBox(height: 6),
                                 Row(
                                   children: [
-                                    const Row(
+                                    Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.thumbs_up_down,
                                           color: Colors.blue,
                                         ),
-                                        SizedBox(width: 7),
+                                        const SizedBox(width: 7),
                                         Text(
-                                          "69%",
-                                          style: TextStyle(
+                                          "${provider.percentageRating.toString()} %",
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),
                                         ),
-                                        SizedBox(width: 8),
-                                        Icon(
+                                        const SizedBox(width: 8),
+                                        const Icon(
                                           Icons.rate_review,
                                           color: Colors.blue,
                                         ),
-                                        SizedBox(width: 7),
+                                        const SizedBox(width: 7),
                                         Text(
-                                          "3200",
-                                          style: TextStyle(
+                                          provider.countReviewDocter.toString(),
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),
@@ -231,7 +250,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                                       const ProfilePsikologScreen(
                                                           isInstan: true)));
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           "Mulai Chat",
                                           style: TextStyle(
                                             fontSize: 16,

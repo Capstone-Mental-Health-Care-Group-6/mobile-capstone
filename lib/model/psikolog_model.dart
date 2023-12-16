@@ -1,13 +1,13 @@
-class Psikolog {
+class PsikologModel {
     List<Datum> data;
     String message;
 
-    Psikolog({
+    PsikologModel({
         required this.data,
         required this.message,
     });
 
-    factory Psikolog.fromJson(Map<String, dynamic> json) => Psikolog(
+    factory PsikologModel.fromJson(Map<String, dynamic> json) => PsikologModel(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         message: json["message"],
     );
@@ -26,7 +26,7 @@ class Datum {
     String doctorDob;
     String doctorProvinsi;
     String doctorKota;
-    String doctorNumberphone;
+    String doctorNumberPhone;
     String doctorGender;
     String doctorAvatar;
     String doctorDescription;
@@ -39,11 +39,11 @@ class Datum {
     String doctorIjazah;
     int doctorBalance;
     String doctorStatus;
-    int doctorExpertise;
+    int expertiseId;
     List<Experience> experience;
     List<Education> education;
     List<Workday> workday;
-    dynamic ratings;
+    List<Rating> ratings;
 
     Datum({
         required this.id,
@@ -53,7 +53,7 @@ class Datum {
         required this.doctorDob,
         required this.doctorProvinsi,
         required this.doctorKota,
-        required this.doctorNumberphone,
+        required this.doctorNumberPhone,
         required this.doctorGender,
         required this.doctorAvatar,
         required this.doctorDescription,
@@ -66,7 +66,7 @@ class Datum {
         required this.doctorIjazah,
         required this.doctorBalance,
         required this.doctorStatus,
-        required this.doctorExpertise,
+        required this.expertiseId,
         required this.experience,
         required this.education,
         required this.workday,
@@ -81,7 +81,7 @@ class Datum {
         doctorDob: json["doctor_dob"],
         doctorProvinsi: json["doctor_provinsi"],
         doctorKota: json["doctor_kota"],
-        doctorNumberphone: json["doctor_numberphone"],
+        doctorNumberPhone: json["doctor_number_phone"],
         doctorGender: json["doctor_gender"],
         doctorAvatar: json["doctor_avatar"],
         doctorDescription: json["doctor_description"],
@@ -94,11 +94,11 @@ class Datum {
         doctorIjazah: json["doctor_ijazah"],
         doctorBalance: json["doctor_balance"],
         doctorStatus: json["doctor_status"],
-        doctorExpertise: json["doctor_expertise"],
+        expertiseId: json["expertise_id"],
         experience: List<Experience>.from(json["experience"].map((x) => Experience.fromJson(x))),
         education: List<Education>.from(json["education"].map((x) => Education.fromJson(x))),
         workday: List<Workday>.from(json["workday"].map((x) => Workday.fromJson(x))),
-        ratings: json["ratings"],
+        ratings: List<Rating>.from(json["ratings"].map((x) => Rating.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -109,7 +109,7 @@ class Datum {
         "doctor_dob": doctorDob,
         "doctor_provinsi": doctorProvinsi,
         "doctor_kota": doctorKota,
-        "doctor_numberphone": doctorNumberphone,
+        "doctor_number_phone": doctorNumberPhone,
         "doctor_gender": doctorGender,
         "doctor_avatar": doctorAvatar,
         "doctor_description": doctorDescription,
@@ -122,19 +122,19 @@ class Datum {
         "doctor_ijazah": doctorIjazah,
         "doctor_balance": doctorBalance,
         "doctor_status": doctorStatus,
-        "doctor_expertise": doctorExpertise,
+        "expertise_id": expertiseId,
         "experience": List<dynamic>.from(experience.map((x) => x.toJson())),
         "education": List<dynamic>.from(education.map((x) => x.toJson())),
         "workday": List<dynamic>.from(workday.map((x) => x.toJson())),
-        "ratings": ratings,
+        "ratings": List<dynamic>.from(ratings.map((x) => x.toJson())),
     };
 }
 
 class Education {
     int id;
     int doctorId;
-    DoctorUniversity doctorUniversity;
-    DoctorStudyProgram doctorStudyProgram;
+    String doctorUniversity;
+    String doctorStudyProgram;
     DateTime doctorEnrollYear;
     DateTime doctorGraduateYear;
 
@@ -150,8 +150,8 @@ class Education {
     factory Education.fromJson(Map<String, dynamic> json) => Education(
         id: json["id"],
         doctorId: json["doctor_id"],
-        doctorUniversity: doctorUniversityValues.map[json["doctor_university"]]!,
-        doctorStudyProgram: doctorStudyProgramValues.map[json["doctor_study_program"]]!,
+        doctorUniversity: json["doctor_university"],
+        doctorStudyProgram: json["doctor_study_program"],
         doctorEnrollYear: DateTime.parse(json["doctor_enroll_year"]),
         doctorGraduateYear: DateTime.parse(json["doctor_graduate_year"]),
     );
@@ -159,39 +159,19 @@ class Education {
     Map<String, dynamic> toJson() => {
         "id": id,
         "doctor_id": doctorId,
-        "doctor_university": doctorUniversityValues.reverse[doctorUniversity],
-        "doctor_study_program": doctorStudyProgramValues.reverse[doctorStudyProgram],
+        "doctor_university": doctorUniversity,
+        "doctor_study_program": doctorStudyProgram,
         "doctor_enroll_year": doctorEnrollYear.toIso8601String(),
         "doctor_graduate_year": doctorGraduateYear.toIso8601String(),
     };
 }
 
-enum DoctorStudyProgram {
-    PROGRAM_C,
-    PROGRAM_D
-}
-
-final doctorStudyProgramValues = EnumValues({
-    "Program C ": DoctorStudyProgram.PROGRAM_C,
-    "Program D": DoctorStudyProgram.PROGRAM_D
-});
-
-enum DoctorUniversity {
-    UNIVERSITY_C,
-    UNIVERSITY_D
-}
-
-final doctorUniversityValues = EnumValues({
-    "University C": DoctorUniversity.UNIVERSITY_C,
-    "University D": DoctorUniversity.UNIVERSITY_D
-});
-
 class Experience {
     int id;
     int doctorId;
-    DoctorCompany doctorCompany;
-    DoctorTitle doctorTitle;
-    DoctorCompany doctorCompanyAddress;
+    String doctorCompany;
+    String doctorTitle;
+    String doctorCompanyAddress;
     DateTime doctorStartDate;
     DateTime doctorEndDate;
 
@@ -208,9 +188,9 @@ class Experience {
     factory Experience.fromJson(Map<String, dynamic> json) => Experience(
         id: json["id"],
         doctorId: json["doctor_id"],
-        doctorCompany: doctorCompanyValues.map[json["doctor_company"]]!,
-        doctorTitle: doctorTitleValues.map[json["doctor_title"]]!,
-        doctorCompanyAddress: doctorCompanyValues.map[json["doctor_company_address"]]!,
+        doctorCompany: json["doctor_company"],
+        doctorTitle: json["doctor_title"],
+        doctorCompanyAddress: json["doctor_company_address"],
         doctorStartDate: DateTime.parse(json["doctor_start_date"]),
         doctorEndDate: DateTime.parse(json["doctor_end_date"]),
     );
@@ -218,34 +198,58 @@ class Experience {
     Map<String, dynamic> toJson() => {
         "id": id,
         "doctor_id": doctorId,
-        "doctor_company": doctorCompanyValues.reverse[doctorCompany],
-        "doctor_title": doctorTitleValues.reverse[doctorTitle],
-        "doctor_company_address": doctorCompanyValues.reverse[doctorCompanyAddress],
+        "doctor_company": doctorCompany,
+        "doctor_title": doctorTitle,
+        "doctor_company_address": doctorCompanyAddress,
         "doctor_start_date": doctorStartDate.toIso8601String(),
         "doctor_end_date": doctorEndDate.toIso8601String(),
     };
 }
 
-enum DoctorCompany {
-    COMPANY_C,
-    COMPANY_D,
-    EMPTY
+class Rating {
+    int id;
+    int doctorId;
+    int patientId;
+    String transactionId;
+    int doctorStarRating;
+    DoctorReview doctorReview;
+
+    Rating({
+        required this.id,
+        required this.doctorId,
+        required this.patientId,
+        required this.transactionId,
+        required this.doctorStarRating,
+        required this.doctorReview,
+    });
+
+    factory Rating.fromJson(Map<String, dynamic> json) => Rating(
+        id: json["id"],
+        doctorId: json["doctor_id"],
+        patientId: json["patient_id"],
+        transactionId: json["transaction_id"],
+        doctorStarRating: json["doctor_star_rating"],
+        doctorReview: doctorReviewValues.map[json["doctor_review"]]!,
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "doctor_id": doctorId,
+        "patient_id": patientId,
+        "transaction_id": transactionId,
+        "doctor_star_rating": doctorStarRating,
+        "doctor_review": doctorReviewValues.reverse[doctorReview],
+    };
 }
 
-final doctorCompanyValues = EnumValues({
-    "Company C": DoctorCompany.COMPANY_C,
-    "Company D": DoctorCompany.COMPANY_D,
-    "": DoctorCompany.EMPTY
-});
-
-enum DoctorTitle {
-    TITLE_C,
-    TITLE_D
+enum DoctorReview {
+    GOOD,
+    NO_REVIEW_YET
 }
 
-final doctorTitleValues = EnumValues({
-    "Title C": DoctorTitle.TITLE_C,
-    "Title D": DoctorTitle.TITLE_D
+final doctorReviewValues = EnumValues({
+    "Good": DoctorReview.GOOD,
+    "No review yet": DoctorReview.NO_REVIEW_YET
 });
 
 class Workday {
@@ -292,4 +296,4 @@ class EnumValues<T> {
     }
 }
 
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI2MjI5MDYsImlhdCI6MTcwMjYxOTMwNiwiaWQiOjIzLCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.zb7Bq1RFnbwGP6zXAnEaX6yNWb-qnKaskIAQ90zEBsE";
+String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI3NTc1MTgsImlhdCI6MTcwMjc1MzkxOCwiaWQiOjcsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0.WaNx4uwrXSOjoPrxZz6ZgDoX7YZktFJDCZzGf1-2X9c";
