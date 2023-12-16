@@ -35,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
     loginViewModel.passwordController.clear();
     getPatientByIdViewModel =
         Provider.of<GetPatientByIdViewModel>(context, listen: false);
-    getPatientByIdViewModel.getPatientbyID();
     checkLogin(context);
     super.initState();
   }
