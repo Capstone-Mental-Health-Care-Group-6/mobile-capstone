@@ -1,11 +1,13 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/view/screen/counseling/list_psikolog_instant.dart';
 import 'package:empathi_care/view/screen/counseling/list_psikolog_premium.dart';
+import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PaketScreen extends StatefulWidget {
@@ -16,427 +18,323 @@ class PaketScreen extends StatefulWidget {
 }
 
 class _PaketScreenState extends State<PaketScreen> {
-  bool isInstan = true, isLoading = true;
-  int? selectedPaket;
-  int selectedMetode = 1, selectedDuration = 1;
-
-  List<Map<String, dynamic>> listPaket = [];
-  Future<void> delayLoading() async {
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      setState(() {
-        isLoading = false;
-      });
-    });
-  }
-
-  addDataPaket() {
-    setState(() {
-      listPaket.clear();
-    });
-    if (isInstan) {
-      listPaket = [
-        {
-          "title": "Paket Perkenalan",
-          "price": "Rp. 80.000/1 Sesi",
-          "images": "assets/icons/icons_doctor.svg",
-          "profit": [
-            "Metode Chat,Call,VidCall, atau Zoom",
-            "Durasi 30 Menit",
-          ],
-        },
-      ];
-      setState(() {});
-    } else {
-      listPaket = [
-        {
-          "title": "Paket Perkenalan",
-          "price": "Rp. 100.000/1 Sesi",
-          "images": "assets/icons/icons_doctor.svg",
-          "profit": [
-            "Metode Chat,Call,VidCall, atau Zoom",
-            "Jadwal bisa disesuaikan dengan kebutuhan",
-            "Garansi Ganti Psikolog",
-          ],
-        },
-        {
-          "title": "Paket Bikin Nyaman",
-          "price": "Rp. 150.000/2 Sesi",
-          "images": "assets/icons/icons_hospital.svg",
-          "profit": [
-            "Metode Chat,Call,VidCall, atau Zoom",
-            "Jadwal bisa disesuaikan dengan kebutuhan",
-            "Garansi Ganti Psikolog",
-            "Masa aktif paket 1 bulan",
-          ],
-        },
-        {
-          "title": "Paket Perkenalan",
-          "price": "Rp. 200.000/4 Sesi",
-          "images": "assets/icons/icons_select.svg",
-          "profit": [
-            "Metode Chat,Call,VidCall, atau Zoom",
-            "Jadwal bisa disesuaikan dengan kebutuhan",
-            "Garansi ganti psikolog",
-            "Masa aktif paket 1 bulan",
-          ],
-        },
-        {
-          "title": "Paket Perkenalan",
-          "price": "Rp. 200.000/4 Sesi",
-          "images": "assets/icons/icons_select.svg",
-          "profit": [
-            "Metode Chat,Call,VidCall, atau Zoom",
-            "Jadwal bisa disesuaikan dengan kebutuhan",
-            "Garansi ganti psikolog",
-            "Masa aktif paket 1 bulan",
-          ],
-        }
-      ];
-      setState(() {});
-    }
-  }
-
+  late PaketProvider paketProvider;
   @override
   void initState() {
-    delayLoading();
-    addDataPaket();
+    paketProvider = context.read<PaketProvider>();
+
+    paketProvider.init(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Paket",
-          style: GoogleFonts.montserrat(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+        appBar: AppBar(
+          title: Text(
+            "Paket",
+            style: GoogleFonts.montserrat(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
         ),
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-      ),
-      body: Builder(
-        builder: (context) {
-          if (isLoading) {
-            return shimmerLoading();
-          } else {
-            return FadeInLeft(
-              duration: const Duration(milliseconds: 500),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    timeLine(),
-                    const SizedBox(height: 16),
-                    Text(
-                      "Pilih Paket dan Metode",
-                      style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Pilihlah kombinasi paket dan bundle yang sesuai dengan kebutuhanmu.",
-                      style: GoogleFonts.montserrat(fontSize: 12),
-                    ),
-                    const SizedBox(height: 12),
-                    Visibility(
-                      visible: !isInstan,
-                      child: Container(
-                        padding: const EdgeInsets.only(top: 10, right: 2, left: 2, bottom: 2),
-                        decoration: BoxDecoration(
-                          color: const Color(0xff6C8AF7),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+        body: Consumer<PaketProvider>(
+          builder: (context, paketProv, child) {
+            return paketProv.isLoading
+                ? shimmerLoading()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    child: Stack(
+                      children: [
+                        ListView(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                "Mau ganti metode ? Klick \"Ganti\"",
-                                style: GoogleFonts.montserrat(fontSize: 14, color: Colors.white),
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffCCE7FF),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: const Icon(
-                                        Icons.question_answer,
-                                      ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                timeLine(),
+                                const SizedBox(height: 16),
+                                Text(
+                                  "Pilih Paket dan Metode",
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 16),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  "Pilihlah kombinasi paket dan bundle yang sesuai dengan kebutuhanmu.",
+                                  style: GoogleFonts.montserrat(fontSize: 12),
+                                ),
+                                const SizedBox(height: 12),
+                                Visibility(
+                                  visible: !paketProv.isInstan,
+                                  child: Container(
+                                    padding: const EdgeInsets.only(top: 10, right: 2, left: 2, bottom: 2),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff6C8AF7),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            selectedMetode == 1 ? "Chat" : "Gmeet",
-                                            style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
+                                    width: double.infinity,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                                          child: Text(
+                                            "Mau ganti metode ? Klick \"Ganti\"",
+                                            style: GoogleFonts.montserrat(fontSize: 14, color: Colors.white),
                                           ),
-                                          const SizedBox(height: 4),
-                                          Text(
-                                            selectedDuration == 1 ? "60 Menit" : "90 Menit",
-                                            style: GoogleFonts.montserrat(fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (context) {
-                                            return modalSelectMetode();
-                                          },
-                                        ).then((value) {
-                                          setState(() {});
-                                        });
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        side: const BorderSide(color: Colors.blue),
-                                      ),
-                                      child: Text(
-                                        "Ganti",
-                                        style: GoogleFonts.montserrat(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Container(
-                      width: double.infinity,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: const Color(0xffCCE7FF),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  isInstan = true;
-                                  addDataPaket();
-                                  selectedPaket = null;
-                                  setState(() {});
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
-                                  decoration: isInstan
-                                      ? BoxDecoration(
-                                          color: const Color(0xff0085FF),
-                                          borderRadius: BorderRadius.circular(8),
-                                        )
-                                      : null,
-                                  child: Center(
-                                      child: Text(
-                                    "Instan",
-                                    style: GoogleFonts.montserrat(color: isInstan ? Colors.white : Colors.black, fontSize: 12),
-                                  )),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  isInstan = false;
-                                  selectedPaket = null;
-                                  addDataPaket();
-                                  setState(() {});
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
-                                  decoration: !isInstan
-                                      ? BoxDecoration(
-                                          color: const Color(0xff0085FF),
-                                          borderRadius: BorderRadius.circular(8),
-                                        )
-                                      : null,
-                                  child: Center(
-                                      child: Text(
-                                    "Premium",
-                                    style: GoogleFonts.montserrat(color: !isInstan ? Colors.white : Colors.black, fontSize: 12),
-                                  )),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Expanded(
-                      child: ListView(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: listPaket.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 16),
-                                    child: InkWell(
-                                      onTap: () {
-                                        selectedPaket = index;
-                                        setState(() {});
-                                      },
-                                      child: Card(
-                                        margin: EdgeInsets.zero,
-                                        elevation: 4,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                                        color: Colors.white,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding: const EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                color: index == selectedPaket ? const Color.fromARGB(255, 21, 94, 153) : const Color(0xffCCE7FF),
-                                                borderRadius: const BorderRadius.only(
-                                                  topLeft: Radius.circular(8),
-                                                  topRight: Radius.circular(8),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    height: 40,
-                                                    width: 40,
-                                                    decoration: const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: SvgPicture.asset(listPaket[index]['images']),
+                                        const SizedBox(height: 4),
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  width: 40,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xffCCE7FF),
+                                                    borderRadius: BorderRadius.circular(8),
                                                   ),
-                                                  const SizedBox(width: 12),
-                                                  Column(
+                                                  child: const Icon(
+                                                    Icons.question_answer,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 12),
+                                                Expanded(
+                                                  child: Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        listPaket[index]['title'],
-                                                        style: TextStyle(fontSize: 16, color: index == selectedPaket ? Colors.white : Colors.black),
+                                                        paketProv.listMethods[paketProv.selectedMetode - 1]['name'].toString(),
+                                                        style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
                                                       ),
+                                                      const SizedBox(height: 4),
                                                       Text(
-                                                        listPaket[index]['price'],
-                                                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: index == selectedPaket ? Colors.white : Colors.black),
+                                                        paketProv.listDuration[paketProv.selectedDuration - 1]['name'].toString(),
+                                                        style: GoogleFonts.montserrat(fontSize: 14),
                                                       ),
                                                     ],
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    showModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return modalSelectMetode();
+                                                      },
+                                                    ).then((value) => setState(
+                                                          () {},
+                                                        ));
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.white,
+                                                    side: const BorderSide(color: Colors.blue),
+                                                  ),
+                                                  child: Text(
+                                                    "Ganti",
+                                                    style: GoogleFonts.montserrat(
+                                                      fontSize: 14,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                Container(
+                                  width: double.infinity,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xffCCE7FF),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () {
+                                              paketProv.onChangeType(context);
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 12),
+                                              decoration: paketProv.isInstan
+                                                  ? BoxDecoration(
+                                                      color: const Color(0xff0085FF),
+                                                      borderRadius: BorderRadius.circular(8),
+                                                    )
+                                                  : null,
+                                              child: Center(
+                                                  child: Text(
+                                                "Instan",
+                                                style: GoogleFonts.montserrat(color: paketProv.isInstan ? Colors.white : Colors.black, fontSize: 12),
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () {
+                                              paketProv.onChangeType(context);
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 12),
+                                              decoration: !paketProv.isInstan
+                                                  ? BoxDecoration(
+                                                      color: const Color(0xff0085FF),
+                                                      borderRadius: BorderRadius.circular(8),
+                                                    )
+                                                  : null,
+                                              child: Center(
+                                                  child: Text(
+                                                "Premium",
+                                                style: GoogleFonts.montserrat(color: !paketProv.isInstan ? Colors.white : Colors.black, fontSize: 12),
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListView.builder(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: paketProv.listPaket.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.only(top: 16),
+                                          child: InkWell(
+                                            onTap: () {
+                                              paketProv.onSelectPaket(index);
+                                            },
+                                            child: Card(
+                                              margin: EdgeInsets.zero,
+                                              elevation: 4,
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                              color: Colors.white,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    padding: const EdgeInsets.all(10),
+                                                    decoration: BoxDecoration(
+                                                      color: index == paketProv.selectedPaket ? const Color.fromARGB(255, 21, 94, 153) : const Color(0xffCCE7FF),
+                                                      borderRadius: const BorderRadius.only(
+                                                        topLeft: Radius.circular(8),
+                                                        topRight: Radius.circular(8),
+                                                      ),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                      children: [
+                                                        Container(
+                                                          height: 40,
+                                                          width: 40,
+                                                          decoration: const BoxDecoration(
+                                                            shape: BoxShape.circle,
+                                                          ),
+                                                          child: Image.network(paketProv.listPaket[index]['avatar'].toString()),
+                                                        ),
+                                                        const SizedBox(width: 12),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(
+                                                              paketProv.listPaket[index]['name'].toString(),
+                                                              style: TextStyle(fontSize: 16, color: index == paketProv.selectedPaket ? Colors.white : Colors.black),
+                                                            ),
+                                                            Text(
+                                                              "Rp ${NumberFormat('###,###,###,###', 'ID').format(double.parse(paketProv.listPaket[index]['price'].toString()))}",
+                                                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: index == paketProv.selectedPaket ? Colors.white : Colors.black),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(10),
+                                                    child: Text(paketProv.listPaket[index]['description'].toString().replaceAll(", ", ",\n")),
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.all(10),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Builder(builder: (context) {
-                                                    List profit = listPaket[index]['profit'];
-                                                    return ListView.builder(
-                                                      shrinkWrap: true,
-                                                      physics: const NeverScrollableScrollPhysics(),
-                                                      itemCount: listPaket[index]['profit'].length,
-                                                      itemBuilder: (context, index) {
-                                                        return Padding(
-                                                          padding: const EdgeInsets.only(top: 3),
-                                                          child: Text(
-                                                            "\u2022 ${profit[index].toString()}",
-                                                            style: const TextStyle(fontSize: 14),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
-                                                  })
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                },
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 40,
+                            child: ElevatedButton(
+                              onPressed: paketProv.selectedPaket != null
+                                  ? paketProv.isInstan
+                                      ? () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (_) => const ListPsikologInstant()));
+                                          //instan
+                                        }
+                                      : () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (_) => const ListPsikologPremium()));
+                                          //premium
+                                        }
+                                  : null,
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  )),
+                              child: Text(
+                                "Pilih Paket",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: selectedPaket != null
-                            ? isInstan
-                                ? () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (_)=>const ListPsikologInstant()));
-                                    //instan
-                                  }
-                                : () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (_)=>const ListPsikologPremium()));
-                                    //premium
-                                  }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            )),
-                        child: Text(
-                          "Pilih Paket",
-                          style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }
-        },
-      ),
-    );
+                      ],
+                    ),
+                  );
+          },
+        ));
   }
 
   Widget modalSelectMetode() {
+    final provider = Provider.of<PaketProvider>(context);
     return StatefulBuilder(
       builder: (context, setState) {
         return Padding(
@@ -471,78 +369,56 @@ class _PaketScreenState extends State<PaketScreen> {
                 style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        selectedMetode = 1;
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-                        decoration: BoxDecoration(
-                          border: selectedMetode == 1 ? Border.all(color: Colors.blue) : null,
-                          color: const Color(0xffCCE7FF),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              MdiIcons.forum,
-                              color: selectedMetode == 1 ? Colors.blue : Colors.black,
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: paketProvider.listMethods.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 2.7, crossAxisSpacing: 5),
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      if (index == 0 && provider.selectedMetode == 2) {
+                        provider.selectedMetode = 1;
+                      } else if (index == 1 && provider.selectedMetode == 1) {
+                        provider.selectedMetode = 2;
+                      } else {
+                        null;
+                      }
+                      setState(() {});
+                    },
+                    child: Container(
+                      // padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                      decoration: BoxDecoration(
+                        border: (provider.selectedMetode - 1) == index ? Border.all(color: Colors.blue) : null,
+                        color: const Color(0xffCCE7FF),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: (provider.selectedMetode - 1) == index ? Colors.blue : Colors.black,
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              "Chat",
-                              style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700, color: selectedMetode == 1 ? Colors.blue : Colors.black),
-                            )
-                          ],
-                        ),
+                            child: Icon(
+                              index == 0 ? Icons.question_answer : MdiIcons.video,
+                              size: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            paketProvider.listMethods[index]['name'].toString(),
+                            style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700, color: (provider.selectedMetode - 1) == index ? Colors.blue : Colors.black),
+                          )
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        selectedMetode = 2;
-                        setState(() {});
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-                        decoration: BoxDecoration(
-                          border: selectedMetode == 2 ? Border.all(color: Colors.blue) : null,
-                          color: const Color(0xffCCE7FF),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: selectedMetode == 2 ? Colors.blue : Colors.black,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Icon(
-                                MdiIcons.video,
-                                size: 18,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              "Gmeet",
-                              style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700, color: selectedMetode == 2 ? Colors.blue : Colors.black),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
               const SizedBox(height: 26),
               Text(
@@ -550,54 +426,40 @@ class _PaketScreenState extends State<PaketScreen> {
                 style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  InkWell(
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: paketProvider.listDuration.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 2.7, crossAxisSpacing: 5),
+                itemBuilder: (context, index) {
+                  return InkWell(
                     onTap: () {
-                      selectedDuration = 1;
+                      if (index == 0 && provider.selectedDuration == 2) {
+                        provider.selectedDuration = 1;
+                      } else if (index == 1 && provider.selectedDuration == 1) {
+                        provider.selectedDuration = 2;
+                      } else {
+                        null;
+                      }
                       setState(() {});
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
+                      // padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
                       decoration: BoxDecoration(
-                        border: selectedDuration == 1 ? Border.all(color: Colors.blue) : null,
+                        border: (provider.selectedDuration - 1) == index ? Border.all(color: Colors.blue) : null,
                         color: const Color(0xffCCE7FF),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(
-                        "60 Menit",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: selectedDuration == 1 ? Colors.blue : Colors.black,
+                      child: Center(
+                        child: Text(
+                          paketProvider.listDuration[index]['name'].toString(),
+                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700, color: (provider.selectedDuration - 1) == index ? Colors.blue : Colors.black),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  InkWell(
-                    onTap: () {
-                      selectedDuration = 2;
-                      setState(() {});
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
-                      decoration: BoxDecoration(
-                        border: selectedDuration == 2 ? Border.all(color: Colors.blue) : null,
-                        color: const Color(0xffCCE7FF),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        "90 Menit",
-                        style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: selectedDuration == 2 ? Colors.blue : Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
               const Spacer(),
               ElevatedButton(
@@ -627,6 +489,7 @@ class _PaketScreenState extends State<PaketScreen> {
   }
 
   Padding shimmerLoading() {
+    final provider = Provider.of<PaketProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Column(
@@ -838,13 +701,13 @@ class _PaketScreenState extends State<PaketScreen> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    isInstan = !isInstan;
-                                  });
+                                  // setState(() {
+                                  //   provider.isInstan = !provider.isInstan;
+                                  // });
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 12),
-                                  decoration: isInstan
+                                  decoration: provider.isInstan
                                       ? BoxDecoration(
                                           color: const Color(0xff0085FF),
                                           borderRadius: BorderRadius.circular(8),
@@ -879,13 +742,13 @@ class _PaketScreenState extends State<PaketScreen> {
                             Expanded(
                               child: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    isInstan = !isInstan;
-                                  });
+                                  // setState(() {
+                                  //   provider.isInstan = !provider.isInstan;
+                                  // });
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(vertical: 12),
-                                  decoration: !isInstan
+                                  decoration: !provider.isInstan
                                       ? BoxDecoration(
                                           color: const Color(0xff0085FF),
                                           borderRadius: BorderRadius.circular(8),
