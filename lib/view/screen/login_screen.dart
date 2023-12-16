@@ -44,8 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     user = loginData.getBool('login') ?? true;
 
     if (user == false) {
-      Navigator.pushAndRemoveUntil(
-          context,
+      Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const RoutesScreen()),
           (route) => false);
     }
@@ -66,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               backgroundColor: const Color(0XFF0085FF),
             );
             getPatientByIdViewModel.getPatientbyID();
-            Navigator.pushAndRemoveUntil(
-                context,
+            Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => const RoutesScreen()),
                 (route) => false);
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
