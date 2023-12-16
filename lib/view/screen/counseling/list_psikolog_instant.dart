@@ -34,13 +34,14 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
   @override
   void initState() {
     provider = Provider.of<PsikologProvider>(context, listen: false);
-    provider.fetchListPsikolog(token);
+    initial();
     super.initState();
   }
 
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
+    provider.fetchListPsikolog(token);
   }
 
   @override
