@@ -10,7 +10,7 @@ class PaketProvider extends ChangeNotifier {
   int selectedMetode = 1, selectedDuration = 1;
   PaketService paketService = PaketService();
 
-  List listPaket = [], listMethods = [], listDuration = [];
+  List? listPaket, listMethods = [], listDuration = [];
 
   Future init(BuildContext context) async {
     isInstan = true;
