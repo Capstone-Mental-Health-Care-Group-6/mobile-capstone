@@ -55,18 +55,6 @@ class _FillingProfile1State extends State<FillingProfile4> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 13),
-            child: Text(
-              'Batal',
-              style: GoogleFonts.nunito(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: const Color(0xff000000)),
-            ),
-          )
-        ],
       ),
       body: Form(
         key: _formKey,
@@ -145,6 +133,13 @@ class _FillingProfile1State extends State<FillingProfile4> {
                           backgroundColor: const Color(0XFF0085FF),
                           foregroundColor: Colors.white),
                       onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      const CreateSuccessAccountScreen()),
+                              (route) => false);
+                        }
                         handleRegister();
                       },
                       child: Text(
