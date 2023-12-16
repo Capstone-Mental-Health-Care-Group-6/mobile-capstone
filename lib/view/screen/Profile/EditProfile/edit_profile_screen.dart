@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class EditProfile1 extends StatefulWidget {
-  const EditProfile1({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
 
   @override
-  State<EditProfile1> createState() => _EditProfile1State();
+  State<EditProfile> createState() => _EditProfileState();
 }
 
-class _EditProfile1State extends State<EditProfile1> {
+class _EditProfileState extends State<EditProfile> {
   final namaLengkap = TextEditingController();
   final emailController = TextEditingController();
   final datectl = TextEditingController();
@@ -31,6 +31,7 @@ class _EditProfile1State extends State<EditProfile1> {
           style:
               GoogleFonts.montserrat(fontWeight: FontWeight.w700, fontSize: 16),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: Form(
         key: _formKey,
@@ -166,7 +167,7 @@ class _EditProfile1State extends State<EditProfile1> {
                   controller: namaLengkap,
                   keyboardType: TextInputType.emailAddress,
                   inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]+$')),
+                    FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z_ ]+')),
                   ],
                   decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(left: 17),
@@ -293,6 +294,27 @@ class _EditProfile1State extends State<EditProfile1> {
                     contentPadding: const EdgeInsets.only(left: 17),
                     border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: GestureDetector(
+                        onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          selectDate = (await showDatePicker(
+                            context: context,
+                            initialDate: currentDate,
+                            firstDate: DateTime(1990),
+                            lastDate: DateTime.now(),
+                          ))!;
+                          datectl.text =
+                              DateFormat('dd MMMM yyyy').format(selectDate);
+                        },
+                        child: const Icon(
+                          Icons.calendar_month_outlined,
+                          size: 24,
+                          color: Color(0xff636363),
+                        ),
+                      ),
                     ),
                     label: Text('Tanggal Lahir',
                         style: GoogleFonts.montserrat(

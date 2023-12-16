@@ -25,6 +25,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        surfaceTintColor: Colors.white,
       ),
       body: ListView(
         children: [
@@ -117,13 +118,11 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Text(
-                        "Menunggu Pembayaran",
-                        textAlign: TextAlign.end,
-                        style: GoogleFonts.montserrat(
-                          fontSize: 14,
-                        ),
+                    Text(
+                      "Menunggu Pembayaran",
+                      textAlign: TextAlign.end,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -156,7 +155,8 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                   child: InkWell(
                     child: Text(
                       "Lihat rincian",
-                      style: GoogleFonts.montserrat(fontSize: 12, color: Colors.blue),
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12, color: Colors.blue),
                     ),
                   ),
                 ),

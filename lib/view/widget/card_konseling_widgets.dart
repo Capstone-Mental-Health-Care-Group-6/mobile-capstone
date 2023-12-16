@@ -128,7 +128,7 @@ class CardKonselingWidgets extends StatelessWidget {
                                 8.0,
                               ),
                             ),
-                            side: BorderSide(color: Color(0xff0085FF))),
+                            side: const BorderSide(color: Color(0xff0085FF))),
                         onPressed: () {},
                         child: Text(
                           textButton,
@@ -136,7 +136,7 @@ class CardKonselingWidgets extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.w700,
                             fontSize: 12.0,
-                            color: Color(0xff0085FF),
+                            color: const Color(0xff0085FF),
                           ),
                         ),
                       ),
