@@ -146,7 +146,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 const SizedBox(height: 25),
                 GestureDetector(
-                  onTap: () => deleteWidget(context),
+                  onTap: () => showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10))),
+                      context: context,
+                      builder: (context) {
+                        return const DeleteWidget();
+                      }),
                   child: Container(
                     height: 30,
                     width: double.infinity,
