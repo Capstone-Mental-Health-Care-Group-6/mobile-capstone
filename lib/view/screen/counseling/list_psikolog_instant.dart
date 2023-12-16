@@ -19,7 +19,7 @@ class ListPsikologInstant extends StatefulWidget {
 class _ListPsikologInstantState extends State<ListPsikologInstant> {
   bool tersedia = false;
   late PsikologProvider provider;
-  bool isLoading = true, tersedia = true;
+  bool isLoading = true;
 
   Future<void> delayLoading() async {
     Future.delayed(const Duration(seconds: 5)).then((value) {
@@ -52,7 +52,6 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         return Consumer<PsikologProvider>(builder: (context, value, child) {
@@ -225,7 +224,12 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                           ),
                                         ),
                                         onPressed: () {
-                                         Navigator.push(context, MaterialPageRoute(builder: (_)=>const ProfilePsikologScreen(isInstan: true)));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const ProfilePsikologScreen(
+                                                          isInstan: true)));
                                         },
                                         child: Text(
                                           "Mulai Chat",
