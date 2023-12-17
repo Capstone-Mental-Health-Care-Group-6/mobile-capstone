@@ -15,11 +15,24 @@ class KonsellingApiService {
       );
       final Map<String, dynamic> responseData = response.data;
       KonselingData data = KonselingData.fromJson(responseData);
-      if (data.data != null) {
-        for (var datum in data.data!) {
-          datum.name = datum.name;
-        }
-      }
+
+      return data;
+    } catch (e) {
+      throw Exception('Gagal mengambil data dari API: $e');
+    }
+  }
+
+  Future<KonselingData> fetchTopikById(String token, id) async {
+    try {
+      final response = await _dio.get(
+        "${Url.baseUrl}/counseling/topics/$id",
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      final Map<String, dynamic> responseData = response.data;
+      KonselingData data = KonselingData.fromJson(responseData);
+
       return data;
     } catch (e) {
       throw Exception('Gagal mengambil data dari API: $e');

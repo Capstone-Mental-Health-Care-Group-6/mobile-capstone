@@ -13,7 +13,7 @@ class KonselingProvider extends ChangeNotifier {
       _topikKonseling = await _apiService.fetchTopik(token);
       notifyListeners();
     } catch (e) {
-      throw Exception('Gagal mendapatkan data pengguna: $e');
+      throw Exception('Gagal mendapatkan data: $e');
     }
   }
 
@@ -43,5 +43,27 @@ class KonselingProvider extends ChangeNotifier {
   void setSelectedOption(String value) {
     _selectedOption = value;
     notifyListeners();
+  }
+
+  int? _selectedId;
+
+  int? get selectedId => _selectedId;
+
+  void setSelectedId(int value) {
+    _selectedId = value;
+    notifyListeners();
+  }
+
+  KonselingData _getid = KonselingData();
+
+  KonselingData get getid => _getid;
+  Future<void> getById() async {
+    try {
+      _getid = await _apiService.fetchTopikById(token, selectedId);
+      print("test$getid");
+      notifyListeners();
+    } catch (e) {
+      throw Exception('Gagal mendapatkan data: $e');
+    }
   }
 }

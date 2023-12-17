@@ -316,46 +316,53 @@ class _KonselingScreenState extends State<KonselingScreen> {
                     ),
                     SizedBox(
                       height: 205,
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemExtent: 35,
-                        children: konselingProvider.topikKonseling.data
-                                ?.map((datum) {
-                              return ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Row(
-                                  children: [
-                                    Transform.scale(
-                                      scale: 1.19,
-                                      child: Radio<String>(
-                                        value: datum.name ?? "",
-                                        groupValue:
-                                            konselingProvider.selectedOption,
-                                        onChanged: (String? value) {
-                                          konselingProvider
-                                              .setSelectedOption(value!);
-                                        },
-                                        activeColor: Colors.black,
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        toggleable: true,
+                      child: konselingProvider.topikKonseling.data?.isEmpty ==
+                              true
+                          ? const CircularProgressIndicator()
+                          : ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemExtent: 38,
+                              children: konselingProvider.topikKonseling.data
+                                      ?.map((datum) {
+                                    return ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: Row(
+                                        children: [
+                                          Transform.scale(
+                                            scale: 1.2,
+                                            child: Radio<String>(
+                                              value: datum.name ?? "",
+                                              groupValue: konselingProvider
+                                                  .selectedOption,
+                                              onChanged: (String? value) {
+                                                konselingProvider
+                                                    .setSelectedOption(value!);
+                                                konselingProvider
+                                                    .setSelectedId(datum.id!);
+                                                    konselingProvider.getById();
+                                              },
+                                              activeColor: Colors.black,
+                                              materialTapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
+                                              toggleable: true,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 3),
+                                          Text(
+                                            datum.name ?? "",
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    const SizedBox(width: 3),
-                                    Text(
-                                      datum.name ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList() ??
-                            [],
-                      ),
+                                    );
+                                  }).toList() ??
+                                  [],
+                            ),
                     ),
                     const SizedBox(height: 10),
                     Row(
