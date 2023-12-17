@@ -3,6 +3,7 @@ import 'package:empathi_care/model/mystate_model.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
   late LoginViewModel loginViewModel;
   late SharedPreferences loginData;
+  late GetPatientByIdViewModel getPatientByIdViewModel;
   late bool user;
 
   @override
@@ -31,6 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordProvider.visiblePassword = true;
     loginViewModel.emailController.clear();
     loginViewModel.passwordController.clear();
+    getPatientByIdViewModel =
+        Provider.of<GetPatientByIdViewModel>(context, listen: false);
     checkLogin(context);
     super.initState();
   }
@@ -40,8 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     user = loginData.getBool('login') ?? true;
 
     if (user == false) {
-      Navigator.pushAndRemoveUntil(
-          context,
+      Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const RoutesScreen()),
           (route) => false);
     }
@@ -61,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
               content: Text(loginViewModel.message),
               backgroundColor: const Color(0XFF0085FF),
             );
-            Navigator.pushAndRemoveUntil(
-                context,
+            getPatientByIdViewModel.getPatientbyID();
+            Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => const RoutesScreen()),
                 (route) => false);
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -207,8 +210,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const ConfirmationEmailScreen()));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (_) => const ConfirmationEmailScreen()),
+                        (route) => false);
                   },
                 ),
               ),
