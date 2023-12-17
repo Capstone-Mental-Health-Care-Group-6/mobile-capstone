@@ -178,5 +178,4 @@ class DataRiwayatTransaksi {
       };
 }
 
-String token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4OTIwMDIsImlhdCI6MTcwMjgwNTYwMiwiaWQiOjc3LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.h6BX5aTwnoqJDXO9ZQJx2n3iknaIitvWARIie5hGUbs";
+
