@@ -32,4 +32,11 @@ class RiwayatTransaksiProvider extends ChangeNotifier {
   void setId(String newId) {
     _id = newId;
   }
+
+  final List _transactionid = [];
+  List get transactionId => _transactionid;
+  void addata(){
+    _transactionid.add(id);
+    debugPrint(transactionId.toString());
+  }
 }

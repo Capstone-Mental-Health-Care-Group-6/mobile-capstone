@@ -89,6 +89,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
     final harga = formatRupiah(transaction.priceResult);
     final berirating = transaction.doctorStarRating! > 0;
     riwayatTransaksiProvider.setId(transaction.transactionId ?? '');
+    riwayatTransaksiProvider.addata();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(
