@@ -5,6 +5,8 @@ import 'package:empathi_care/view_model/enabled_button_provider.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
+import 'package:empathi_care/view_model/payment_method_view_model.dart';
+import 'package:empathi_care/view_model/transaction_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,10 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => ChatBotCSProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => PaymentMethodViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => TransactionViewModel()),
         ],
         builder: (context, child) {
           return MaterialApp(
