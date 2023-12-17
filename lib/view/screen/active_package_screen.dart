@@ -483,7 +483,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                                       ),
                                     ),
                                   ),
-                                ),
+                                ), 
                         ],
                       ),
                     ),
