@@ -1,6 +1,8 @@
 import 'package:empathi_care/view/widget/article_widget.dart';
+import 'package:empathi_care/view_model/artikel_rekomendasi_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class AllArticlesPage extends StatefulWidget {
   const AllArticlesPage({super.key});
@@ -26,6 +28,11 @@ class _AllArticlesPageState extends State<AllArticlesPage> {
         build(context);
       });
     }
+  }
+
+  void initState() {
+    super.initState();
+    Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
   }
 
   @override
@@ -83,48 +90,18 @@ class _AllArticlesPageState extends State<AllArticlesPage> {
             ),
           ),
           Expanded(
-            child: ListView(
-              children: const [
-                ArticleWidget(
-                  imagePath: 'assets/images/article.png',
-                  title: 'Mengenal Mental Health Lebih Dalam',
-                  date: '13 Oktober 2023',
-                  category: 'Umum',
-                  titleParagraf: '',
-                ),
-                ArticleWidget(
-                  imagePath: 'assets/images/article.png',
-                  title: 'Mengenal Mental Health Lebih Dalam',
-                  date: '13 Oktober 2023',
-                  category: 'Umum',
-                ),
-                ArticleWidget(
-                  imagePath: 'assets/images/article.png',
-                  title: 'Mengenal Mental Health Lebih Dalam',
-                  date: '13 Oktober 2023',
-                  category: 'Umum',
-                ),
-                ArticleWidget(
-                  imagePath: 'assets/images/article.png',
-                  title: 'Mengenal Mental Health Lebih Dalam',
-                  date: '13 Oktober 2023',
-                  category: 'Umum',
-                ),
-                ArticleWidget(
-                  imagePath: 'assets/images/article.png',
-                  title: 'Mengenal Mental Health Lebih Dalam',
-                  date: '13 Oktober 2023',
-                  category: 'Umum',
-                ),
-                ArticleWidget(
-                  imagePath: 'assets/images/article.png',
-                  title: 'Mengenal Mental Health Lebih Dalam',
-                  date: '13 Oktober 2023',
-                  category: 'Umum',
-                ),
-              ],
+            child: Consumer<ArticleProvider>(
+              builder: (context, articleProvider, child) {
+                return ListView.builder(
+                  itemCount: articleProvider.articles.length,
+                  itemBuilder: (context, index) {
+                    var article = articleProvider.articles[index];
+                    return ArticleWidget(article: article);
+                  },
+                );
+              },
             ),
-          )
+          ),
         ]));
   }
 }
