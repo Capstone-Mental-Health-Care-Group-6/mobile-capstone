@@ -48,7 +48,6 @@ class RiwayatTransaksiServices {
         ),
       );
 
-
       final RiwayatTransaksi data = RiwayatTransaksi.fromJson(response.data);
 
       return data;
