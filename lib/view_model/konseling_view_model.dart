@@ -8,9 +8,9 @@ class KonselingProvider extends ChangeNotifier {
 
   KonselingData get topikKonseling => _topikKonseling;
 
-  Future<void> fetchTopikKonseling(String token) async {
+  Future<void> fetchTopikKonseling() async {
     try {
-      _topikKonseling = await _apiService.fetchTopik(token);
+      _topikKonseling = await _apiService.fetchTopik();
       notifyListeners();
     } catch (e) {
       throw Exception('Gagal mendapatkan data: $e');
@@ -59,7 +59,7 @@ class KonselingProvider extends ChangeNotifier {
   KonselingData get getid => _getid;
   Future<void> getById() async {
     try {
-      _getid = await _apiService.fetchTopikById(token, selectedId);
+      _getid = await _apiService.fetchTopikById(selectedId);
       print("test$getid");
       notifyListeners();
     } catch (e) {

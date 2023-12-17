@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-=======
 import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
->>>>>>> development
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
@@ -212,8 +209,6 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
                                         ),
                                       ],
                                     ),
-<<<<<<< HEAD
-=======
                                     margin: const EdgeInsets.only(bottom: 12.0),
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
@@ -346,7 +341,6 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
                                         ],
                                       ),
                                     ),
->>>>>>> development
                                   ),
                                 ),
                               );
@@ -384,7 +378,6 @@ class _RekomendasiPsikologInstantState extends State<RekomendasiPsikologInstant>
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(20.0),

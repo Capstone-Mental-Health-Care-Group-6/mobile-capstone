@@ -10,7 +10,16 @@ class KonselingScreen extends StatefulWidget {
 }
 
 class _KonselingScreenState extends State<KonselingScreen> {
+
   String? selectedOption;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<KonselingProvider>(context, listen: false)
+        .fetchTopikKonseling();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -261,8 +270,6 @@ class _KonselingScreenState extends State<KonselingScreen> {
       "Lainnya",
     ];
 
-<<<<<<< HEAD
-=======
     void showOptionsDialog() {
       showDialog(
         context: context,
@@ -419,7 +426,6 @@ class _KonselingScreenState extends State<KonselingScreen> {
   void _showAlurKonseling(BuildContext context) {
     final konselingProvider =
         Provider.of<KonselingProvider>(context, listen: false);
->>>>>>> development
     showDialog(
       context: context,
       builder: (BuildContext context) {
