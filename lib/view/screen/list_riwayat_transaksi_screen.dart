@@ -85,7 +85,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
 
     final img = transaction.doctorAvatar ?? '';
     final name = transaction.doctorName ?? '';
-    final harga = formatRupiah(transaction.priceResult as double);
+    final harga = formatRupiah(transaction.priceResult);
     final berirating = transaction.doctorStarRating! > 0;
 
     return Padding(

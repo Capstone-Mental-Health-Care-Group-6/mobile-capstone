@@ -44,7 +44,7 @@ class DataRiwayatTransaksi {
   int? priceMethod;
   int? priceDuration;
   int? priceCounseling;
-  int? priceResult;
+  int priceResult;
   String? paymentProof;
   int? paymentStatus;
   String? paymentType;
@@ -69,7 +69,7 @@ class DataRiwayatTransaksi {
     this.priceMethod,
     this.priceDuration,
     this.priceCounseling,
-    this.priceResult,
+    required this.priceResult,
     this.paymentProof,
     this.paymentStatus,
     this.paymentType,
@@ -179,4 +179,4 @@ class DataRiwayatTransaksi {
 }
 
 String token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4ODEyMjQsImlhdCI6MTcwMjc5NDgyNCwiaWQiOjc3LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.48XbCM9kEBXm4GwECld2DmQ7_d_O14MaEWf9QoH8PFY";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4OTIwMDIsImlhdCI6MTcwMjgwNTYwMiwiaWQiOjc3LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.h6BX5aTwnoqJDXO9ZQJx2n3iknaIitvWARIie5hGUbs";
