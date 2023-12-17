@@ -1,5 +1,5 @@
-import 'package:empathi_care/model/active_package_model.dart';
-import 'package:empathi_care/view_model/instant_view_model.dart';
+import 'package:empathi_care/model/active_package_models.dart';
+import 'package:empathi_care/view_model/instants_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';

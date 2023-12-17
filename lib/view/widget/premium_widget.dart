@@ -1,4 +1,4 @@
-import 'package:empathi_care/model/active_package_model.dart';
+import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/view/screen/zoom_screen.dart';
 import 'package:empathi_care/view_model/premium_view_model.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
     super.initState();
     final token = Provider.of<PremiumViewModel>(context, listen: false).token;
     Provider.of<PremiumViewModel>(context, listen: false)
-        .fetchDataInstant(token);
+        .fetchDataPremium(token);
   }
 
   @override

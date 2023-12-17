@@ -20,8 +20,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
     super.initState();
     final token =
         Provider.of<ActivePackageViewModel>(context, listen: false).token;
-    Provider.of<ActivePackageViewModel>(context, listen: false)
-        .delayLoading(token);
+    Provider.of<ActivePackageViewModel>(context, listen: false).delayLoading(token);
   }
 
   @override

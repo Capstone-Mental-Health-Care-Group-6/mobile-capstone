@@ -9,15 +9,17 @@ import 'package:empathi_care/view_model/detail_history_transaction_view_model.da
 import 'package:empathi_care/view_model/delete_viewmodel.dart';
 import 'package:empathi_care/view_model/enabled_button_provider.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
-import 'package:empathi_care/view_model/instant_view_model.dart';
 import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
+import 'package:empathi_care/view_model/instants_view_model.dart';
 import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
+import 'package:empathi_care/view_model/premium_view_model.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
-import 'package:empathi_care/view_model/premium_view_model.dart';
+import 'package:empathi_care/view_model/payment_method_view_model.dart';
+import 'package:empathi_care/view_model/transaction_view_model.dart';
 import 'package:empathi_care/view_model/rating_and_review_view_model.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:empathi_care/view_model/update_profile_view_model.dart';
@@ -62,12 +64,10 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
           ChangeNotifierProvider(
-              create: (BuildContext context) => InstantViewModel()),
-              ChangeNotifierProvider(
-              create: (BuildContext context) => PremiumViewModel()),
-              ChangeNotifierProvider(
-              create: (BuildContext context) => ActivePackageViewModel()),
-ChangeNotifierProvider(
+              create: (BuildContext context) => PaymentMethodViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => TransactionViewModel()),
+          ChangeNotifierProvider(
               create: (BuildContext context) => RegisterViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => RiwayatTransaksiProvider()),
@@ -90,6 +90,13 @@ ChangeNotifierProvider(
               create: (BuildContext context) => UpdateProfileViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => InactivatePatientViewModel()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => InstantViewModel()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => ActivePackageViewModel()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => PremiumViewModel()),
+
         ],
         builder: (context, child) {
           return MaterialApp(
