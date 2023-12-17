@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/utils/baseurl.dart';
+import 'package:flutter/material.dart';
 
 class PsikologApiService{
   final Dio _dio = Dio();
 
-  Future<Psikolog> fetchPsikolog(String token) async {
+  Future<PsikologModel> fetchPsikolog(String token) async {
     try {
       final response = await _dio.get(
         "${Url.baseUrl}/doctor",
@@ -13,15 +14,13 @@ class PsikologApiService{
           headers: {'Authorization':'Bearer $token'}
         )
       );
-      
-      return Psikolog.fromJson(response.data);
+      return PsikologModel.fromJson(response.data);
     } catch (e) {
-      throw Exception('$e');
+      throw Exception(e);
     }
   }
 
-  Future<Psikolog> fetchPsikologSearch(String token,String search) async {
-    
+  Future<PsikologModel> fetchPsikologSearch(String token,String search) async {
     try {
       final response = await _dio.get(
         "${Url.baseUrl}/doctor?name=$search",
@@ -30,7 +29,7 @@ class PsikologApiService{
         )
       );
     
-      return Psikolog.fromJson(response.data);
+      return PsikologModel.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }
