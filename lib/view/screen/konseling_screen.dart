@@ -261,6 +261,165 @@ class _KonselingScreenState extends State<KonselingScreen> {
       "Lainnya",
     ];
 
+<<<<<<< HEAD
+=======
+    void showOptionsDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            insetPadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(13),
+            ),
+            backgroundColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              padding: const EdgeInsets.only(left: 8),
+              width: MediaQuery.of(context).size.width * 0.9,
+              child:
+                  Consumer<KonselingProvider>(builder: (context, value, child) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15, right: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.zero,
+                              child: Icon(Icons.close),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                      child: buildPilihTopik(
+                        "Pilih Topik",
+                        "Permasalahan apa yang ingin anda diskusikan ?",
+                        "assets/images/Select-rafiki 2.png",
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 10, right: 15),
+                      child: Divider(
+                        thickness: 2.3,
+                        color: Color(0xff6C8AF7),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 205,
+                      child: konselingProvider.topikKonseling.data?.isEmpty ==
+                              true
+                          ? const CircularProgressIndicator()
+                          : ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemExtent: 38,
+                              children: konselingProvider.topikKonseling.data
+                                      ?.map((datum) {
+                                    return ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: Row(
+                                        children: [
+                                          Transform.scale(
+                                            scale: 1.2,
+                                            child: Radio<String>(
+                                              value: datum.name ?? "",
+                                              groupValue: konselingProvider
+                                                  .selectedOption,
+                                              onChanged: (String? value) {
+                                                konselingProvider
+                                                    .setSelectedOption(value!);
+                                                konselingProvider
+                                                    .setSelectedId(datum.id!);
+                                                    konselingProvider.getById();
+                                              },
+                                              activeColor: Colors.black,
+                                              materialTapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
+                                              toggleable: true,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 3),
+                                          Text(
+                                            datum.name ?? "",
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList() ??
+                                  [],
+                            ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const PaketScreen()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              backgroundColor: const Color(0xFF0085FF),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: const Text(
+                              "Pilih Topik",
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
+            ),
+          );
+        },
+      );
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showOptionsDialog();
+    });
+  }
+
+  void _showAlurKonseling(BuildContext context) {
+    final konselingProvider =
+        Provider.of<KonselingProvider>(context, listen: false);
+>>>>>>> development
     showDialog(
       context: context,
       builder: (BuildContext context) {

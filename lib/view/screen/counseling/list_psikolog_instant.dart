@@ -48,6 +48,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
         surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
+<<<<<<< HEAD
         if (isLoading) {
           return shimmerLoading();
         } else {
@@ -58,6 +59,85 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 30.0),
                   child: Column(
+=======
+        return Consumer<PsikologProvider>(builder: (context, value, child) {
+          if (provider.isLoading == true) {
+            return shimmerLoading();
+          } else if (provider.notFound != false) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Tidak menemukan hasil yang sesuai. Silakan coba kata kunci lainnya.",
+                      textAlign: TextAlign.center,
+                    ),
+                    Image.asset(
+                      "assets/images/Reminders-rafiki 1.png",
+                      width: 305,
+                      height: 305,
+                    )
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 30.0),
+                    child: Column(
+                      children: [
+                        const TimeLine(),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(top: 20.0, bottom: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Expanded(
+                                flex: 1,
+                                child: Text(
+                                  "Pilih Psikolog",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return const RekomendasiPsikologInstant();
+                                    }),
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(5.0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.blue.withOpacity(0.3),
+                                  ),
+                                  child: const Text(
+                                    "Lihat Semua",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.black),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Column(
+>>>>>>> development
                     children: [
                       const TimeLine(),
                       Padding(
@@ -180,29 +260,29 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                 const SizedBox(height: 6),
                                 Row(
                                   children: [
-                                    const Row(
+                                    Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.thumbs_up_down,
                                           color: Colors.blue,
                                         ),
-                                        SizedBox(width: 7),
+                                        const SizedBox(width: 7),
                                         Text(
-                                          "69%",
-                                          style: TextStyle(
+                                          "${provider.percentageRating.toString()} %",
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),
                                         ),
-                                        SizedBox(width: 8),
-                                        Icon(
+                                        const SizedBox(width: 8),
+                                        const Icon(
                                           Icons.rate_review,
                                           color: Colors.blue,
                                         ),
-                                        SizedBox(width: 7),
+                                        const SizedBox(width: 7),
                                         Text(
-                                          "3200",
-                                          style: TextStyle(
+                                          provider.countReviewDocter.toString(),
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),

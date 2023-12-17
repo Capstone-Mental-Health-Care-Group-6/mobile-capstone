@@ -30,7 +30,14 @@ logOutWidget(BuildContext context) {
                     foregroundColor: const Color.fromRGBO(255, 255, 255, 1)),
                 child: const Text('Batal'),
                 onPressed: () {
+<<<<<<< HEAD
                   Navigator.of(context).pop();
+=======
+                  loginData.setBool('login', true);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      (route) => false);
+>>>>>>> development
                 },
               ),
               Padding(

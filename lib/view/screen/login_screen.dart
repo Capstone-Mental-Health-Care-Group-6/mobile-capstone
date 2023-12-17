@@ -16,21 +16,83 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
+<<<<<<< HEAD
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+=======
+  late LoginViewModel loginViewModel;
+  late NavigationProvider navigationProvider;
+  late SharedPreferences loginData;
+  late GetPatientByIdViewModel getPatientByIdViewModel;
+  late bool user;
+>>>>>>> development
 
   @override
   void initState() {
     passwordProvider = Provider.of<PasswordProvider>(context, listen: false);
+<<<<<<< HEAD
+=======
+    loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+    navigationProvider =
+        Provider.of<NavigationProvider>(context, listen: false);
+>>>>>>> development
     passwordProvider.visiblePassword = true;
     emailController.clear();
     passwordController.clear();
     super.initState();
   }
 
+<<<<<<< HEAD
   @override
   Widget build(BuildContext context) {
     final navigationProvider = Provider.of<NavigationProvider>(context);
+=======
+  void checkLogin(context) async {
+    loginData = await SharedPreferences.getInstance();
+    user = loginData.getBool('login') ?? true;
+
+    if (user == false) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => const RoutesScreen()),
+          (route) => false);
+      navigationProvider.setIndex(0);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    void handleLogin() async {
+      if (loginViewModel.loginFormKey.currentState!.validate()) {
+        try {
+          await loginViewModel.loginAuth();
+          if (mounted) {
+            loginData.setBool('login', false);
+            final snackBar = SnackBar(
+              content: Text(loginViewModel.message),
+              backgroundColor: const Color(0XFF0085FF),
+            );
+            getPatientByIdViewModel.getPatientbyID();
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (_) => const RoutesScreen()),
+                (route) => false);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            navigationProvider.setIndex(0);
+          }
+        } on DioException catch (e) {
+          if (e.response != null) {
+            final snackBar = SnackBar(
+              content: Text('${e.response?.data['message']}'),
+              backgroundColor: const Color(0XFF0085FF),
+            );
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
+          }
+        }
+      }
+    }
+
+>>>>>>> development
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

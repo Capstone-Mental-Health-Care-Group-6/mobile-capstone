@@ -7,6 +7,20 @@ class ListRiwayatTransaksi extends StatelessWidget {
   const ListRiwayatTransaksi({super.key});
 
   @override
+<<<<<<< HEAD
+=======
+  State<ListRiwayatTransaksi> createState() => _ListRiwayatTransaksiState();
+}
+
+class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<RiwayatTransaksiProvider>(context, listen: false).getData();
+  }
+
+  @override
+>>>>>>> development
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +49,7 @@ class ListRiwayatTransaksi extends StatelessWidget {
             height: 1,
           ),
         ),
+<<<<<<< HEAD
       ),
       body: SingleChildScrollView(
           child: Column(
@@ -70,6 +85,45 @@ class ListRiwayatTransaksi extends StatelessWidget {
 
   Widget buildListDokter(
       String img, String name, String harga, String tgl, bool berirating, BuildContext context) {
+=======
+        body: FutureBuilder<RiwayatTransaksi>(
+          future: riwayatTransaksiProvider.getData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              final riwayatTransaksi = snapshot.data!;
+              return riwayatTransaksi.message!.contains("data")
+                  ? const RiwayatPemesananIsnone()
+                  : ListView.builder(
+                      itemCount: riwayatTransaksi.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return buildListDokter(
+                            riwayatTransaksi.data![index], context);
+                      },
+                    );
+            }
+          },
+        ));
+  }
+
+  Widget buildListDokter(
+      DataRiwayatTransaksi transaction, BuildContext context) {
+        final riwayatTransaksiProvider =
+        Provider.of<RiwayatTransaksiProvider>(context, listen: false);
+
+    final tgl = transaction.createdAt != null
+        ? getFormattedDateRiwayat(transaction.createdAt!)
+        : '';
+    final img = transaction.doctorAvatar ?? '';
+    final name = transaction.doctorName ?? '';
+    final harga = formatRupiah(transaction.priceResult);
+    final berirating = transaction.doctorStarRating! > 0;
+    riwayatTransaksiProvider.setId(transaction.transactionId ?? '');
+    riwayatTransaksiProvider.addata();
+>>>>>>> development
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(

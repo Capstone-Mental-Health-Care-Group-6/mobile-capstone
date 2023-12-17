@@ -33,6 +33,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 5,
@@ -73,6 +74,234 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                 ),
+=======
+        appBar: AppBar(
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            elevation: 5,
+            shadowColor: Colors.black,
+            title: Text(
+              "Psikolog",
+              style: GoogleFonts.montserrat(
+                fontSize: 16.0,
+                color: const Color(0xff393938),
+                fontWeight: FontWeight.w700,
+              ),
+            ),),
+        body: Builder(builder: (context) {
+          return Consumer<PsikologProvider>(builder: (context, value, child) {
+            if (provider.isLoading == true) {
+              return shimmerLoading();
+            } else if (provider.notFound != false) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Tidak menemukan hasil yang sesuai. Silakan coba kata kunci lainnya.",
+                        textAlign: TextAlign.center,
+                      ),
+                      Image.asset(
+                        "assets/images/Reminders-rafiki 1.png",
+                        width: 305,
+                        height: 305,
+                      )
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 30.0),
+                      child: Column(
+                        children: [
+                          const TimeLine(),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, bottom: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                const Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "Pilih Psikolog",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return const RekomendasiPsikolog();
+                                      }),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.blue.withOpacity(0.3),
+                                    ),
+                                    child: const Text(
+                                      "Lihat Semua",
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.black),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        for (var data in provider.dataPsikolog!.data)
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      width: 3)),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.white,
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  // offset: Offset(, 3),
+                                ),
+                              ],
+                            ),
+                            margin: const EdgeInsets.only(bottom: 12.0),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 80,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                data.doctorAvatar.toString()),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 9),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data.doctorName.toString(),
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Text(
+                                            "Spesialis Positive psychology",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          const Text(
+                                            "Online",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.thumbs_up_down,
+                                            color: Colors.blue,
+                                          ),
+                                          const SizedBox(width: 7),
+                                          Text(
+                                            "${provider.percentageRating.toString()} %",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          const Icon(
+                                            Icons.rate_review,
+                                            color: Colors.blue,
+                                          ),
+                                          const SizedBox(width: 7),
+                                          Text(
+                                            provider.countReviewDocter
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            backgroundColor: Colors.blue,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const ProfilePsikologScreen(
+                                                            isInstan: false,
+                                                            session: 2)));
+                                          },
+                                          child: const Text(
+                                            "Mulai Chat",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ],
+>>>>>>> development
                               ),
                             ),
                             GestureDetector(
