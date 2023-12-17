@@ -22,6 +22,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
   late LoginViewModel loginViewModel;
+  late NavigationProvider navigationProvider;
   late SharedPreferences loginData;
   late GetPatientByIdViewModel getPatientByIdViewModel;
   late bool user;
@@ -30,6 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     passwordProvider = Provider.of<PasswordProvider>(context, listen: false);
     loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
+    navigationProvider =
+        Provider.of<NavigationProvider>(context, listen: false);
     passwordProvider.visiblePassword = true;
     loginViewModel.emailController.clear();
     loginViewModel.passwordController.clear();
@@ -47,13 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const RoutesScreen()),
           (route) => false);
+      navigationProvider.setIndex(0);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final navigationProvider = Provider.of<NavigationProvider>(context);
-
     void handleLogin() async {
       if (loginViewModel.loginFormKey.currentState!.validate()) {
         try {

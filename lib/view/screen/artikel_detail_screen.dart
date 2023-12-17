@@ -98,12 +98,15 @@ class ArticleDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Image.asset(
-                    imagePath,
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
+                  Container(
+                      width: 350,
+                      height: 180,
+                      child: Center(
+                        child: Image.network(
+                          imagePath,
+                          fit: BoxFit.cover,
+                        ),
+                      )),
                   const SizedBox(height: 8),
                   RichText(
                     textAlign: TextAlign.justify,

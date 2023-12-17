@@ -1,8 +1,11 @@
+import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
 import 'package:empathi_care/view/screen/list_artikel_screen.dart';
 import 'package:empathi_care/view/screen/notification_screen.dart';
+import 'package:empathi_care/view_model/artikel_rekomendasi_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,6 +16,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final double _fabBottomPosition = 16.0;
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.notifications_outlined),
             color: Colors.white,
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_)=>const NotificationScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const NotificationScreen()));
             },
           )
         ],
@@ -146,7 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(right: 20),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (_)=> const AllArticlesPage()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const AllArticlesPage()));
                             },
                             child: Text(
                               'Lihat Semua',
@@ -160,80 +174,86 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: GridView.count(
-                      childAspectRatio: (itemWidth / itemHeight),
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: List.generate(
-                        4,
-                        (index) {
-                          List<String> itemTexts = [
-                            'Mengenal Mental Health Lebih Dalam',
-                            '5 Cara Menghilangkan Grogi Depan Umum',
-                            'Penyebab Impulse Buying Dan Cara Mengatasinya',
-                            'Tips Mengatasi Cemas yang Berlebihan'
-                          ];
-
-                          return Container(
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      const Color(0xff000000).withOpacity(0.12),
-                                  blurRadius: 16,
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10)),
-                                  child: Image.asset(
-                                    'assets/images/cover${index + 1}.png',
-                                    width: 180,
-                                    height: 100,
-                                    fit: BoxFit.cover,
+                  Consumer<ArticleProvider>(
+                    builder: (context, articleProvider, child) {
+                      return GridView.count(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: articleProvider.articles.map((article) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ArticleDetailPage(
+                                    title: article.title,
+                                    imagePath: article.thumbnail,
+                                    date: '17 Oktober 2019',
+                                    category: article.categoryName,
+                                    content: article.content,
                                   ),
                                 ),
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
+                              );
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                    child: Image.network(
+                                      article.thumbnail,
+                                      width: double.infinity,
+                                      height: 100,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(22),
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10)),
-                                    color: Colors.white,
-                                  ),
-                                  height: 77,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 11),
-                                        child: Text(
-                                          itemTexts[index],
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 13),
-                                          textAlign: TextAlign.start,
-                                        ),
+                                        bottomRight: Radius.circular(10),
                                       ),
-                                    ],
+                                    ),
+                                    height: 80,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 11),
+                                          child: Text(
+                                            article.title,
+                                            style:
+                                                const TextStyle(fontSize: 12),
+                                            textAlign: TextAlign.start,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
-                        },
-                      ),
-                    ),
-                  ),
+                        }).toList(),
+                      );
+                    },
+                  )
                 ],
               ),
             ),
