@@ -1,17 +1,26 @@
+import 'package:empathi_care/model/detail_history_transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class InvoiceRatingWidget extends StatelessWidget {
-  const InvoiceRatingWidget({super.key});
+  const InvoiceRatingWidget(
+      {super.key, required this.detailHistoryTransaction});
+
+  final DetailHistoryTransactionModel detailHistoryTransaction;
 
   @override
   Widget build(BuildContext context) {
+    String formatNumberToDecimal(int number) {
+      NumberFormat numberFormat = NumberFormat.decimalPattern('id');
+
+      return numberFormat.format(number);
+    }
+
     return Container(
-      padding: const EdgeInsets.all(
-        8.0,
-      ),
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 20),
       width: MediaQuery.of(context).size.width,
-      height: 420.0,
+      // height: 420.0,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           12.0,
@@ -23,7 +32,11 @@ class InvoiceRatingWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset('assets/images/doctorEllipse.png'),
+              CircleAvatar(
+                radius: 30,
+                backgroundImage:
+                    NetworkImage(detailHistoryTransaction.data[0].doctorAvatar),
+              ),
               const SizedBox(
                 width: 20.0,
               ),
@@ -31,7 +44,7 @@ class InvoiceRatingWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Rangga S.Psi., M.Psi',
+                    detailHistoryTransaction.data[0].doctorName,
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
                       fontSize: 14.0,
@@ -44,7 +57,7 @@ class InvoiceRatingWidget extends StatelessWidget {
                     'Spesialis Psikolog',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w400,
-                      fontSize: 10.0,
+                      fontSize: 12,
                     ),
                   ),
                 ],
@@ -80,10 +93,12 @@ class InvoiceRatingWidget extends StatelessWidget {
               left: 15.0,
             ),
             child: Text(
-              'Sangat Membantu dan membuat saya lebih bersemangat!',
+              detailHistoryTransaction.data[0].doctorReview == 'No review yet'
+                  ? '-'
+                  : detailHistoryTransaction.data[0].doctorReview,
               style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.w400,
-                fontSize: 10.0,
+                fontSize: 12,
               ),
             ),
           ),
@@ -104,7 +119,7 @@ class InvoiceRatingWidget extends StatelessWidget {
               'Detail Pemesanan',
               style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.w600,
-                fontSize: 10.0,
+                fontSize: 12,
               ),
             ),
           ),
@@ -120,17 +135,19 @@ class InvoiceRatingWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Paket Chat Psikolog',
+                  'Paket ${detailHistoryTransaction.data[0].methodName} Psikolog',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
-                  'Instant',
+                  detailHistoryTransaction.data[0].counselingType == "A"
+                      ? "Instan"
+                      : "Premium",
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -151,14 +168,14 @@ class InvoiceRatingWidget extends StatelessWidget {
                   'Topik',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
-                  'Stress',
+                  detailHistoryTransaction.data[0].topicName,
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -181,7 +198,7 @@ class InvoiceRatingWidget extends StatelessWidget {
               'Detail Pembayaran',
               style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.w600,
-                fontSize: 10.0,
+                fontSize: 12,
               ),
             ),
           ),
@@ -200,42 +217,15 @@ class InvoiceRatingWidget extends StatelessWidget {
                   'Biaya Konsultasi',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
-                  '50.000',
+                  formatNumberToDecimal(
+                      detailHistoryTransaction.data[0].priceCounseling),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 15.0,
-              right: 15.0,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Pajak',
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
-                  ),
-                ),
-                Text(
-                  '5.000',
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -253,17 +243,47 @@ class InvoiceRatingWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Diskon Voucher',
+                  'Biaya Durasi Konseling',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
-                  '-10.000',
+                  formatNumberToDecimal(
+                      detailHistoryTransaction.data[0].priceDuration),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 8.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 15.0,
+              right: 15.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Biaya Metode Konseling',
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  formatNumberToDecimal(
+                      detailHistoryTransaction.data[0].priceMethod),
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -293,14 +313,15 @@ class InvoiceRatingWidget extends StatelessWidget {
                   'Total Harga',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
-                  '45.000',
+                  formatNumberToDecimal(
+                      detailHistoryTransaction.data[0].priceResult),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
               ],
@@ -324,17 +345,18 @@ class InvoiceRatingWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Bayar melalui OVO',
+                  'Bayar melalui ${detailHistoryTransaction.data[0].paymentType.toUpperCase()}',
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
                 Text(
-                  '45.000',
+                  formatNumberToDecimal(
+                      detailHistoryTransaction.data[0].priceResult),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
-                    fontSize: 10.0,
+                    fontSize: 12,
                   ),
                 ),
               ],
