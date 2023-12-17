@@ -8,10 +8,10 @@ class AllArticlesPage extends StatefulWidget {
   const AllArticlesPage({super.key});
 
   @override
-  AllArticlesPageState createState() => AllArticlesPageState();
+  _AllArticlesPageState createState() => _AllArticlesPageState();
 }
 
-class AllArticlesPageState extends State<AllArticlesPage> {
+class _AllArticlesPageState extends State<AllArticlesPage> {
   final TextEditingController controller = TextEditingController();
   List<String> categories = [
     'Semua',

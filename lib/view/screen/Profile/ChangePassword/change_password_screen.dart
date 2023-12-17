@@ -1,10 +1,8 @@
-import 'package:empathi_care/view_model/change_password_view_model.dart';
 import 'package:empathi_care/view_model/enabled_button_provider.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -16,38 +14,21 @@ class ChangePasswordScreen extends StatefulWidget {
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   late EnabledButton enabledButton;
-  late ChangePasswordViewModel changePasswordViewModel;
-  late PasswordProvider passwordProvider;
-  String password = '';
-  String passwordLamaa = '';
-  late SharedPreferences fullLoginData;
 
   @override
   void initState() {
-    passwordProvider = Provider.of(context, listen: false);
     enabledButton = Provider.of(context, listen: false);
-    passwordProvider.visiblePassword = true;
-    passwordProvider.visiblePassword2 = true;
-    initial();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    enabledButton.passwordBaru.clear();
-    enabledButton.passwordLama.clear();
-    super.dispose();
-  }
-
-  void initial() async {
-    fullLoginData = await SharedPreferences.getInstance();
-    passwordLamaa = fullLoginData.getString('password').toString();
+    enabledButton.passwordBaru.addListener(() {
+      enabledButton.enable();
+    });
+    enabledButton.passwordLama.addListener(() {
+      enabledButton.enable();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    changePasswordViewModel = Provider.of(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -77,7 +58,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 child: Consumer<PasswordProvider>(
                   builder: (context, passwordProvider, _) => TextFormField(
-                    onChanged: (value) => enabledButton.enable(),
                     controller: enabledButton.passwordLama,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: passwordProvider.visiblePassword,
@@ -120,7 +100,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 child: Consumer<PasswordProvider>(
                   builder: (context, passwordProvider, _) => TextFormField(
                     controller: enabledButton.passwordBaru,
-                    onChanged: (value) => enabledButton.enable(),
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: passwordProvider.visiblePassword2,
                     decoration: InputDecoration(
@@ -167,49 +146,35 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         foregroundColor: Colors.white),
                     onPressed: enabledButton.isNull
                         ? () {
-                            if (passwordLamaa ==
-                                enabledButton.passwordLama.text) {
-                              Navigator.pop(context);
-
-                              password = enabledButton.passwordBaru.text;
-                              changePasswordViewModel.changePassword(password);
-                              showDialog(
-                                context: context,
-                                builder: (context) => AlertDialog(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(5))),
-                                  content: SizedBox(
-                                    width: 219,
-                                    height: 147,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Icon(
-                                          Icons.task_alt,
-                                          size: 80,
-                                          color: Color(0xff0085FF),
-                                        ),
-                                        Text(
-                                          'Data Anda Berhasil diubah',
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      ],
-                                    ),
+                            Navigator.pop(context);
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                content: SizedBox(
+                                  width: 219,
+                                  height: 147,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.task_alt,
+                                        size: 80,
+                                        color: Color(0xff0085FF),
+                                      ),
+                                      Text(
+                                        'Data Anda Berhasil diubah',
+                                        style: GoogleFonts.montserrat(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                            } else {
-                              const snackBar = SnackBar(
-                                content: Text('Password lama salah'),
-                                backgroundColor: Color(0XFF0085FF),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            }
+                              ),
+                            );
                           }
                         : null,
                     child: Text(
