@@ -1,22 +1,15 @@
 // article_widget.dart
 
+import 'package:empathi_care/model/article_model.dart';
 import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ArticleWidget extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String date;
-  final String category;
-  final String? titleParagraf;
+  final Article article;
 
   const ArticleWidget({
     super.key,
-    required this.imagePath,
-    required this.title,
-    required this.date,
-    required this.category,
-    this.titleParagraf,
+    required this.article,
   });
 
   void _navigateToDetail(BuildContext context) {
@@ -24,12 +17,11 @@ class ArticleWidget extends StatelessWidget {
       context,
       MaterialPageRoute(
         builder: (context) => ArticleDetailPage(
-          title: title,
-          date: date,
-          imagePath: imagePath,
-          category: category,
-          content:
-              ' Good mental health atau kesehatan mental yang baik adalah kondisi ketika kejiwaan dan pikiran dalam keadaan tenang dan damai. Kondisi ini memungkinkan seseorang untuk berpikir lebih jernih dan fokus saat beraktivitas. Sama halnya dengan kesehatan fisik, kesehatan mental juga penting untuk dijaga. ',
+          title: article.title,
+          date: '17 Oktober 2023',
+          imagePath: article.thumbnail,
+          category: article.categoryName,
+          content: article.content,
         ),
       ),
     );
@@ -56,7 +48,8 @@ class ArticleWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: AssetImage(imagePath),
+                      image: NetworkImage(article
+                          .thumbnail), // Use NetworkImage for remote images
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -67,7 +60,7 @@ class ArticleWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        article.title,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -83,14 +76,14 @@ class ArticleWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(1),
                         ),
                         child: Text(
-                          category,
+                          article.categoryName,
                           style: const TextStyle(color: Colors.blue),
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        date,
-                        style: const TextStyle(color: Colors.grey),
+                      const Text(
+                        '17 Oktober 2023',
+                        style: TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(height: 20),
                     ],
