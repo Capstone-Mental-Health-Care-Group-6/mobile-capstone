@@ -25,6 +25,7 @@ class ActivePackageViewModel extends ChangeNotifier {
     if (isLoaded) {
       await fetchDataActivePackage(token);
     }
+    
     await Future.delayed(
       const Duration(seconds: 5),
     ).then((value) {
