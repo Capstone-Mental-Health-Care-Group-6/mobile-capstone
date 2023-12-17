@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/utils/baseurl.dart';
-import 'package:flutter/material.dart';
 
 class PsikologApiService{
   final Dio _dio = Dio();
