@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatAIScreen extends StatefulWidget {
-  const ChatAIScreen({Key? key}) : super(key: key);
+  const ChatAIScreen({super.key});
 
   @override
   State<ChatAIScreen> createState() => _ChatAIScreenState();

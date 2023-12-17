@@ -10,7 +10,7 @@ class PaketProvider extends ChangeNotifier {
   int selectedMetode = 1, selectedDuration = 1;
   PaketService paketService = PaketService();
 
-  List listPaket = [], listMethods = [], listDuration = [];
+  List? listPaket, listMethods = [], listDuration = [];
 
   Future init(BuildContext context) async {
     isInstan = true;
@@ -25,7 +25,8 @@ class PaketProvider extends ChangeNotifier {
 
   Future getPaket(String metode, BuildContext context) async {
     try {
-      listPaket = await paketService.getPaket(metode, selectedMetode.toString(), selectedDuration.toString());
+      listPaket = await paketService.getPaket(
+          metode, selectedMetode.toString(), selectedDuration.toString());
       isLoading = false;
 
       // log(jsonDecode(response.data));

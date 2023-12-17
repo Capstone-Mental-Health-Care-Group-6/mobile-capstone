@@ -10,12 +10,12 @@ class PsikologModel {
     factory PsikologModel.fromJson(Map<String, dynamic> json) => PsikologModel(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         message: json["message"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "message": message,
-    };
+      };
 }
 
 class Datum {
@@ -73,7 +73,7 @@ class Datum {
         required this.ratings,
     });
 
-    factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         userId: json["user_id"],
         doctorName: json["doctor_name"],
@@ -101,7 +101,7 @@ class Datum {
         ratings: List<Rating>.from(json["ratings"].map((x) => Rating.fromJson(x))),
     );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
         "doctor_name": doctorName,
@@ -138,32 +138,32 @@ class Education {
     DateTime doctorEnrollYear;
     DateTime doctorGraduateYear;
 
-    Education({
-        required this.id,
-        required this.doctorId,
-        required this.doctorUniversity,
-        required this.doctorStudyProgram,
-        required this.doctorEnrollYear,
-        required this.doctorGraduateYear,
-    });
+  Education({
+    required this.id,
+    required this.doctorId,
+    required this.doctorUniversity,
+    required this.doctorStudyProgram,
+    required this.doctorEnrollYear,
+    required this.doctorGraduateYear,
+  });
 
-    factory Education.fromJson(Map<String, dynamic> json) => Education(
+  factory Education.fromJson(Map<String, dynamic> json) => Education(
         id: json["id"],
         doctorId: json["doctor_id"],
         doctorUniversity: json["doctor_university"],
         doctorStudyProgram: json["doctor_study_program"],
         doctorEnrollYear: DateTime.parse(json["doctor_enroll_year"]),
         doctorGraduateYear: DateTime.parse(json["doctor_graduate_year"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "doctor_id": doctorId,
         "doctor_university": doctorUniversity,
         "doctor_study_program": doctorStudyProgram,
         "doctor_enroll_year": doctorEnrollYear.toIso8601String(),
         "doctor_graduate_year": doctorGraduateYear.toIso8601String(),
-    };
+      };
 }
 
 class Experience {
@@ -175,17 +175,17 @@ class Experience {
     DateTime doctorStartDate;
     DateTime doctorEndDate;
 
-    Experience({
-        required this.id,
-        required this.doctorId,
-        required this.doctorCompany,
-        required this.doctorTitle,
-        required this.doctorCompanyAddress,
-        required this.doctorStartDate,
-        required this.doctorEndDate,
-    });
+  Experience({
+    required this.id,
+    required this.doctorId,
+    required this.doctorCompany,
+    required this.doctorTitle,
+    required this.doctorCompanyAddress,
+    required this.doctorStartDate,
+    required this.doctorEndDate,
+  });
 
-    factory Experience.fromJson(Map<String, dynamic> json) => Experience(
+  factory Experience.fromJson(Map<String, dynamic> json) => Experience(
         id: json["id"],
         doctorId: json["doctor_id"],
         doctorCompany: json["doctor_company"],
@@ -193,9 +193,9 @@ class Experience {
         doctorCompanyAddress: json["doctor_company_address"],
         doctorStartDate: DateTime.parse(json["doctor_start_date"]),
         doctorEndDate: DateTime.parse(json["doctor_end_date"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "doctor_id": doctorId,
         "doctor_company": doctorCompany,
@@ -203,7 +203,7 @@ class Experience {
         "doctor_company_address": doctorCompanyAddress,
         "doctor_start_date": doctorStartDate.toIso8601String(),
         "doctor_end_date": doctorEndDate.toIso8601String(),
-    };
+      };
 }
 
 class Rating {
@@ -253,47 +253,46 @@ final doctorReviewValues = EnumValues({
 });
 
 class Workday {
-    int id;
-    int doctorId;
-    int workdayId;
-    DateTime startTime;
-    DateTime endTime;
+  int id;
+  int doctorId;
+  int workdayId;
+  DateTime startTime;
+  DateTime endTime;
 
-    Workday({
-        required this.id,
-        required this.doctorId,
-        required this.workdayId,
-        required this.startTime,
-        required this.endTime,
-    });
+  Workday({
+    required this.id,
+    required this.doctorId,
+    required this.workdayId,
+    required this.startTime,
+    required this.endTime,
+  });
 
-    factory Workday.fromJson(Map<String, dynamic> json) => Workday(
+  factory Workday.fromJson(Map<String, dynamic> json) => Workday(
         id: json["id"],
         doctorId: json["doctor_id"],
         workdayId: json["workday_id"],
         startTime: DateTime.parse(json["start_time"]),
         endTime: DateTime.parse(json["end_time"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "doctor_id": doctorId,
         "workday_id": workdayId,
         "start_time": startTime.toIso8601String(),
         "end_time": endTime.toIso8601String(),
-    };
+      };
 }
 
 class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
 
-    EnumValues(this.map);
+  EnumValues(this.map);
 
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
 }
-
 String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI3NTc1MTgsImlhdCI6MTcwMjc1MzkxOCwiaWQiOjcsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0.WaNx4uwrXSOjoPrxZz6ZgDoX7YZktFJDCZzGf1-2X9c";
