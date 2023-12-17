@@ -24,7 +24,7 @@ class JwtService {
 
 class UrlBuilderService {
   String buildUrl(int id) {
-    return '${Url.baseUrl}/transaksi/patient/2';
+    return '${Url.baseUrl}/transaksi/patient/$id';
   }
 }
 
