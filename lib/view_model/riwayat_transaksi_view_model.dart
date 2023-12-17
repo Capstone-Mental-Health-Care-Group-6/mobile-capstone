@@ -31,6 +31,5 @@ class RiwayatTransaksiProvider extends ChangeNotifier {
 
   void setId(String newId) {
     _id = newId;
-    print(id);
   }
 }
