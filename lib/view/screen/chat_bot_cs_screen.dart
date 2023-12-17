@@ -4,8 +4,9 @@ import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class ChatMenuScreen extends StatefulWidget {
-  const ChatMenuScreen({Key? key}) : super(key: key);
+  const ChatMenuScreen({super.key});
 
   @override
   State<ChatMenuScreen> createState() => _ChatMenuScreenState();
@@ -13,9 +14,6 @@ class ChatMenuScreen extends StatefulWidget {
 
 class _ChatMenuScreenState extends State<ChatMenuScreen> {
   late ChatBotCSProvider _chatBotProvider;
-  OverlayEntry? overlayEntry;
-  bool isOverlayVisible = false;
-  bool cancelDelete = false;
 
   @override
   void initState() {
@@ -27,64 +25,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
   @override
   void dispose() {
     _chatBotProvider.clearMessages();
-    overlayEntry?.remove();
     super.dispose();
-  }
-
-  void toggleOverlayVisibility() {
-    overlayEntry?.remove();
-    setState(() {
-      isOverlayVisible = !isOverlayVisible;
-      cancelDelete = false;
-    });
-  }
-
-  void showButtonOverlay(BuildContext context) {
-    overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        top: 40.0,
-        right: 10.0,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                blurRadius: 5,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  _chatBotProvider.clearMessages();
-                  toggleOverlayVisibility();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffCD2121),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
-                child: const Text(
-                  'Hapus Pesan',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-
-    Overlay.of(context).insert(overlayEntry!);
-
-    setState(() {
-      isOverlayVisible = true;
-    });
   }
 
   @override
@@ -95,82 +36,51 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           'HelpBot',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (isOverlayVisible) {
-              toggleOverlayVisibility();
-            } else {
-              Navigator.of(context).pop();
-            }
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {
-              if (isOverlayVisible) {
-                toggleOverlayVisibility();
-              } else {
-                showButtonOverlay(context);
-              }
-            },
-          ),
-        ],
       ),
-      body: GestureDetector(
-        onTap: () {
-          if (isOverlayVisible && !cancelDelete) {
-            toggleOverlayVisibility();
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(
-            top: 10,
-            bottom: 10,
-            left: 5,
-            right: 10,
-          ),
-          child: Column(
-            children: [
-              Text('$formattedDate $formattedHour'),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Consumer<ChatBotCSProvider>(
-                      builder: (context, provider, child) {
-                        return ListView.builder(
-                          itemCount: provider.chatBotCs.length,
-                          itemBuilder: (context, index) {
-                            final message = provider.chatBotCs[index];
-                            var buttonKey = index;
+      body: Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
+          bottom: 10,
+          left: 5,
+          right: 10,
+        ),
+        child: Column(
+          children: [
+            Text('$formattedDate $formattedHour'),
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Consumer<ChatBotCSProvider>(
+                    builder: (context, provider, child) {
+                      return ListView.builder(
+                        itemCount: provider.chatBotCs.length,
+                        itemBuilder: (context, index) {
+                          final message = provider.chatBotCs[index];
+                          var buttonKey = index;
 
-                            return Align(
-                              alignment: message.isUser
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              child: message.isUser
-                                  ? _buildUserMessageContainer(message)
-                                  : (message.text.contains("Selamat") ||
-                                          message.text.contains("1") ||
-                                          message.text
-                                              .startsWith('Explanation') ||
-                                          message.text
-                                              .contains("Bagaimanakah") ||
-                                          message.text.contains("Terimakasih"))
-                                      ? _buildBotMessageContainer(message)
-                                      : _buildMenuResponseButton(
-                                          message, index, buttonKey, provider),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
+                          return Align(
+                            alignment: message.isUser
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: message.isUser
+                                ? _buildUserMessageContainer(message)
+                                : (message.text.contains("Selamat") ||
+                                        provider.menuExplanations.values
+                                            .contains(message.text) ||
+                                        message.text.contains("Terimakasih") ||
+                                        message.text.contains("Bagaimanakah"))
+                                    ? _buildBotMessageContainer(message)
+                                    : _buildMenuResponseButton(
+                                        message, index, buttonKey, provider),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -236,6 +146,8 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
       ),
     );
   }
+
+
 
   Widget _buildMenuResponseButton(
     ChatBotCS message,
