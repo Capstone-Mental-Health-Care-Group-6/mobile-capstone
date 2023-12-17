@@ -23,7 +23,7 @@ class InvoiceRatingWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset('assets/doctorEllipse.png'),
+              Image.asset('assets/images/doctorEllipse.png'),
               const SizedBox(
                 width: 20.0,
               ),
