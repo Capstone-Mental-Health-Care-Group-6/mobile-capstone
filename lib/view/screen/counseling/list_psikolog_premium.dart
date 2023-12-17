@@ -1,5 +1,4 @@
 import 'package:dotted_line/dotted_line.dart';
-import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog.dart';
 import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
@@ -7,6 +6,7 @@ import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ListPsikologPremium extends StatefulWidget {
@@ -20,12 +20,19 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
   bool tersedia = false;
 
   late PsikologProvider provider;
+  late SharedPreferences sp;
+  String token = '';
 
   @override
   void initState() {
     provider = Provider.of<PsikologProvider>(context, listen: false);
     provider.fetchListPsikolog(token);
     super.initState();
+  }
+
+  void initial() async {
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
   }
 
   @override
@@ -219,9 +226,15 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (_)=> const ProfilePsikologScreen(isInstan: false, session: 2)));
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const ProfilePsikologScreen(
+                                                            isInstan: false,
+                                                            session: 2)));
                                           },
-                                          child: Text(
+                                          child: const Text(
                                             "Mulai Chat",
                                             style: TextStyle(
                                               fontSize: 16,
@@ -561,9 +574,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                                   BorderRadius.circular(
                                             8,
                                           ))),
-                                      onPressed: () {
-                                        
-                                      },
+                                      onPressed: () {},
                                       child: SizedBox(
                                         width: getTextWidth(
                                             "Mulai Chat",
@@ -622,8 +633,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                             ),
                                           ),
                                         ),
-                                      )
-                                      ),
+                                      )),
                             ],
                           ),
                         ],

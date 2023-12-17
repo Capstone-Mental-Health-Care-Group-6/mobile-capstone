@@ -1,8 +1,8 @@
-import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RekomendasiPsikologInstant extends StatefulWidget {
@@ -18,12 +18,19 @@ class _RekomendasiPsikologInstantState
   final _formKey = GlobalKey<FormState>();
 
   late PsikologProvider provider;
+  late SharedPreferences sp;
+  String token = '';
 
   @override
   void initState() {
     provider = Provider.of<PsikologProvider>(context, listen: false);
     provider.fetchListPsikolog(token);
     super.initState();
+  }
+
+  void initial() async {
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
   }
 
   @override
@@ -215,7 +222,7 @@ class _RekomendasiPsikologInstantState
                                                     //                 isInstan:
                                                     //                     true)));
                                                   },
-                                                  child: Text(
+                                                  child: const Text(
                                                     "Mulai Chat",
                                                     style: TextStyle(
                                                       fontSize: 16,

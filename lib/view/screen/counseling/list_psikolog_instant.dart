@@ -4,8 +4,8 @@ import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +19,9 @@ class ListPsikologInstant extends StatefulWidget {
 class _ListPsikologInstantState extends State<ListPsikologInstant> {
   bool tersedia = false;
   late PsikologProvider provider;
-  bool isLoading = true, tersedia = true;
+  bool isLoading = true;
+  late SharedPreferences sp;
+  String token = '';
 
   Future<void> delayLoading() async {
     Future.delayed(const Duration(seconds: 5)).then((value) {
@@ -32,8 +34,14 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
   @override
   void initState() {
     provider = Provider.of<PsikologProvider>(context, listen: false);
-    provider.fetchListPsikolog(token);
+    initial();
     super.initState();
+  }
+
+  void initial() async {
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
+    provider.fetchListPsikolog(token);
   }
 
   @override
@@ -52,7 +60,6 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        surfaceTintColor: Colors.white,
       ),
       body: Builder(builder: (context) {
         return Consumer<PsikologProvider>(builder: (context, value, child) {
@@ -225,9 +232,14 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                           ),
                                         ),
                                         onPressed: () {
-                                         Navigator.push(context, MaterialPageRoute(builder: (_)=>const ProfilePsikologScreen(isInstan: true)));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      const ProfilePsikologScreen(
+                                                          isInstan: true)));
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           "Mulai Chat",
                                           style: TextStyle(
                                             fontSize: 16,

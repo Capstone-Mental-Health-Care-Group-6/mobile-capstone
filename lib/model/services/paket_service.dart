@@ -9,14 +9,14 @@ class PaketService {
 
   Future getPaket(String type, String metode, String durasi) async {
     try {
-      final response;
+      final Response response;
       if (type == "PREMIUM") {
         response = await dio.get(
-          "$url/mobile/bundle?type=${type}&metode=${metode}&durasi=${durasi}",
+          "$url/mobile/bundle?type=$type&metode=$metode&durasi=$durasi",
         );
       } else {
         response = await dio.get(
-          "$url/mobile/bundle?type=${type}",
+          "$url/mobile/bundle?type=$type",
         );
       }
       final responseBody = response.data['data'];
