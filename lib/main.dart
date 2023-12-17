@@ -15,6 +15,8 @@ import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
+import 'package:empathi_care/view_model/payment_method_view_model.dart';
+import 'package:empathi_care/view_model/transaction_view_model.dart';
 import 'package:empathi_care/view_model/rating_and_review_view_model.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:empathi_care/view_model/update_profile_view_model.dart';
@@ -58,6 +60,10 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => ChatBotCSProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => PaymentMethodViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => TransactionViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => RegisterViewModel()),
           ChangeNotifierProvider(
