@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_model.dart';
 import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class PremiumViewModel extends ChangeNotifier {
   final ActivePackageService _activePackageService = ActivePackageService(
