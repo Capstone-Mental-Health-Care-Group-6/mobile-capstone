@@ -5,7 +5,6 @@ class ActivePackageModel {
   ActivePackageModel({this.data, this.message});
 
   ActivePackageModel.fromJson(Map<String, dynamic> json) {
-    // data = (json['data'] != null ? Data.fromJson(json['data']) : null) ;
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
@@ -18,7 +17,6 @@ class ActivePackageModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
-      // data['data'] = this.data!.toJson();
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['message'] = message;
@@ -61,28 +59,6 @@ class Data {
       this.counselingType,
       this.counselingMethod,
       this.counselingTopic,});
-
-      // @override
-  // String toString(){
-  //   return '{'
-  //     'id : $id, '
-  // 'transactionId : $transactionId, '
-  // 'userId: $userId'
-  // 'String? doctorAvatar'
-  // 'String? doctorName'
-  // 'int? doctorExpertise'
-  // 'String? doctorMeetLink'
-  // 'String? date'
-  // 'String? time'
-  // 'int? duration'
-  // 'String? status'
-  // 'String? createdAt'
-  // 'String? updatedAt'
-  // 'String? counselingType'
-  // 'String? counselingMethod'
-  // 'String? counselingTopic;'
-  //   '}';
-  // }
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];

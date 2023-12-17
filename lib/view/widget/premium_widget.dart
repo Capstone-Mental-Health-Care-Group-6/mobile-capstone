@@ -214,11 +214,6 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                             decoration: BoxDecoration(
                               color: data1.date! == 'masa'
                                   ? const Color(0xff54C438)
-                                  // : listPaket[index]['status'] == 'Masa aktif 14 hari'
-                                  //     ? const Color(0xffFFBB00)
-                                  //     : listPaket[index]['status'] ==
-                                  //             'Masa aktif 6 hari'
-                                  //         ? const Color(0xffFF3932)
                                   : const Color(0xff959595),
                               borderRadius: BorderRadius.circular(
                                 4.0,
