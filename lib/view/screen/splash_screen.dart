@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
           end: Alignment.bottomCenter,
         )),
         child: Center(
-          child: SvgPicture.asset('assets/image/EmpathiCare_Logo.svg'),
+          child: SvgPicture.asset('assets/icons/EmpathiCare_Logo.svg'),
         ),
       ),
     );

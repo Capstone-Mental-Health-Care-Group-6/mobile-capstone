@@ -3,22 +3,17 @@ import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:flutter/material.dart';
 
 class CardInvoicePayment extends StatelessWidget {
-  const CardInvoicePayment({Key? key}) : super(key: key);
+  const CardInvoicePayment({super.key});
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Container(
-          height: 400,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: _buildContent(),
-        ),
+    return Container(
+      height: 420,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
       ),
+      child: _buildContent(),
     );
   }
 
