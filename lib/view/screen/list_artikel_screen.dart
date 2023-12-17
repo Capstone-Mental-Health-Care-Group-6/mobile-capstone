@@ -30,6 +30,7 @@ class _AllArticlesPageState extends State<AllArticlesPage> {
     }
   }
 
+  @override
   void initState() {
     super.initState();
     Provider.of<ArticleProvider>(context, listen: false).fetchArticles();

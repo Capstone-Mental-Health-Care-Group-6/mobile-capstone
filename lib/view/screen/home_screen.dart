@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final double _fabBottomPosition = 16.0;
+  @override
   void initState() {
     super.initState();
     Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
@@ -180,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         children: articleProvider.articles.map((article) {
                           return GestureDetector(
                             onTap: () {
@@ -200,7 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Container(
                               margin: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                boxShadow: [],
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Column(
@@ -219,8 +219,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(22),
-                                    decoration: BoxDecoration(
+                                    padding: const EdgeInsets.all(22),
+                                    decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(10),
                                         bottomRight: Radius.circular(10),
@@ -236,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               const EdgeInsets.only(left: 11),
                                           child: Text(
                                             article.title,
-                                            style: TextStyle(fontSize: 12),
+                                            style:
+                                                const TextStyle(fontSize: 12),
                                             textAlign: TextAlign.start,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,

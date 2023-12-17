@@ -21,8 +21,7 @@ class ArticleWidget extends StatelessWidget {
           date: '17 Oktober 2023',
           imagePath: article.thumbnail,
           category: article.categoryName,
-          content:
-              article.content ?? '', // You can modify this based on your data
+          content: article.content,
         ),
       ),
     );
@@ -82,9 +81,9 @@ class ArticleWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
+                      const Text(
                         '17 Oktober 2023',
-                        style: const TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Colors.grey),
                       ),
                       const SizedBox(height: 20),
                     ],
