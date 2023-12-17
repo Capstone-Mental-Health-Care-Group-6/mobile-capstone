@@ -34,6 +34,7 @@ dependencies:
   dio: ^5.4.0
   dotted_border: ^2.1.0
   dotted_line: ^3.2.2
+  file_picker: ^6.1.1
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.9
@@ -45,8 +46,9 @@ dependencies:
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
   toggle_switch: ^2.1.0
-  file_picker: ^6.1.1
   animation_search_bar: ^0.0.10
+  shared_preferences: ^2.2.2
+
 
 dev_dependencies:
   flutter_lints: ^3.0.1
