@@ -9,16 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfilePsikologScreen extends StatefulWidget {
-  final bool isInstan;
-  final DateTime? dateKonseling;
-  final int? session;
-
   const ProfilePsikologScreen({
-    Key? key,
-    required this.isInstan,
-    this.dateKonseling,
-    this.session,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ProfilePsikologScreen> createState() => _ProfilePsikologScreenState();
@@ -46,7 +39,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
     getCalledar();
 
     prov = context.read<ProfilePsikologProvider>();
-    prov.init(widget.isInstan);
+    prov.init(context);
     super.initState();
   }
 
@@ -1099,7 +1092,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 2,
+      itemCount: prov.session,
       itemBuilder: (context, indexList) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

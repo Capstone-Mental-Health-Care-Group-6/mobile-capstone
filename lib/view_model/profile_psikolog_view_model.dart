@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:empathi_care/model/services/profile_psikolog_service.dart';
+import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePsikologProvider extends ChangeNotifier {
@@ -13,25 +15,25 @@ class ProfilePsikologProvider extends ChangeNotifier {
   List ratings = [];
   int session = 0;
   final profileService = ProfilePsikologService();
+  late PaketProvider paketProvider;
 
   List<Map<String, dynamic>> selectedWorkday = [];
   List selectedDate = [];
 
-  void init(bool instan) async {
+  void init(BuildContext context) async {
+    isLoading = true;
+    paketProvider = context.read<PaketProvider>();
     dataDoctor.clear();
     selectedWorkday.clear();
     avgRating = "0";
-    isInstan = instan;
+    isInstan = paketProvider.isInstan;
 
-    session = 2;
+    session = paketProvider.listPaket[paketProvider.selectedPaket!]['sessions'];
     final pref = await SharedPreferences.getInstance();
 
     if (isInstan) {
       selectedWorkday.add({"workday": {}, "selected": false});
     }
-
-    await pref.setString('token',
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI5MTMxMDgsImlhdCI6MTcwMjgyNjcwOCwiaWQiOjUsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0.8ogVb7Bk5INio-gT4wHYhWqT2cX7bnzCBiuYgNfSLlc");
 
     log(pref.getString("token").toString());
 
