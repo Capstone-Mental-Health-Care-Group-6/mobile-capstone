@@ -20,7 +20,6 @@ class InstantViewModel extends ChangeNotifier {
   int _selectedIndex = 0;
 
   ActivePackageModel? _activePackageModel;
-
   ActivePackageModel? get activePackageModel => _activePackageModel;
   int get selectedIndex => _selectedIndex;
 

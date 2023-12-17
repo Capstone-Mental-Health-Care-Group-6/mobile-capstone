@@ -18,7 +18,6 @@ class PremiumViewModel extends ChangeNotifier {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4NzkxNTMsImlhdCI6MTcwMjc5Mjc1MywiaWQiOjYzLCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.kDsfAWh1RA_7YhB6jcJdlr9x-pBVLxS_NdkORKErLNQ";
 
   int _selectedIndex = 0;
-
   ActivePackageModel? _activePackageModel;
 
   ActivePackageModel? get activePackageModel => _activePackageModel;
