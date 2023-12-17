@@ -25,7 +25,8 @@ class ActivePackageViewModel extends ChangeNotifier {
     if (isLoaded) {
       await fetchDataActivePackage(token);
     }
-    
+
+
     await Future.delayed(
       const Duration(seconds: 5),
     ).then((value) {
@@ -33,6 +34,7 @@ class ActivePackageViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
+
 
   Future<ActivePackageModel> fetchDataActivePackage(String token) async {
     _activePackageModel = await _activePackageService.fetchData(token);
