@@ -11,13 +11,11 @@ import 'package:shimmer/shimmer.dart';
 class ProfilePsikologScreen extends StatefulWidget {
   final bool isInstan;
   final DateTime? dateKonseling;
-  final int? session;
 
   const ProfilePsikologScreen({
     Key? key,
     required this.isInstan,
     this.dateKonseling,
-    this.session,
   }) : super(key: key);
 
   @override

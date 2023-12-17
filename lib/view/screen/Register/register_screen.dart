@@ -1,8 +1,7 @@
-import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_1_screen.dart';
+import 'package:empathi_care/view/screen/Register/verification_screen.dart';
 import 'package:empathi_care/view/screen/login_screen.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
-import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,16 +15,15 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  late PasswordProvider passwordProvider;
-  late RegisterViewModel registerViewModel;
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+
+  late PasswordProvider passwordProvider;
   @override
   void initState() {
     passwordProvider = Provider.of(context, listen: false);
-    registerViewModel = Provider.of(context, listen: false);
     passwordProvider.check = false;
     passwordProvider.visiblePassword = true;
     passwordProvider.visiblePassword2 = true;
@@ -223,10 +221,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         );
                       } else {
-                        registerViewModel.email = emailController.text;
-                        registerViewModel.password = passwordController.text;
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const FillingProfile1()));
+                            builder: (_) => VerificationScreen(
+                                  email: emailController.text,
+                                )));
                       }
                     }
                   },

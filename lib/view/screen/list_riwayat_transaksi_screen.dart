@@ -1,16 +1,14 @@
-import 'package:empathi_care/model/riwayat_transaksi_model.dart';
-import 'package:empathi_care/utils/constant/currency.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
-import 'package:empathi_care/view/screen/riwayat_transaksi_isnone.dart';
-import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
+import 'package:empathi_care/view/screen/HistoryTransactions/detail_transaction.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class ListRiwayatTransaksi extends StatefulWidget {
+class ListRiwayatTransaksi extends StatelessWidget {
   const ListRiwayatTransaksi({super.key});
 
   @override
+<<<<<<< HEAD
+=======
   State<ListRiwayatTransaksi> createState() => _ListRiwayatTransaksiState();
 }
 
@@ -22,37 +20,72 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
   }
 
   @override
+>>>>>>> development
   Widget build(BuildContext context) {
-    final riwayatTransaksiProvider =
-        Provider.of<RiwayatTransaksiProvider>(context, listen: false);
-
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Riwayat Pemesanan",
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                fontFamily: MyFont.fontMontserrat),
-          ),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1.5),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 185, 185, 185),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.25),
-                    spreadRadius: 0.2,
-                    blurRadius: 1,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
-              ),
-              height: 1,
+      appBar: AppBar(
+        title: const Text(
+          "Riwayat Pemesanan",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+              fontFamily: MyFont.fontMontserrat),
+        ),
+        surfaceTintColor: Colors.white,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.5),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 185, 185, 185),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  spreadRadius: 0.2,
+                  blurRadius: 1,
+                  offset: const Offset(0, 1),
+                ),
+              ],
             ),
+            height: 1,
           ),
         ),
+<<<<<<< HEAD
+      ),
+      body: SingleChildScrollView(
+          child: Column(
+        children: [
+          buildListDokter(
+              "assets/images/Dokter 1.png",
+              "Rangga S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 10, 26, 19, 30)),
+              true, context),
+          buildListDokter(
+              "assets/images/Dokter 2.png",
+              "Melani S.Psi., M.Psi",
+              "Rp.40.000",
+              getFormattedDateRiwayat(DateTime(2023, 03, 21, 18, 00)),
+              true, context),
+          buildListDokter(
+              "assets/images/Dokter 3.png",
+              "Seto Mulyadi S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 02, 20, 20, 30)),
+              true, context),
+          buildListDokter(
+              "assets/images/Dokter 4.png",
+              "Roslina Vearuli S.Psi., M.Psi",
+              "Rp.50.000",
+              getFormattedDateRiwayat(DateTime(2023, 01, 16, 19, 30)),
+              false, context)
+        ],
+      )),
+    );
+  }
+
+  Widget buildListDokter(
+      String img, String name, String harga, String tgl, bool berirating, BuildContext context) {
+=======
         body: FutureBuilder<RiwayatTransaksi>(
           future: riwayatTransaksiProvider.getData(),
           builder: (context, snapshot) {
@@ -90,6 +123,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
     final berirating = transaction.doctorStarRating! > 0;
     riwayatTransaksiProvider.setId(transaction.transactionId ?? '');
     riwayatTransaksiProvider.addata();
+>>>>>>> development
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(
@@ -103,9 +137,12 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
                     fontWeight: FontWeight.w600)),
           ),
           ListTile(
-            leading: CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(img),
+            leading: ClipOval(
+              child: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.transparent,
+                child: Image.asset(img),
+              ),
             ),
             title: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -160,7 +197,9 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
                     const Spacer(),
                     berirating
                         ? ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_)=> const DetailTransaction()));
+                            },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 3,
