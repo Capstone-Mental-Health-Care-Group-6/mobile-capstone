@@ -1,17 +1,25 @@
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/active_package_view_model.dart';
+import 'package:empathi_care/view_model/change_password_view_model.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view_model/enabled_button_provider.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
 import 'package:empathi_care/view_model/instant_view_model.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
+import 'package:empathi_care/view_model/paket_view_model.dart';
+import 'package:empathi_care/view_model/konseling_view_model.dart';
+import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
+import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/premium_view_model.dart';
+import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 
 void main() {
   initializeDateFormatting('id', null).then((_) {
@@ -32,9 +40,14 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) =>
                   CountDownPaymentSuccessProvider()),
-          ChangeNotifierProvider<NavigationProvider>(
-            create: (create) => NavigationProvider(),
-          ),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => NavigationProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => FillingProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => PaketProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => NavigationProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
@@ -47,6 +60,20 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => PremiumViewModel()),
               ChangeNotifierProvider(
               create: (BuildContext context) => ActivePackageViewModel()),
+ChangeNotifierProvider(
+              create: (BuildContext context) => RegisterViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => RiwayatTransaksiProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => ChangePasswordViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => PsikologProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => KonselingProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => LoginViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => GetPatientByIdViewModel()),
         ],
         builder: (context, child) {
           return MaterialApp(
