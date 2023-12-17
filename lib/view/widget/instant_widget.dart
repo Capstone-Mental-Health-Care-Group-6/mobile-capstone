@@ -154,31 +154,31 @@ class _InstantWidgetState extends State<InstantWidget> {
                                       ),),
                                 ),
                               ),
-                              // Container(
-                              //   margin: const EdgeInsets.all(
-                              //     2.9,
-                              //   ),
-                              //   padding: const EdgeInsets.all(
-                              //     1.5,
-                              //   ),
-                              //   height: 9.0,
-                              //   width: 9.0,
-                              //   decoration: const BoxDecoration(
-                              //     color: Colors.white,
-                              //     shape: BoxShape.circle,
-                              //   ),
-                              //   child: Container(
-                              //     decoration: BoxDecoration(
-                              //       color: listPaket[index]['statusDoctor'] ==
-                              //               'online'
-                              //           ? Colors.green
-                              //           : listPaket[index]['statusDoctor'] == 'sibuk'
-                              //               ? const Color(0xffFFF311)
-                              //               : Colors.grey,
-                              //       shape: BoxShape.circle,
-                              //     ),
-                              //   ),
-                              // ),
+                              Container(
+                                margin: const EdgeInsets.all(
+                                  2.9,
+                                ),
+                                padding: const EdgeInsets.all(
+                                  1.5,
+                                ),
+                                height: 9.0,
+                                width: 9.0,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Container(
+                                  // decoration: BoxDecoration(
+                                  //   color: listPaket[index]['statusDoctor'] ==
+                                  //           'online'
+                                  //       ? Colors.green
+                                  //       : listPaket[index]['statusDoctor'] == 'sibuk'
+                                  //           ? const Color(0xffFFF311)
+                                  //           : Colors.grey,
+                                  //   shape: BoxShape.circle,
+                                  // ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
