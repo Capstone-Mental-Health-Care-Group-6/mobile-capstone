@@ -18,8 +18,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
   @override
   void initState() {
     super.initState();
-    Provider.of<RiwayatTransaksiProvider>(context, listen: false)
-        .getData(token);
+    Provider.of<RiwayatTransaksiProvider>(context, listen: false).getData();
   }
 
   @override
@@ -55,23 +54,23 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
           ),
         ),
         body: FutureBuilder<RiwayatTransaksi>(
-          future: riwayatTransaksiProvider.getData(token),
+          future: riwayatTransaksiProvider.getData(),
           builder: (context, snapshot) {
-            
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
               final riwayatTransaksi = snapshot.data!;
-              return riwayatTransaksi.message!.contains("data")? 
-               const RiwayatPemesananIsnone() :ListView.builder(
-                itemCount: riwayatTransaksi.data?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return buildListDokter(
-                      riwayatTransaksi.data![index], context);
-                },
-              );
+              return riwayatTransaksi.message!.contains("data")
+                  ? const RiwayatPemesananIsnone()
+                  : ListView.builder(
+                      itemCount: riwayatTransaksi.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return buildListDokter(
+                            riwayatTransaksi.data![index], context);
+                      },
+                    );
             }
           },
         ));
@@ -79,15 +78,18 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
 
   Widget buildListDokter(
       DataRiwayatTransaksi transaction, BuildContext context) {
+        final riwayatTransaksiProvider =
+        Provider.of<RiwayatTransaksiProvider>(context, listen: false);
+
     final tgl = transaction.createdAt != null
         ? getFormattedDateRiwayat(transaction.createdAt!)
         : '';
-
-    final img = transaction.patientAvatar ?? '';
+    final img = transaction.doctorAvatar ?? '';
     final name = transaction.doctorName ?? '';
-    final harga = formatRupiah(transaction.priceResult as double);
+    final harga = formatRupiah(transaction.priceResult);
     final berirating = transaction.doctorStarRating! > 0;
-
+    riwayatTransaksiProvider.setId(transaction.transactionId ?? '');
+    riwayatTransaksiProvider.addata();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(

@@ -1,3 +1,5 @@
+import 'package:empathi_care/model/psikolog_model.dart';
+import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -166,30 +168,31 @@ class _RekomendasiPsikologInstantState
                                           const SizedBox(height: 6),
                                           Row(
                                             children: [
-                                              const Row(
+                                              Row(
                                                 children: [
-                                                  Icon(
+                                                  const Icon(
                                                     Icons.thumbs_up_down,
                                                     color: Colors.blue,
                                                   ),
-                                                  SizedBox(width: 7),
+                                                  const SizedBox(width: 7),
                                                   Text(
-                                                    "69%",
-                                                    style: TextStyle(
+                                                    "${provider.percentageRating.toString()} %",
+                                                    style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 12,
                                                     ),
                                                   ),
-                                                  SizedBox(width: 8),
-                                                  Icon(
+                                                  const SizedBox(width: 8),
+                                                  const Icon(
                                                     Icons.rate_review,
                                                     color: Colors.blue,
                                                   ),
-                                                  SizedBox(width: 7),
+                                                  const SizedBox(width: 7),
                                                   Text(
-                                                    "3200",
-                                                    style: TextStyle(
+                                                    provider.countReviewDocter
+                                                        .toString(),
+                                                    style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontSize: 12,
@@ -214,13 +217,13 @@ class _RekomendasiPsikologInstantState
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (_) =>
-                                                    //             const ProfilePsikologScreen(
-                                                    //                 isInstan:
-                                                    //                     true)));
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                const ProfilePsikologScreen(
+                                                                    isInstan:
+                                                                        true)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",
