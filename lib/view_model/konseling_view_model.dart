@@ -8,7 +8,7 @@ class KonselingProvider extends ChangeNotifier {
 
   KonselingData get topikKonseling => _topikKonseling;
 
-  Future<void> fetchTopikKonseling(String token) async {
+  Future<void> fetchTopikKonseling() async {
     try {
       _topikKonseling = await _apiService.fetchTopik();
       notifyListeners();

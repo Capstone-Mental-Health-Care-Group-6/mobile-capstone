@@ -17,7 +17,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
   void initState() {
     super.initState();
     Provider.of<KonselingProvider>(context, listen: false)
-        .fetchTopikKonseling(token);
+        .fetchTopikKonseling();
   }
 
   @override
