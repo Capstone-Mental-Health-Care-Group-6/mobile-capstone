@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:empathi_care/model/active_package_model.dart';
+import 'package:empathi_care/model/active_package_models.dart';
 import 'package:flutter/material.dart';
 
 class JwtService {

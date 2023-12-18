@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_models.dart';
-import 'package:empathi_care/model/services/active_package_service.dart';
+import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:flutter/material.dart';
 
 class InstantViewModel extends ChangeNotifier {
