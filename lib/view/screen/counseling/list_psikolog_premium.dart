@@ -252,9 +252,9 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (_) =>
-                                                        const ProfilePsikologScreen(
+                                                         ProfilePsikologScreen(
                                                             isInstan: false,
-                                                            session: 2)));
+                                                            session: 2, doctor_id:data.id)));
                                           },
                                           child: const Text(
                                             "Mulai Chat",

@@ -150,8 +150,8 @@ class _RekomendasiPsikologInstantState
                                                     const SizedBox(height: 5),
                                                     const Text(
                                                       "Spesialis Positive psychology",
-                                                      style:
-                                                          TextStyle(fontSize: 14),
+                                                      style: TextStyle(
+                                                          fontSize: 14),
                                                     ),
                                                     const SizedBox(height: 3),
                                                     const Text(
@@ -223,9 +223,12 @@ class _RekomendasiPsikologInstantState
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (_) =>
-                                                                const ProfilePsikologScreen(
+                                                                ProfilePsikologScreen(
                                                                     isInstan:
-                                                                        true, session: 1,)));
+                                                                        true,
+                                                                    session: 1,
+                                                                    doctor_id:
+                                                                        data.id)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",
