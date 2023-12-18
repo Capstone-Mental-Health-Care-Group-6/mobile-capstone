@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PembayaranManualScreen extends StatefulWidget {
-  const PembayaranManualScreen({super.key, required bool isManualPayment});
+  const PembayaranManualScreen({super.key, required bool isManualPayment, required String manualPaymentMethod});
 
   @override
   State<PembayaranManualScreen> createState() => _PembayaranManualScreenState();
