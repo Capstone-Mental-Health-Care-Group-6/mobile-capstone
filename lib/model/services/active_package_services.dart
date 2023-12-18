@@ -36,31 +36,40 @@ class UrlBulService {
 
 class ActivePackageService {
   late SharedPreferences sp;
-  final Dio _dio = Dio();
   String token = '';
+  ActivePackageService();
 
   Future fetchData() async {
-    try {
-      final JwtService jwtService = JwtService();
-      final int userId = jwtService.getTokenId(token);
-      final UrlBulService urlBulService = UrlBulService();
-      final String url = urlBulService.buildUrl(userId);
-      sp = await SharedPreferences.getInstance();
+    late SharedPreferences sp;
+    final Dio _dio = Dio();
+    String token = '';
 
-      token = sp.getString('accesstoken').toString();
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
 
-      final response = await _dio.get(
-        url,
-        options: Options(
-          headers: {'Authorization': 'Bearer $token'},
-        ),
-      );
-      debugPrint('$response');
-      final activePackage = ActivePackageModel.fromJson(response.data);
-      debugPrint('$activePackage');
-      return activePackage;
-    } catch (e) {
-      rethrow;
+    Future fetchData() async {
+      try {
+        final JwtService jwtService = JwtService();
+        final int userId = jwtService.getTokenId(token);
+        final UrlBulService urlBulService = UrlBulService();
+        final String url = urlBulService.buildUrl(userId);
+        sp = await SharedPreferences.getInstance();
+
+        token = sp.getString('accesstoken').toString();
+
+        final response = await _dio.get(
+          url,
+          options: Options(
+            headers: {'Authorization': 'Bearer $token'},
+          ),
+        );
+        debugPrint('$response');
+        final activePackage = ActivePackageModel.fromJson(response.data);
+        debugPrint('$activePackage');
+        return activePackage;
+      } catch (e) {
+        rethrow;
+      }
     }
   }
 }

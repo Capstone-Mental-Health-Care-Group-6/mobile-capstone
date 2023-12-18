@@ -2,9 +2,14 @@ import 'package:empathi_care/view/widget/card_konseling_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ZoomScreen extends StatelessWidget {
+class ZoomScreen extends StatefulWidget {
   const ZoomScreen({super.key});
 
+  @override
+  State<ZoomScreen> createState() => _ZoomScreenState();
+}
+
+class _ZoomScreenState extends State<ZoomScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

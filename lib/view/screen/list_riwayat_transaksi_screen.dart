@@ -60,7 +60,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return const Center(child: CircularProgressIndicator());
             } else {
               final riwayatTransaksi = snapshot.data!;
               return riwayatTransaksi.message!.contains("data")
