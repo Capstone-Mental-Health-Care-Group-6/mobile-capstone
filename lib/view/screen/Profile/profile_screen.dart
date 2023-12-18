@@ -27,6 +27,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String gender = '';
 
   String phone = '';
+  String name = "";
+  String email = "";
   @override
   void initState() {
     getPatientByIdViewModel =
@@ -40,6 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     birth = DateTime.parse(sp.getString('birth').toString());
     gender = sp.getString('gender').toString();
     phone = sp.getString('phone').toString();
+    email = sp.getString('email').toString();
+    name = sp.getString('name').toString();
   }
 
   @override
@@ -71,14 +75,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                getPatientByIdViewModel.name,
+                                name,
                                 style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               Text(
-                                getPatientByIdViewModel.email,
+                                email,
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12, fontWeight: FontWeight.w500),
                               ),

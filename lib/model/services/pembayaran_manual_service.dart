@@ -33,7 +33,7 @@ class PembayaranManualService {
         ),
       });
       final response = await dio.post(
-        Url.baseUrl,
+        "${Url.baseUrl}/transkasi",
         data: data,
         options: Options(headers: mainheader),
       );

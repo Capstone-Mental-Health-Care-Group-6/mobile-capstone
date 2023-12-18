@@ -15,6 +15,7 @@ import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
+import 'package:empathi_care/view_model/pembayaran_manual_view_model.dart';
 import 'package:empathi_care/view_model/premium_view_model.dart';
 import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
@@ -101,6 +102,8 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => PremiumViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => ProfilePsikologProvider()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => PembayaranManualProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
