@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
+    Provider.of<ArticleProvider>(context, listen: false).fetchArticleslimit();
   }
 
   @override
@@ -213,20 +213,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Image.network(
                                       article.thumbnail,
-                                      width: double.infinity,
+                                      width: 120,
                                       height: 100,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(22),
+                                    padding: const EdgeInsets.only(top: 20),
                                     decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(10),
                                         bottomRight: Radius.circular(10),
                                       ),
                                     ),
-                                    height: 80,
+                                    height: 60,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
