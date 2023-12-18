@@ -16,6 +16,7 @@ import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/premium_view_model.dart';
+import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/payment_method_view_model.dart';
@@ -92,12 +93,14 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => UpdateProfileViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => InactivatePatientViewModel()),
-              ChangeNotifierProvider(
+          ChangeNotifierProvider(
               create: (BuildContext context) => ActivePackageViewModel()),
-              ChangeNotifierProvider(
+          ChangeNotifierProvider(
               create: (BuildContext context) => InstantViewModel()),
-              ChangeNotifierProvider(
+          ChangeNotifierProvider(
               create: (BuildContext context) => PremiumViewModel()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => ProfilePsikologProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
