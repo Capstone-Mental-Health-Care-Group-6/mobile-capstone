@@ -1,12 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:flutter/material.dart';
 
 class ActivePackageViewModel extends ChangeNotifier {
-  final ActivePackageService _activePackageService = ActivePackageService(
-    Dio(),
-  );
+  final ActivePackageService _activePackageService = ActivePackageService();
   bool isLoaded = true;
   final List<String> categories = [
     'Semua',
@@ -18,14 +15,10 @@ class ActivePackageViewModel extends ChangeNotifier {
 
   ActivePackageModel? get activePackageModel => _activePackageModel;
 
-  String token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4NzkxNTMsImlhdCI6MTcwMjc5Mjc1MywiaWQiOjYzLCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.kDsfAWh1RA_7YhB6jcJdlr9x-pBVLxS_NdkORKErLNQ";
-
-  Future<void> delayLoading(String token) async {
+  Future<void> delayLoading() async {
     if (isLoaded) {
-      await fetchDataActivePackage(token);
+      await fetchDataActivePackage();
     }
-
 
     await Future.delayed(
       const Duration(seconds: 5),
@@ -35,9 +28,8 @@ class ActivePackageViewModel extends ChangeNotifier {
     });
   }
 
-
-  Future<ActivePackageModel> fetchDataActivePackage(String token) async {
-    _activePackageModel = await _activePackageService.fetchData(token);
+  Future<ActivePackageModel> fetchDataActivePackage() async {
+    _activePackageModel = await _activePackageService.fetchData();
     try {
       if (_activePackageModel != null) {
         notifyListeners();

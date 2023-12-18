@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/midtrans_transaction_model.dart';
+import 'package:empathi_care/utils/baseurl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionService {
+  late SharedPreferences sp;
   final Dio _dio = Dio();
-  final String baseUrl = 'https://kmb5alta.online';
+  String token = '';
 
   Future<MidtransTransactionModel> makeMidtransTransaction(
       {required int topicId,
@@ -19,9 +22,10 @@ class TransactionService {
       required String paymentType,
       required int doctorId}) async {
     try {
-      const String accessToken =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4ODgxMDYsImlhdCI6MTcwMjgwMTcwNiwiaWQiOjIsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0.rsaYJDZp-Ql_-rISEXrZFgPf1aGp9T-TGokgBSsetwo';
-      final Response response = await _dio.post('$baseUrl/transaksi',
+       sp = await SharedPreferences.getInstance();
+
+      token = sp.getString('accesstoken').toString();
+      final Response response = await _dio.post('${Url.baseUrl}/transaksi',
           data: {
             'topic_id': topicId,
             'patient_id': patientId,
@@ -37,7 +41,7 @@ class TransactionService {
             'doctor_id': doctorId
           },
           options: Options(
-            headers: {"Authorization": "Bearer $accessToken"},
+            headers: {"Authorization": "Bearer $token"},
           ));
 
       return MidtransTransactionModel.fromJson(response.data);
