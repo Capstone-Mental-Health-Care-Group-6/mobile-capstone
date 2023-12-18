@@ -1,33 +1,73 @@
 import 'package:empathi_care/model/chat_bot_ai_model.dart';
+import 'package:empathi_care/model/services/chat_bot_ai_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatBotAIProvider extends ChangeNotifier {
-  final List<ChatBotAI> _chatMessages = [];
+  final List<ChatBotPrompt> _chatMessages = [];
   final Map<int, bool> _buttonHoverStatus = {};
-
+  ChatbotAiApiService chatBotAi = ChatbotAiApiService();
+  ChatBotAI? chatbotAi;
+  bool isLoading = true;
+  List<ChatBotPrompt> get chatBotPrompt => _chatMessages;
   Map<int, bool> get buttonHoverStatus => _buttonHoverStatus;
-
-  List<ChatBotAI> get chatBotAi => _chatMessages;
-  final Map<String, String> menuExplanations = {
+  Map<String, String> menuExplanations = {
     'Mengatasi Gangguan Kecemasan':
-        'Jangan Berharap Kepada Manusia\n\nApakah informasi yang\nsaya berikan sudah jelas?',
+        // 'Jangan Berharap Kepada Manusia\n\nApakah informasi yang\nsaya berikan sudah jelas?',
+        '',
     'Mengatasi Stress':
-        'Uninstall Mobile Legend dan Jangan Main Compe di VALORANT jika bermain SOLO \n\nApakah informasi yang\nsaya berikan sudah jelas?',
+                // 'Uninstall Mobile Legend dan Jangan Main Compe di VALORANT jika bermain SOLO \n\nApakah informasi yang\nsaya berikan sudah jelas?',
+                '',
     'Mengatasi Depresi':
-        'Perbanyak Ibadah \n\nApakah informasi yang\nsaya berikan sudah jelas?',
+                // 'Perbanyak Ibadah \n\nApakah informasi yang\nsaya berikan sudah jelas?',
+                '',
     'Mengatasi Psikomatis':
-        'Dukungan keluarga dan teman-teman sangat penting. Membangun jaringan dukungan yang kuat dapat membantu individu dengan psikosomatis merasa lebih terhubung dan kurang terisolasi. Apakah masalah anda sudah terselesaikan? \n\nApakah informasi yang\nsaya berikan sudah jelas?',
+                // 'Dukungan keluarga dan teman-teman sangat penting. Membangun jaringan dukungan yang kuat dapat membantu individu dengan psikosomatis merasa lebih terhubung dan kurang terisolasi. Apakah masalah anda sudah terselesaikan? \n\nApakah informasi yang\nsaya berikan sudah jelas?',
+                '',
   };
+  // Map<String, String> menuExplanations = {};
+  
+  Future postPrompt(String message) async{
+    try {
+      // print(message);
+      chatbotAi = await chatBotAi.postPromptChatbotAi(token,message);
+      // if(chatbotAi!.data.prompt == "Mengatasi Gangguan Kecemasan"){
+        menuExplanations['Mengatasi Gangguan Kecemasan'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+      // }else if(chatbotAi!.data.prompt == "Mengatasi Stress"){
+        menuExplanations['Mengatasi Stress'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+      // }else if(chatbotAi!.data.prompt == "Mengatasi Depresi"){
+        menuExplanations['Mengatasi Depresi'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+      // }else{
+        menuExplanations['Mengatasi Psikomatis'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+      // }
+      isLoading = false;
+    } catch (e) {
+      throw Exception(e);
+    }
+    notifyListeners();
+  }
+
+  // Future fetchPrompt(String token) async{
+  //   try {
+  //     chatbotAi = await chatBotAi.fetchChatBotAI(token);
+      
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  //   notifyListeners();
+  // }
 
   void addMenuMessage(String message) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _chatMessages.add(ChatBotAI(text: message, isUser: false));
+      _chatMessages.add(ChatBotPrompt(text: message, isUser: false));
       notifyListeners();
     });
   }
 
-  void addUserMessage(String message) {
-    _chatMessages.add(ChatBotAI(text: message, isUser: true));
+  void addUserMessage(String message) async {
+    _chatMessages.add(ChatBotPrompt(text: message, isUser: true));
+    if(message != "Ya" && message != "Tidak"){
+      postPrompt(message);
+    }
     notifyListeners();
   }
 
@@ -65,14 +105,10 @@ class ChatBotAIProvider extends ChangeNotifier {
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
           !message.text.contains('Selamat') &&
-          !message.text.contains('Bagaimanakah') &&
-          !message.text.contains('Manusia') &&
-          !message.text.contains('Ibadah') &&
-          !message.text.contains('Uninstall') &&
-          !message.text.contains('keluarga'));
-      notifyListeners();
+          !message.text.contains('Bagaimanakah'));
 
       showMenuExplanation(menuResponse);
+      notifyListeners();
     } else if (lastMessage == 'Ya') {
       addUserMessage('Ya');
       addMenuMessage(
@@ -95,9 +131,17 @@ class ChatBotAIProvider extends ChangeNotifier {
 
   void showMenuExplanation(String menuKey) {
     if (menuExplanations.containsKey(menuKey)) {
-      addMenuMessage('${menuExplanations[menuKey]}');
-      addMenuMessage('Ya');
-      addMenuMessage('Tidak');
+      // if(isLoading){
+      //   debugPrint(isLoading.toString());
+      //   addMenuMessage("Memuat");
+      //   notifyListeners();
+      // }else{
+      //   debugPrint(isLoading.toString());
+        addMenuMessage('${menuExplanations[menuKey]}');        
+        addMenuMessage('Ya');
+        addMenuMessage('Tidak');
+        notifyListeners();
+      // }
     }
   }
 

@@ -1,5 +1,6 @@
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/change_password_view_model.dart';
+import 'package:empathi_care/view_model/chat_bot_ai_view_model.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:empathi_care/view_model/count_down_payment_success_view_model.dart';
 import 'package:empathi_care/view_model/enabled_button_provider.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => FillingProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => ChatBotCSProvider()),
+          ChangeNotifierProvider(
+              create: (BuildContext context) => ChatBotAIProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => EnabledButton()),
           ChangeNotifierProvider(

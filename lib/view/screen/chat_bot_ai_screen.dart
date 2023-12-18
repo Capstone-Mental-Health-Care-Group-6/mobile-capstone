@@ -70,11 +70,10 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
               child: Consumer<ChatBotAIProvider>(
                 builder: (context, provider, child) {
                   return ListView.builder(
-                    itemCount: provider.chatBotAi.length,
+                    itemCount: provider.chatBotPrompt.length,
                     itemBuilder: (context, index) {
-                      final message = provider.chatBotAi[index];
+                      final message = provider.chatBotPrompt[index];
                       var buttonKey = index;
-
                       return Align(
                         alignment: message.isUser
                             ? Alignment.centerRight
@@ -88,15 +87,14 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                           child: message.isUser
                               ? _buildUserMessageContainer(message)
                               : (message.text.contains("Selamat") ||
-                                      message.text.contains("Manusia") ||
-                                      message.text.contains("Uninstall") ||
-                                      message.text.contains("Ibadah") ||
-                                      message.text.contains('keluarga') ||
+                                      message.text.contains("Apakah informasi") ||
                                       message.text.contains("Bagaimanakah") ||
                                       message.text.contains("Terimakasih"))
                                   ? _buildBotMessageContainer(message)
-                                  : _buildMenuResponseButton(
-                                      message, index, buttonKey, provider),
+                                  // : provider.isLoading ? _buildBotMessageContainer(message) : _buildMenuResponseButton(
+                                  //     message, index, buttonKey, provider),
+                                      : _buildMenuResponseButton(
+                                      message, index, buttonKey, provider)
                         ),
                       );
                     },
@@ -110,7 +108,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
     );
   }
 
-  Widget _buildUserMessageContainer(ChatBotAI message) {
+  Widget _buildUserMessageContainer(ChatBotPrompt message) {
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: Row(
@@ -141,7 +139,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
     );
   }
 
-  Widget _buildBotMessageContainer(ChatBotAI message) {
+  Widget _buildBotMessageContainer(ChatBotPrompt message) {
     return Container(
       margin: const EdgeInsets.all(10.0),
       child: Row(
@@ -149,7 +147,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/images/chatbot.png',
+            'assets/images/chatbot_home.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(
@@ -172,7 +170,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
   }
 
   Widget _buildMenuResponseButton(
-    ChatBotAI message,
+    ChatBotPrompt message,
     int index,
     int buttonKey,
     ChatBotAIProvider provider,
