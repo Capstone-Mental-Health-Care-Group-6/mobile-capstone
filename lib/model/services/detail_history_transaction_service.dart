@@ -8,7 +8,7 @@ class DetailHistoryTransactionService {
   late String accessToken;
 
   Future<DetailHistoryTransactionModel> fetchDetailHistoryTransactionById(
-      String transactionId) async {
+      {required String transactionId}) async {
     try {
       const String baseUrl = 'https://kmb5alta.online';
 

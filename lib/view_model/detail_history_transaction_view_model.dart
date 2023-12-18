@@ -10,13 +10,14 @@ class DetailHistoryTransactionViewModel with ChangeNotifier {
   DetailHistoryTransactionModel? detailHistoryTransactionData;
   MyState myState = MyState.initial;
 
-  Future<DetailHistoryTransactionModel> getDetailHistoryTransaction() async {
+  Future<DetailHistoryTransactionModel> getDetailHistoryTransaction(
+      {required String transactionId}) async {
     try {
       myState = MyState.loading;
       notifyListeners();
 
       detailHistoryTransactionData = await detailHistoryTransactionService
-          .fetchDetailHistoryTransactionById("B-1702746482");
+          .fetchDetailHistoryTransactionById(transactionId: transactionId);
 
       myState = MyState.loaded;
       notifyListeners();
