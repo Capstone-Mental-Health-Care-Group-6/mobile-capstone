@@ -1,11 +1,16 @@
+import 'package:dio/dio.dart';
+import 'package:empathi_care/model/mystate_model.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
 import 'package:empathi_care/view/screen/Register/register_screen.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
+import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,37 +21,27 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late PasswordProvider passwordProvider;
-<<<<<<< HEAD
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-=======
   late LoginViewModel loginViewModel;
   late NavigationProvider navigationProvider;
   late SharedPreferences loginData;
   late GetPatientByIdViewModel getPatientByIdViewModel;
   late bool user;
->>>>>>> development
 
   @override
   void initState() {
     passwordProvider = Provider.of<PasswordProvider>(context, listen: false);
-<<<<<<< HEAD
-=======
     loginViewModel = Provider.of<LoginViewModel>(context, listen: false);
     navigationProvider =
         Provider.of<NavigationProvider>(context, listen: false);
->>>>>>> development
     passwordProvider.visiblePassword = true;
-    emailController.clear();
-    passwordController.clear();
+    loginViewModel.emailController.clear();
+    loginViewModel.passwordController.clear();
+    getPatientByIdViewModel =
+        Provider.of<GetPatientByIdViewModel>(context, listen: false);
+    checkLogin(context);
     super.initState();
   }
 
-<<<<<<< HEAD
-  @override
-  Widget build(BuildContext context) {
-    final navigationProvider = Provider.of<NavigationProvider>(context);
-=======
   void checkLogin(context) async {
     loginData = await SharedPreferences.getInstance();
     user = loginData.getBool('login') ?? true;
@@ -92,11 +87,11 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
->>>>>>> development
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(
+          key: loginViewModel.loginFormKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
                 child: TextFormField(
-                  controller: emailController,
+                  controller: loginViewModel.emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 13),
@@ -170,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Consumer<PasswordProvider>(
                   builder: (context, passwordProvider, _) {
                     return TextFormField(
-                      controller: passwordController,
+                      controller: loginViewModel.passwordController,
                       obscureText: passwordProvider.visiblePassword,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
@@ -217,8 +212,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const ConfirmationEmailScreen()));
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (_) => const ConfirmationEmailScreen()),
+                        (route) => false);
                   },
                 ),
               ),
@@ -231,15 +228,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10)),
                       backgroundColor: const Color(0XFF0085FF),
                       foregroundColor: Colors.white),
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=> const RoutesScreen()), (route) => false);
-                      navigationProvider.setIndex(0);
-                  },
-                  child: Text(
-                    'Login',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w700, fontSize: 16),
+                  onPressed: handleLogin,
+                  child: Consumer<LoginViewModel>(
+                    builder:
+                        (context, loginViewModel, circularProgressIndicator) {
+                      if (loginViewModel.myState == MyState.loading) {
+                        return circularProgressIndicator!;
+                      } else {
+                        return Text(
+                          'Login',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700, fontSize: 16),
+                        );
+                      }
+                    },
+                    child: const CircularProgressIndicator(),
                   ),
                 ),
               ),
