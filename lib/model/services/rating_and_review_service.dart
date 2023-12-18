@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/rating_and_review_model.dart';
+import 'package:empathi_care/utils/baseurl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RatingAndReviewService {
@@ -10,7 +11,6 @@ class RatingAndReviewService {
   Future<RatingAndReviewModel> addRatingDoctorById(
       int doctorRatingId, int doctorStarRating, String doctorReview) async {
     try {
-      const String baseUrl = 'https://kmb5alta.online';
       Map<String, dynamic> payloads = {
         "doctor_star_rating": doctorStarRating,
         "doctor_review": doctorReview
@@ -19,7 +19,7 @@ class RatingAndReviewService {
       authUser = await SharedPreferences.getInstance();
       accessToken = authUser.getString('accesstoken').toString();
 
-      final response = await _dio.put('$baseUrl/doctor/rating/$doctorRatingId',
+      final response = await _dio.put('${Url.baseUrl}/doctor/rating/$doctorRatingId',
           data: payloads,
           options: Options(headers: {"Authorization": 'Bearer $accessToken'}));
 

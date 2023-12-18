@@ -29,7 +29,7 @@ class ChatBotAIProvider extends ChangeNotifier {
   Future postPrompt(String message, String token) async{
     try {
       // print(message);
-      chatbotAi = await chatBotAi.postPromptChatbotAi(token,message);
+      chatbotAi = await chatBotAi.postPromptChatbotAi(message);
       // if(chatbotAi!.data.prompt == "Mengatasi Gangguan Kecemasan"){
         menuExplanations['Mengatasi Gangguan Kecemasan'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
       // }else if(chatbotAi!.data.prompt == "Mengatasi Stress"){

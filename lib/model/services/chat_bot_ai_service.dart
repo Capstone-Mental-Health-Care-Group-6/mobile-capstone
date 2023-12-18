@@ -4,13 +4,19 @@ import 'package:dio/dio.dart';
 import 'package:empathi_care/model/chat_bot_ai_model.dart';
 import 'package:empathi_care/utils/baseurl.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatbotAiApiService{
+  late SharedPreferences sp;
   final Dio _dio = Dio();
+  String token = '';
   late String message;
 
   // Future<Psikolog> fetchPsikolog(String token) async {
-  Future<ChatBotAI> fetchChatBotAI(String token) async {
+  Future<ChatBotAI> fetchChatBotAI() async {
+    sp = await SharedPreferences.getInstance();
+
+    token = sp.getString('accesstoken').toString();
     try {
       final response = await _dio.get(
         "${Url.baseUrl}/chatbot",
@@ -28,7 +34,10 @@ class ChatbotAiApiService{
     }
   }
 
-   Future<ChatBotAI> postPromptChatbotAi(String token, String prompt) async {
+   Future<ChatBotAI> postPromptChatbotAi( String prompt) async {
+     sp = await SharedPreferences.getInstance();
+
+    token = sp.getString('accesstoken').toString();
     try {
       final response =
         await _dio.post('${Url.baseUrl}/chatbot',

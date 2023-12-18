@@ -15,9 +15,8 @@ class _InstantWidgetState extends State<InstantWidget> {
   @override
   void initState() {
     super.initState();
-    final token = Provider.of<InstantViewModel>(context, listen: false).token;
     Provider.of<InstantViewModel>(context, listen: false)
-        .fetchDataInstant(token);
+        .fetchDataInstant();
   }
 
   @override

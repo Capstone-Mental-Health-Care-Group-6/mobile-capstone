@@ -3,6 +3,7 @@ import 'package:empathi_care/model/midtrans_transaction_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionService {
+  late SharedPreferences sp;
   final Dio _dio = Dio();
   final String baseUrl = 'https://kmb5alta.online';
   late SharedPreferences authUser;
