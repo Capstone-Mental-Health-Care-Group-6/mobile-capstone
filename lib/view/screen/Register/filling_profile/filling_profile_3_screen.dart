@@ -1,10 +1,8 @@
 import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_4_screen.dart';
 import 'package:empathi_care/view/widget/timeline_widget.dart';
-import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class FillingProfile3 extends StatefulWidget {
   const FillingProfile3({super.key});
@@ -14,17 +12,27 @@ class FillingProfile3 extends StatefulWidget {
 }
 
 class _FillingProfile1State extends State<FillingProfile3> {
-  late RegisterViewModel registerViewModel;
   final datectl = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   late DateTime selectDate = DateTime.now();
   final currentDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
-    registerViewModel = Provider.of(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 13),
+            child: Text(
+              'Batal',
+              style: GoogleFonts.nunito(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  color: const Color(0xff000000)),
+            ),
+          )
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -114,7 +122,6 @@ class _FillingProfile1State extends State<FillingProfile3> {
                           foregroundColor: Colors.white),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          registerViewModel.birthDate = selectDate;
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => const FillingProfile4()));
                         }

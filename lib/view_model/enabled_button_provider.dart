@@ -9,9 +9,4 @@ class EnabledButton extends ChangeNotifier {
     isNull = passwordBaru.text.isNotEmpty && passwordLama.text.isNotEmpty;
     notifyListeners();
   }
-
-  void clearText() {
-    passwordBaru.clear();
-    passwordLama.clear();
-  }
 }

@@ -1,17 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:empathi_care/model/payment_method_model.dart';
-import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view/screen/payment/pembayaran_manual_screen.dart';
-import 'package:empathi_care/view/screen/web_view_gopay_payment_screen.dart';
 import 'package:empathi_care/view/widget/card_invoice_widget.dart';
 import 'package:empathi_care/view/widget/card_method_payment.dart';
 import 'package:empathi_care/view/widget/card_psikolog_on_payment_method.dart';
-import 'package:empathi_care/view_model/transaction_view_model.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+
+enum EWallet { gopay, ovo, dana }
 
 class PaymentMethodScreen extends StatefulWidget {
   const PaymentMethodScreen({super.key});
@@ -21,92 +16,12 @@ class PaymentMethodScreen extends StatefulWidget {
 }
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
-  bool isManualPayment = true;
+  bool isEWallet = true;
+  int? selectedPaymentMethod;
   bool isCheckTermCondition = false;
-  List<PaymentMethodModel> paymentMethods =
-      PaymentMethodModel.getListManualPayment();
-  late PaymentMethodModel _selectedPaymentMethod;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedPaymentMethod = paymentMethods[0];
-  }
 
   @override
   Widget build(BuildContext context) {
-    final transactionViewModel =
-        Provider.of<TransactionViewModel>(context, listen: false);
-
-    void makeTransaction() async {
-      if (isCheckTermCondition) {
-        debugPrint(_selectedPaymentMethod.name);
-        if (_selectedPaymentMethod.type == 'manual') {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => PembayaranManualScreen(
-                        isManualPayment: true,
-                        manualPaymentMethod: _selectedPaymentMethod.name,
-                      )));
-        } else {
-          try {
-            await transactionViewModel.makeMidtransTransaction(
-                topicId: 1,
-                patientId: 2,
-                methodId: 1,
-                durationId: 1,
-                counselingId: 1,
-                counselingSession: 1,
-                counselingType: "A",
-                priceMethod: 125000,
-                priceCounseling: 300000,
-                priceDuration: 60000,
-                paymentType: _selectedPaymentMethod.name.toLowerCase(),
-                doctorId: 13);
-
-            if (mounted) {
-              debugPrint(_selectedPaymentMethod.name);
-              if (_selectedPaymentMethod.name == 'Gopay') {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const WebViewGopayPaymentScreen()));
-              } else {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (_) => const PembayaranManualScreen(
-                              isManualPayment: false,
-                            )));
-              }
-            }
-          } on DioException catch (e) {
-            debugPrint(e.response.toString());
-            if (e.response != null) {
-              final snackBar = SnackBar(
-                content: Text('${e.response?.data['message']}'),
-                backgroundColor: const Color(0XFF0085FF),
-              );
-
-              if (mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
-            }
-          }
-        }
-      } else {
-        const snackBar = SnackBar(
-          content: Text(
-            'Syarat dan ketentuan belum disetujui',
-          ),
-          backgroundColor: Color(0XFF0085FF),
-        );
-
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Pilih Metode Pembayaran',
@@ -143,24 +58,20 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 ),
                 const SizedBox(height: 15),
                 switcherPaymentMethod(),
-                Column(
+                const Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(height: 15),
+                    CardMethodPayment(typeName: 'dana'),
+                    SizedBox(height: 5),
+                    CardMethodPayment(
+                      typeName: 'ovo',
                     ),
-                    for (PaymentMethodModel paymentMethod in paymentMethods)
-                      CardMethodPayment(
-                        label: paymentMethod.name,
-                        groupValue: _selectedPaymentMethod,
-                        value: paymentMethod,
-                        logo: paymentMethod.logo,
-                        onChanged: (PaymentMethodModel currentPaymentMethod) {
-                          setState(() {
-                            _selectedPaymentMethod = currentPaymentMethod;
-                          });
-                        },
-                      ),
+                    SizedBox(height: 5),
+                    CardMethodPayment(
+                      typeName: 'gopay',
+                    ),
+                    SizedBox(height: 5),
                   ],
                 ),
                 Row(
@@ -186,20 +97,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                   GoogleFonts.montserrat(color: Colors.black),
                               children: [
                             TextSpan(
-                              text: 'syarat dan ketentuan',
-                              style: GoogleFonts.montserrat(
-                                  color: const Color(0xFF6C8AF7)),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Feedback.forTap(context);
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => const TermsScreen(),
-                                    ),
-                                  );
-                                },
-                            )
+                                text: 'syarat dan ketentuan',
+                                style: GoogleFonts.montserrat(
+                                    color: const Color(0xFF6C8AF7)))
                           ])),
                     ),
                   ],
@@ -230,42 +130,29 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                           fontWeight: FontWeight.w700, fontSize: 18))
                 ],
               ),
-              Consumer<TransactionViewModel>(builder: (context, value, child) {
-                return SizedBox(
-                  width: 170,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor:
-                          Colors.white, //change background color of button
-                      backgroundColor:
-                          const Color(0xFF0085FF), //change text color of button
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    foregroundColor:
+                        Colors.white, //change background color of button
+                    backgroundColor:
+                        const Color(0xFF0085FF), //change text color of button
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    onPressed: !value.isLoading ? makeTransaction : null,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 0),
-                      child: value.isLoading
-                          ? Container(
-                              width: 24,
-                              height: 24,
-                              padding: const EdgeInsets.all(2.0),
-                              child: const CircularProgressIndicator(
-                                color: Color(0xFF0085FF),
-                                strokeWidth: 3,
-                              ),
-                            )
-                          : Text(
-                              'Bayar Sekarang',
-                              style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w700, fontSize: 14),
-                            ),
-                    ),
+                    elevation: 15.0),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const PembayaranManualScreen()));
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+                  child: Text(
+                    'Bayar Sekarang',
+                    style: GoogleFonts.montserrat(
+                        fontWeight: FontWeight.w700, fontSize: 14),
                   ),
-                );
-              })
+                ),
+              ),
             ],
           ),
         ),
@@ -289,15 +176,14 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  setState(() {
-                    isManualPayment = true;
-                    paymentMethods = PaymentMethodModel.getListManualPayment();
-                    _selectedPaymentMethod = paymentMethods[0];
-                  });
+                  isEWallet = true;
+                  // addDataPaket();
+                  selectedPaymentMethod = null;
+                  setState(() {});
                 },
                 child: Container(
                   // padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: isManualPayment
+                  decoration: isEWallet
                       ? BoxDecoration(
                           color: const Color(0xff0085FF),
                           borderRadius: BorderRadius.circular(8),
@@ -305,9 +191,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       : null,
                   child: Center(
                       child: Text(
-                    "Manual Transfer",
+                    "E-wallet",
                     style: GoogleFonts.montserrat(
-                        color: isManualPayment ? Colors.white : Colors.black,
+                        color: isEWallet ? Colors.white : Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   )),
@@ -317,15 +203,14 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  setState(() {
-                    isManualPayment = false;
-                    paymentMethods = PaymentMethodModel.getListPaymentGateway();
-                    _selectedPaymentMethod = paymentMethods[0];
-                  });
+                  isEWallet = false;
+                  selectedPaymentMethod = null;
+                  // addDataPaket();
+                  setState(() {});
                 },
                 child: Container(
                   // padding: const EdgeInsets.symmetric(vertical: 12),
-                  decoration: !isManualPayment
+                  decoration: !isEWallet
                       ? BoxDecoration(
                           color: const Color(0xff0085FF),
                           borderRadius: BorderRadius.circular(8),
@@ -333,9 +218,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                       : null,
                   child: Center(
                       child: Text(
-                    "Payment Gateway",
+                    "Bank-Transfer",
                     style: GoogleFonts.montserrat(
-                        color: !isManualPayment ? Colors.white : Colors.black,
+                        color: !isEWallet ? Colors.white : Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   )),
@@ -356,6 +241,7 @@ Widget timeLine() {
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: SizedBox(
           width: double.infinity,
+          // height: 40,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
