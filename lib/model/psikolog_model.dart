@@ -43,7 +43,7 @@ class Datum {
     List<Experience> experience;
     List<Education> education;
     List<Workday> workday;
-    List<Rating>? ratings;
+    List<Rating> ratings;
 
     Datum({
         required this.id,
@@ -98,7 +98,7 @@ class Datum {
         experience: List<Experience>.from(json["experience"].map((x) => Experience.fromJson(x))),
         education: List<Education>.from(json["education"].map((x) => Education.fromJson(x))),
         workday: List<Workday>.from(json["workday"].map((x) => Workday.fromJson(x))),
-        ratings: json["ratings"] == null ? [] : List<Rating>.from(json["ratings"]!.map((x) => Rating.fromJson(x))),
+        ratings: json["ratings"] != null ? List<Rating>.from(json["ratings"].map((x) => Rating.fromJson(x))) : [],
     );
 
     Map<String, dynamic> toJson() => {
@@ -126,7 +126,7 @@ class Datum {
         "experience": List<dynamic>.from(experience.map((x) => x.toJson())),
         "education": List<dynamic>.from(education.map((x) => x.toJson())),
         "workday": List<dynamic>.from(workday.map((x) => x.toJson())),
-        "ratings": ratings == null ? [] : List<dynamic>.from(ratings!.map((x) => x.toJson())),
+        "ratings": ratings.isNotEmpty ? List<dynamic>.from(ratings.map((x) => x.toJson())) : [],
     };
 }
 
