@@ -254,11 +254,15 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                         ),
                                         onPressed: () {
                                           Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const ProfilePsikologScreen(
-                                                          isInstan: true, session: 1,)));
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                ProfilePsikologScreen(
+                                                                    isInstan:
+                                                                        true,
+                                                                    session: 1,
+                                                                    doctor_id:
+                                                                        data.id)));
                                         },
                                         child: const Text(
                                           "Mulai Chat",
