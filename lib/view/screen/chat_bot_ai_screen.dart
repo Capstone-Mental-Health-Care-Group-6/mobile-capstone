@@ -3,6 +3,7 @@ import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/view_model/chat_bot_ai_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatAIScreen extends StatefulWidget {
   const ChatAIScreen({super.key});
@@ -13,6 +14,8 @@ class ChatAIScreen extends StatefulWidget {
 
 class _ChatAIScreenState extends State<ChatAIScreen> {
   late ChatBotAIProvider _chatBotProvider;
+  late SharedPreferences sp;
+  String token = '';
 
   @override
   void initState() {
@@ -20,6 +23,13 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
 
     _chatBotProvider = Provider.of<ChatBotAIProvider>(context, listen: false);
     _chatBotProvider.addInitialMessages();
+    initial();
+  }
+
+  void initial() async {
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
+    // provider.fetchListPsikolog(token);
   }
 
   @override
@@ -81,7 +91,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                         child: GestureDetector(
                           onTap: () {
                             if (!message.isUser) {
-                              provider.handleMenuButtonPress(index);
+                              provider.handleMenuButtonPress(index, token);
                             }
                           },
                           child: message.isUser
@@ -94,7 +104,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                                   // : provider.isLoading ? _buildBotMessageContainer(message) : _buildMenuResponseButton(
                                   //     message, index, buttonKey, provider),
                                       : _buildMenuResponseButton(
-                                      message, index, buttonKey, provider)
+                                      message, index, buttonKey, provider, token)
                         ),
                       );
                     },
@@ -174,6 +184,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
     int index,
     int buttonKey,
     ChatBotAIProvider provider,
+    String token
   ) {
     bool processingTap = false;
 
@@ -192,7 +203,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             Future.delayed(const Duration(seconds: 1), () {
               processingTap = false;
             });
-            provider.handleMenuButtonPress(index);
+            provider.handleMenuButtonPress(index,token);
           }
         },
         onTapCancel: () {

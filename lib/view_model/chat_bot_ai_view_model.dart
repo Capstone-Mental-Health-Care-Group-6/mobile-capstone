@@ -26,7 +26,7 @@ class ChatBotAIProvider extends ChangeNotifier {
   };
   // Map<String, String> menuExplanations = {};
   
-  Future postPrompt(String message) async{
+  Future postPrompt(String message, String token) async{
     try {
       // print(message);
       chatbotAi = await chatBotAi.postPromptChatbotAi(token,message);
@@ -63,10 +63,10 @@ class ChatBotAIProvider extends ChangeNotifier {
     });
   }
 
-  void addUserMessage(String message) async {
+  void addUserMessage(String message, String token) async {
     _chatMessages.add(ChatBotPrompt(text: message, isUser: true));
     if(message != "Ya" && message != "Tidak"){
-      postPrompt(message);
+      postPrompt(message,token);
     }
     notifyListeners();
   }
@@ -91,7 +91,7 @@ class ChatBotAIProvider extends ChangeNotifier {
     });
   }
 
-  void handleMenuButtonPress(int buttonIndex) {
+  void handleMenuButtonPress(int buttonIndex, String token) {
     String lastMessage =
         _chatMessages.isNotEmpty ? _chatMessages[buttonIndex].text : "";
 
@@ -100,7 +100,7 @@ class ChatBotAIProvider extends ChangeNotifier {
         lastMessage.contains("Depresi") ||
         lastMessage.contains("Psikomatis")) {
       String menuResponse = _chatMessages[buttonIndex].text;
-      addUserMessage(menuResponse);
+      addUserMessage(menuResponse,token);
 
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
@@ -110,7 +110,7 @@ class ChatBotAIProvider extends ChangeNotifier {
       showMenuExplanation(menuResponse);
       notifyListeners();
     } else if (lastMessage == 'Ya') {
-      addUserMessage('Ya');
+      addUserMessage('Ya',token);
       addMenuMessage(
           'Terimakasih atas percakapannya!\nJika Anda memiliki pertanyaan lain nanti,\njangan ragu untuk datang kembali.\nSemoga harimu menyenangkan!');
       _chatMessages.removeWhere((message) =>
@@ -118,7 +118,7 @@ class ChatBotAIProvider extends ChangeNotifier {
           (message.text.contains('Ya') || message.text.contains('Tidak')));
       notifyListeners();
     } else if (lastMessage == 'Tidak') {
-      addUserMessage('Tidak');
+      addUserMessage('Tidak',token);
       addMenuMessage('Bagaimanakah saya dapat membantu Anda?');
       addMenuButtons();
 
