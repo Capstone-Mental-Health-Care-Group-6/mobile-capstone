@@ -13,6 +13,7 @@ class LoginViewModel extends ChangeNotifier {
   Login? login;
   MyState myState = MyState.initial;
   late String message;
+
   late SharedPreferences loginData;
 
   Future loginAuth() async {

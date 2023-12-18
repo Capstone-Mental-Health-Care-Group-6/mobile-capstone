@@ -8,10 +8,10 @@ class AllArticlesPage extends StatefulWidget {
   const AllArticlesPage({super.key});
 
   @override
-  _AllArticlesPageState createState() => _AllArticlesPageState();
+  AllArticlesPageState createState() => AllArticlesPageState();
 }
 
-class _AllArticlesPageState extends State<AllArticlesPage> {
+class AllArticlesPageState extends State<AllArticlesPage> {
   final TextEditingController controller = TextEditingController();
   List<String> categories = [
     'Semua',
@@ -162,5 +162,3 @@ class CustomSearch extends SearchDelegate {
     throw UnimplementedError();
   }
 }
-
-//

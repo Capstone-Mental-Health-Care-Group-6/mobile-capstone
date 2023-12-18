@@ -48,4 +48,19 @@ class TransactionViewModel with ChangeNotifier {
       rethrow;
     }
   }
+
+  // Future emailVerificationWithOtp({
+  //   required String otp,
+  // }) async {
+  //   try {
+  //     message = forgotPasswordService.emailVerificationWithOtp(otp: otp);
+  //     // debugPrint('<= message $message');
+  //     notifyListeners();
+  //   } catch (e) {
+  //     // debugPrint('<= message error $e');
+
+  //     rethrow;
+  //   }
+  // }
+
 }

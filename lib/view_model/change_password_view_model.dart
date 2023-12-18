@@ -19,4 +19,6 @@ class ChangePasswordViewModel extends ChangeNotifier {
       }
     }
   }
+
 }
+
