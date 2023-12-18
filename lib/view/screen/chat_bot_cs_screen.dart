@@ -3,6 +3,7 @@ import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ChatMenuScreen extends StatefulWidget {
   const ChatMenuScreen({super.key});
@@ -69,8 +70,10 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                                         message.text.contains("Terimakasih") ||
                                         message.text.contains("Bagaimanakah"))
                                     ? _buildBotMessageContainer(message)
-                                    : _buildMenuResponseButton(
-                                        message, index, buttonKey, provider),
+                                    : message.text.contains("Load")
+                                        ? _buildLoadMessage(message)
+                                        : _buildMenuResponseButton(message,
+                                            index, buttonKey, provider),
                           );
                         },
                       );
@@ -124,7 +127,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/images/ChatBot.png',
+            'assets/images/chatbot.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(
@@ -193,6 +196,37 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLoadMessage(ChatBotCS message) {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.asset(
+            'assets/images/chatbot.png',
+          ),
+          const SizedBox(width: 10.0),
+          Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 46, 46, 46),
+              highlightColor: const Color.fromARGB(255, 117, 117, 117),
+              child: const Text(
+                "Typing...",
+                style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
