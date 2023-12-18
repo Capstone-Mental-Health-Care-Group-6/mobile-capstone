@@ -55,7 +55,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       final int patientId = jwtService.getTokenId(token);
 
       if (isCheckTermCondition) {
-        debugPrint(_selectedPaymentMethod.name);
         if (_selectedPaymentMethod.type == 'manual') {
           if (mounted) {
             Navigator.push(
@@ -91,7 +90,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 doctorId: profilePsikologViewModel.dataDoctor['id']);
 
             if (mounted) {
-              debugPrint(_selectedPaymentMethod.name);
               if (_selectedPaymentMethod.name == 'Gopay') {
                 Navigator.push(
                     context,
@@ -107,7 +105,6 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
               }
             }
           } on DioException catch (e) {
-            debugPrint(e.response.toString());
             if (e.response != null) {
               final snackBar = SnackBar(
                 content: Text('${e.response?.data['message']}'),
