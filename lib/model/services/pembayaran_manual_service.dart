@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:empathi_care/utils/baseurl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PembayaranManualService {
@@ -11,7 +12,7 @@ class PembayaranManualService {
       final pref = await SharedPreferences.getInstance();
       Map<String, String> mainheader = {
         "Content-type": "application/json",
-        "Authorization": "Bearer ${pref.getString('token')}",
+        "Authorization": "Bearer ${pref.getString('accesstoken')}",
       };
       FormData data = FormData.fromMap({
         "price_method": params['price_method'].toString(),
@@ -32,7 +33,7 @@ class PembayaranManualService {
         ),
       });
       final response = await dio.post(
-        "https://kmb5alta.online/transaksi",
+        Url.baseUrl,
         data: data,
         options: Options(headers: mainheader),
       );

@@ -16,7 +16,6 @@ class _PremiumWidgetState extends State<PremiumWidget> {
   @override
   void initState() {
     super.initState();
-    // final token = Provider.of<PremiumViewModel>(context, listen: false).token;
     Provider.of<PremiumViewModel>(context, listen: false)
         .fetchDataPremium();
   }

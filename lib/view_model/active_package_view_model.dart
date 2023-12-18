@@ -1,12 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:flutter/material.dart';
 
 class ActivePackageViewModel extends ChangeNotifier {
-  final ActivePackageService _activePackageService = ActivePackageService(
-    Dio(),
-  );
+  final ActivePackageService _activePackageService = ActivePackageService();
   bool isLoaded = true;
   final List<String> categories = [
     'Semua',
@@ -23,7 +20,6 @@ class ActivePackageViewModel extends ChangeNotifier {
       await fetchDataActivePackage();
     }
 
-
     await Future.delayed(
       const Duration(seconds: 5),
     ).then((value) {
@@ -31,7 +27,6 @@ class ActivePackageViewModel extends ChangeNotifier {
       notifyListeners();
     });
   }
-
 
   Future<ActivePackageModel> fetchDataActivePackage() async {
     _activePackageModel = await _activePackageService.fetchData();

@@ -1,12 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:flutter/material.dart';
 
 class InstantViewModel extends ChangeNotifier {
-  final ActivePackageService _activePackageService = ActivePackageService(
-    Dio(),
-  );
+  final ActivePackageService _activePackageService = ActivePackageService();
 
   final List<String> categories = [
     'Semua',
