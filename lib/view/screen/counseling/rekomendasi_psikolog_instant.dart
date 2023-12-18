@@ -225,7 +225,7 @@ class _RekomendasiPsikologInstantState
                                                             builder: (_) =>
                                                                 const ProfilePsikologScreen(
                                                                     isInstan:
-                                                                        true)));
+                                                                        true, session: 1,)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",

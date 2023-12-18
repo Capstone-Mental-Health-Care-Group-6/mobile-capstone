@@ -10,7 +10,7 @@ import 'package:shimmer/shimmer.dart';
 
 class ProfilePsikologScreen extends StatefulWidget {
   const ProfilePsikologScreen({
-    super.key,
+    super.key, required bool isInstan, required int session,
   });
 
   @override

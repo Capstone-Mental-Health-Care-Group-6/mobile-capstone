@@ -260,7 +260,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                             builder: (_) =>
                                                                 const ProfilePsikologScreen(
                                                                     isInstan:
-                                                                        false)));
+                                                                        false, session: 1,)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",
