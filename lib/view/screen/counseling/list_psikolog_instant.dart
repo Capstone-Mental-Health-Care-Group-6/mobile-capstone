@@ -180,30 +180,32 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                       ),
                                     ),
                                     const SizedBox(width: 9),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data.doctorName,
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        const Text(
-                                          "Spesialis Positive psychology",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        const SizedBox(height: 3),
-                                        const Text("Online",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green)),
-                                      ],
+                                    Flexible(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data.doctorName,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Text(
+                                            "Spesialis Positive psychology",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          const Text("Online",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green)),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
