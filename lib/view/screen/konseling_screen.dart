@@ -1,4 +1,3 @@
-import 'package:empathi_care/model/konseling_model.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:empathi_care/view/screen/paket_screen.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
