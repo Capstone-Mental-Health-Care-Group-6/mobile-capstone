@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/detail_history_transaction_model.dart';
+import 'package:empathi_care/utils/baseurl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailHistoryTransactionService {
@@ -8,14 +9,13 @@ class DetailHistoryTransactionService {
   late String accessToken;
 
   Future<DetailHistoryTransactionModel> fetchDetailHistoryTransactionById(
-      String transactionId) async {
+      {required String transactionId}) async {
     try {
-      const String baseUrl = 'https://kmb5alta.online';
 
       authUser = await SharedPreferences.getInstance();
       accessToken = authUser.getString('accesstoken').toString();
 
-      final response = await _dio.get('$baseUrl/transaksi/check/$transactionId',
+      final response = await _dio.get('${Url.baseUrl}/transaksi/check/$transactionId',
           options: Options(headers: {"Authorization": 'Bearer $accessToken'}));
 
       return DetailHistoryTransactionModel.fromJson(response.data);

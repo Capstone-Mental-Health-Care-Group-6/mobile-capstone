@@ -19,16 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
+    Provider.of<ArticleProvider>(context, listen: false).fetchArticleslimit();
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
 
     /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height - kToolbarHeight - 24) / 3.55;
-    final double itemWidth = size.width / 2;
+    // final double itemHeight = (size.height - kToolbarHeight - 24) / 3.55;
+    // final double itemWidth = size.width / 2;
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
@@ -213,20 +213,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Image.network(
                                       article.thumbnail,
-                                      width: double.infinity,
+                                      width: 120,
                                       height: 100,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.all(22),
+                                    padding: const EdgeInsets.only(top: 20),
                                     decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(10),
                                         bottomRight: Radius.circular(10),
                                       ),
                                     ),
-                                    height: 80,
+                                    height: 60,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,

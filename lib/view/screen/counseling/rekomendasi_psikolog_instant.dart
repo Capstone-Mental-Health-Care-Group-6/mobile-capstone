@@ -1,4 +1,3 @@
-import 'package:empathi_care/model/psikolog_model.dart';
 import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
@@ -26,13 +25,14 @@ class _RekomendasiPsikologInstantState
   @override
   void initState() {
     provider = Provider.of<PsikologProvider>(context, listen: false);
-    provider.fetchListPsikolog(token);
+    initial();
     super.initState();
   }
 
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
+    provider.fetchListPsikolog(token);
   }
 
   @override
@@ -133,35 +133,37 @@ class _RekomendasiPsikologInstantState
                                                 ),
                                               ),
                                               const SizedBox(width: 9),
-                                              Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    data.doctorName,
-                                                    style: const TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  const SizedBox(height: 5),
-                                                  const Text(
-                                                    "Spesialis Positive psychology",
-                                                    style:
-                                                        TextStyle(fontSize: 14),
-                                                  ),
-                                                  const SizedBox(height: 3),
-                                                  const Text(
-                                                    "Online",
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ],
+                                              Flexible(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      data.doctorName,
+                                                      style: const TextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    const SizedBox(height: 5),
+                                                    const Text(
+                                                      "Spesialis Positive psychology",
+                                                      style: TextStyle(
+                                                          fontSize: 14),
+                                                    ),
+                                                    const SizedBox(height: 3),
+                                                    const Text(
+                                                      "Online",
+                                                      style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.green,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -221,9 +223,12 @@ class _RekomendasiPsikologInstantState
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (_) =>
-                                                                const ProfilePsikologScreen(
+                                                                ProfilePsikologScreen(
                                                                     isInstan:
-                                                                        true)));
+                                                                        true,
+                                                                    session: 1,
+                                                                    doctorId: data
+                                                                        .id)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",
@@ -273,7 +278,6 @@ class _RekomendasiPsikologInstantState
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(20.0),

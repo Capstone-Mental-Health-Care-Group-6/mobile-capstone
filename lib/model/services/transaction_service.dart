@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/midtrans_transaction_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TransactionService {
+  late SharedPreferences sp;
   final Dio _dio = Dio();
   final String baseUrl = 'https://kmb5alta.online';
+  late SharedPreferences authUser;
+  late String accessToken;
 
   Future<MidtransTransactionModel> makeMidtransTransaction(
       {required int topicId,
@@ -19,8 +23,9 @@ class TransactionService {
       required String paymentType,
       required int doctorId}) async {
     try {
-      const String accessToken =
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4ODgxMDYsImlhdCI6MTcwMjgwMTcwNiwiaWQiOjIsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0.rsaYJDZp-Ql_-rISEXrZFgPf1aGp9T-TGokgBSsetwo';
+      authUser = await SharedPreferences.getInstance();
+      accessToken = authUser.getString('accesstoken').toString();
+
       final Response response = await _dio.post('$baseUrl/transaksi',
           data: {
             'topic_id': topicId,

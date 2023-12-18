@@ -162,5 +162,3 @@ class CustomSearch extends SearchDelegate {
     throw UnimplementedError();
   }
 }
-
-//

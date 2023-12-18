@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:empathi_care/utils/baseurl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePsikologService {
@@ -8,14 +9,15 @@ class ProfilePsikologService {
 
   final Dio dio = Dio();
 
-  Future<Map<String, dynamic>> getDataDoctor(String idDoctor) async {
+  Future<Map<String, dynamic>> getDataDoctor(int idDoctor) async {
     try {
       final pref = await SharedPreferences.getInstance();
       Map<String, String> mainheader = {
         "Content-type": "application/json",
-        "Authorization": "Bearer ${pref.getString('token')}",
+        "Authorization": "Bearer ${pref.getString('accesstoken')}",
       };
-      final response = await dio.get("https://kmb5alta.online/doctor/$idDoctor", options: Options(headers: mainheader));
+      final response = await dio.get("${Url.baseUrl}/doctor/$idDoctor",
+          options: Options(headers: mainheader));
 
       final responseBody = response.data['data'];
       log(responseBody.toString());
@@ -30,9 +32,10 @@ class ProfilePsikologService {
       final pref = await SharedPreferences.getInstance();
       Map<String, String> mainheader = {
         "Content-type": "application/json",
-        "Authorization": "Bearer ${pref.getString('token')}",
+        "Authorization": "Bearer ${pref.getString('accesstoken')}",
       };
-      final response = await dio.get("https://kmb5alta.online/patient/account/$id", options: Options(headers: mainheader));
+      final response = await dio.get("${Url.baseUrl}/$id",
+          options: Options(headers: mainheader));
 
       final responseBody = response.data['data'];
 

@@ -1,11 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/konseling_model.dart';
 import 'package:empathi_care/utils/baseurl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class KonsellingApiService {
+  late SharedPreferences sp;
   final Dio _dio = Dio();
+  String token = '';
 
-  Future<KonselingData> fetchTopik(String token) async {
+  Future<KonselingData> fetchTopik() async {
+    sp = await SharedPreferences.getInstance();
+
+    token = sp.getString('accesstoken').toString();
     try {
       final response = await _dio.get(
         "${Url.baseUrl}/counseling/topics",
@@ -22,7 +28,10 @@ class KonsellingApiService {
     }
   }
 
-  Future<KonselingData> fetchTopikById(String token, id) async {
+  Future<KonselingData> fetchTopikById(id) async {
+    sp = await SharedPreferences.getInstance();
+
+    token = sp.getString('accesstoken').toString();
     try {
       final response = await _dio.get(
         "${Url.baseUrl}/counseling/topics/$id",

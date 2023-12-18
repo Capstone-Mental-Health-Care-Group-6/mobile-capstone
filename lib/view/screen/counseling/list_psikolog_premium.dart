@@ -26,31 +26,33 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
   @override
   void initState() {
     provider = Provider.of<PsikologProvider>(context, listen: false);
-    provider.fetchListPsikolog(token);
+    initial();
     super.initState();
   }
 
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
+    provider.fetchListPsikolog(token);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            surfaceTintColor: Colors.white,
-            backgroundColor: Colors.white,
-            elevation: 5,
-            shadowColor: Colors.black,
-            title: Text(
-              "Psikolog",
-              style: GoogleFonts.montserrat(
-                fontSize: 16.0,
-                color: const Color(0xff393938),
-                fontWeight: FontWeight.w700,
-              ),
-            ),),
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          elevation: 5,
+          shadowColor: Colors.black,
+          title: Text(
+            "Psikolog",
+            style: GoogleFonts.montserrat(
+              fontSize: 16.0,
+              color: const Color(0xff393938),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
         body: Builder(builder: (context) {
           return Consumer<PsikologProvider>(builder: (context, value, child) {
             if (provider.isLoading == true) {
@@ -171,32 +173,34 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                         ),
                                       ),
                                       const SizedBox(width: 9),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data.doctorName.toString(),
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(height: 5),
-                                          const Text(
-                                            "Spesialis Positive psychology",
-                                            style: TextStyle(fontSize: 14),
-                                          ),
-                                          const SizedBox(height: 3),
-                                          const Text(
-                                            "Online",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.green,
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
+                                      Flexible(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.doctorName.toString(),
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            const Text(
+                                              "Spesialis Positive psychology",
+                                              style: TextStyle(fontSize: 14),
+                                            ),
+                                            const SizedBox(height: 3),
+                                            const Text(
+                                              "Online",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -249,9 +253,11 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (_) =>
-                                                        const ProfilePsikologScreen(
+                                                        ProfilePsikologScreen(
                                                             isInstan: false,
-                                                            session: 2)));
+                                                            session: 2,
+                                                            doctorId:
+                                                                data.id)));
                                           },
                                           child: const Text(
                                             "Mulai Chat",

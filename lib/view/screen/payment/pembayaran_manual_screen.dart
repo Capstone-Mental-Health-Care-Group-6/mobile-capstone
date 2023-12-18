@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
+import 'package:empathi_care/view/screen/payment/verification_payment_screen.dart';
 import 'package:empathi_care/view/widget/count_down_payment_widget.dart';
 import 'package:empathi_care/view/widget/payment_instruction_list.dart';
 import 'package:empathi_care/view_model/transaction_view_model.dart';
@@ -27,7 +27,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
   void initState() {
     prov = context.read<PembayaranManualProvider>();
 
-    prov.init();
+    prov.init(context);
     super.initState();
   }
 
@@ -146,8 +146,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFBB00),
                         borderRadius: BorderRadius.circular(10),
@@ -190,8 +189,7 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                   child: InkWell(
                     child: Text(
                       "Lihat rincian",
-                      style: GoogleFonts.montserrat(
-                          fontSize: 12, color: Colors.blue),
+                      style: GoogleFonts.montserrat(fontSize: 12, color: Colors.blue),
                     ),
                   ),
                 ),
@@ -322,22 +320,17 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                 const SizedBox(height: 16),
                 Text(
                   "Upload Bukti Pembayaran",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey),
+                  style: GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.grey),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "* Transaksi Anda tidak akan kami proses sebelum menekan tombol konfirmasi pembayaran",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 10, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "* Pastikan foto bukti transfer terbaca",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 10, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
                 SizedBox(
@@ -347,9 +340,9 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                         final result = await prov.addTransaction();
 
                         if (result) {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const VerificationPaymentScreen(),
-                          // ));
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const VerificationPaymentScreen(),
+                          ));
                         }
                       },
                       style: ElevatedButton.styleFrom(

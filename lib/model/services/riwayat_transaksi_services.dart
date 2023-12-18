@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:empathi_care/utils/baseurl.dart';
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/riwayat_transaksi_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JwtService {
   Map<String, dynamic> decodeToken(String token) {
@@ -29,11 +30,14 @@ class UrlBuilderService {
 }
 
 class RiwayatTransaksiServices {
-  final Dio _dio;
+  late SharedPreferences sp;
+  final Dio _dio = Dio();
+  String token = '';
 
-  RiwayatTransaksiServices(this._dio);
+  Future fetchRiwayatTransaksi() async {
+    sp = await SharedPreferences.getInstance();
 
-  Future fetchRiwayatTransaksi(String token) async {
+    token = sp.getString('accesstoken').toString();
     try {
       final JwtService jwtService = JwtService();
       final int id = jwtService.getTokenId(token);

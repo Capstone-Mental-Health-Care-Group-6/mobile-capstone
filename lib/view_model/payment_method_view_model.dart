@@ -17,4 +17,7 @@ class PaymentMethodViewModel extends ChangeNotifier {
     _paymentMethods = paymentMethods;
     notifyListeners();
   }
+
 }
+
+

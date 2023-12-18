@@ -12,7 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DetailTransaction extends StatefulWidget {
-  const DetailTransaction({super.key});
+  const DetailTransaction({super.key, required this.transactionId});
+
+  final String transactionId;
 
   @override
   State<DetailTransaction> createState() => _DetailTransactionState();
@@ -51,7 +53,8 @@ class _DetailTransactionState extends State<DetailTransaction> {
         ],
       ),
       body: FutureBuilder<DetailHistoryTransactionModel>(
-        future: detailHistoryTransactionViewModel.getDetailHistoryTransaction(),
+        future: detailHistoryTransactionViewModel.getDetailHistoryTransaction(
+            transactionId: widget.transactionId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -115,8 +118,8 @@ class _DetailTransactionState extends State<DetailTransaction> {
         },
       ),
       bottomNavigationBar: FutureBuilder<DetailHistoryTransactionModel>(
-          future:
-              detailHistoryTransactionViewModel.getDetailHistoryTransaction(),
+          future: detailHistoryTransactionViewModel.getDetailHistoryTransaction(
+              transactionId: widget.transactionId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

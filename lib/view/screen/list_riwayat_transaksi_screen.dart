@@ -2,6 +2,7 @@ import 'package:empathi_care/model/riwayat_transaksi_model.dart';
 import 'package:empathi_care/utils/constant/currency.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view/screen/HistoryTransactions/detail_transaction.dart';
 import 'package:empathi_care/view/screen/riwayat_transaksi_isnone.dart';
 import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return const Center(child: CircularProgressIndicator());
             } else {
               final riwayatTransaksi = snapshot.data!;
               return riwayatTransaksi.message!.contains("data")
@@ -78,7 +79,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
 
   Widget buildListDokter(
       DataRiwayatTransaksi transaction, BuildContext context) {
-        final riwayatTransaksiProvider =
+    final riwayatTransaksiProvider =
         Provider.of<RiwayatTransaksiProvider>(context, listen: false);
 
     final tgl = transaction.createdAt != null
@@ -160,7 +161,15 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
                     const Spacer(),
                     berirating
                         ? ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailTransaction(
+                                        transactionId:
+                                            transaction.transactionId!)),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 3,
@@ -195,7 +204,15 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
                                 borderRadius: BorderRadius.circular(13),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailTransaction(
+                                        transactionId:
+                                            transaction.transactionId!)),
+                              );
+                            },
                             child: const Text(
                               "Beri Rating",
                               style: TextStyle(
