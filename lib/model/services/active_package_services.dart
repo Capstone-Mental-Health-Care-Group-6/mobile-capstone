@@ -30,24 +30,23 @@ class UrlBulService {
     if (userId == null) {
       throw Exception("Couldn't extract user ID from token");
     }
-    return '$domainUrl/counseling/user/$userId';
+    return '$domainUrl/counseling/user/1';
   }
 }
 
 class ActivePackageService {
   late SharedPreferences sp;
+     final Dio _dio = Dio();
   String token = '';
   ActivePackageService();
 
   Future fetchData() async {
     late SharedPreferences sp;
-    final Dio _dio = Dio();
+ 
     String token = '';
 
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
-
-    Future fetchData() async {
       try {
         final JwtService jwtService = JwtService();
         final int userId = jwtService.getTokenId(token);
@@ -72,4 +71,3 @@ class ActivePackageService {
       }
     }
   }
-}
