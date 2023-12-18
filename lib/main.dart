@@ -90,12 +90,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => InactivatePatientViewModel()),
               ChangeNotifierProvider(
-              create: (BuildContext context) => InstantViewModel()),
-              ChangeNotifierProvider(
               create: (BuildContext context) => ActivePackageViewModel()),
               ChangeNotifierProvider(
+              create: (BuildContext context) => InstantViewModel()),
+              ChangeNotifierProvider(
               create: (BuildContext context) => PremiumViewModel()),
-
         ],
         builder: (context, child) {
           return MaterialApp(
