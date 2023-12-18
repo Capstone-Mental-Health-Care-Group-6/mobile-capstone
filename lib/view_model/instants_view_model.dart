@@ -11,7 +11,6 @@ class InstantViewModel extends ChangeNotifier {
     'Aktif',
   ];
 
-
   int _selectedIndex = 0;
 
   ActivePackageModel? _activePackageModel;
