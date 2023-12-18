@@ -24,4 +24,5 @@ class RegisterViewModel extends ChangeNotifier {
       }
     }
   }
+
 }

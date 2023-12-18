@@ -25,18 +25,6 @@ class _FillingProfile1State extends State<FillingProfile3> {
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.white,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 13),
-            child: Text(
-              'Batal',
-              style: GoogleFonts.nunito(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  color: const Color(0xff000000)),
-            ),
-          )
-        ],
       ),
       body: Form(
         key: _formKey,

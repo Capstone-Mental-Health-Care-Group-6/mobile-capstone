@@ -25,6 +25,7 @@ class LoginService {
       message = data['message'];
       String accesstoken = data['data']['token']['access_token'];
       fullLoginData.setString('accesstoken', accesstoken);
+      fullLoginData.setString('email', email);
       fullLoginData.setString('password', password);
       return Login.fromJson(response.data);
     } on DioException catch (_) {

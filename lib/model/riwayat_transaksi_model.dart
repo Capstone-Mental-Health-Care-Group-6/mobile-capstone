@@ -12,21 +12,28 @@ class RiwayatTransaksi {
     return '{$data, message: $message}';
   }
 
-  factory RiwayatTransaksi.fromJson(Map<String, dynamic> json) => RiwayatTransaksi(
-    data: json["data"] == null ? [] : List<DataRiwayatTransaksi>.from(json["data"]!.map((x) => DataRiwayatTransaksi.fromJson(x))),
-    message: json["message"],
-  );
+  factory RiwayatTransaksi.fromJson(Map<String, dynamic> json) =>
+      RiwayatTransaksi(
+        data: json["data"] == null
+            ? []
+            : List<DataRiwayatTransaksi>.from(
+                json["data"]!.map((x) => DataRiwayatTransaksi.fromJson(x))),
+        message: json["message"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "message": message,
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "message": message,
+      };
 }
 
 class DataRiwayatTransaksi {
   String? topicName;
   String? patientName;
   String? patientAvatar;
+  String? doctorAvatar;
   String? doctorName;
   String? methodName;
   String? durationName;
@@ -37,7 +44,7 @@ class DataRiwayatTransaksi {
   int? priceMethod;
   int? priceDuration;
   int? priceCounseling;
-  int? priceResult;
+  int priceResult;
   String? paymentProof;
   int? paymentStatus;
   String? paymentType;
@@ -51,6 +58,7 @@ class DataRiwayatTransaksi {
     this.topicName,
     this.patientName,
     this.patientAvatar,
+    this.doctorAvatar,
     this.doctorName,
     this.methodName,
     this.durationName,
@@ -61,7 +69,7 @@ class DataRiwayatTransaksi {
     this.priceMethod,
     this.priceDuration,
     this.priceCounseling,
-    this.priceResult,
+    required this.priceResult,
     this.paymentProof,
     this.paymentStatus,
     this.paymentType,
@@ -78,26 +86,26 @@ class DataRiwayatTransaksi {
         'topicName: $topicName, '
         'patientName: $patientName, '
         'patientAvatar: $patientAvatar, '
+        'doctorAvatar: $doctorAvatar, '
         'doctorName : $doctorName,'
-    'methodName: $methodName,'
-    'durationName: $durationName,'
-    'counselingId: $counselingId,'
-    'userId: $userId,'
-    'transactionId: $transactionId,'
-    'counselingType: $counselingType,'
-    'priceMethod: $priceMethod,'
-    'priceDuration: $priceDuration,'
-    'priceCounseling: $priceCounseling,'
-    'priceResult: $priceResult,'
-    'paymentProof: $paymentProof,'
-    'paymentStatus: $paymentStatus,'
-    'paymentType: $paymentType,'
-    'doctorRatingId: $doctorRatingId,'
-    'doctorStarRating: $doctorStarRating,'
-    'doctorReview: $doctorReview,'
-    'createdAt: $createdAt,'
-    'updatedAt: $updatedAt,'
-        
+        'methodName: $methodName,'
+        'durationName: $durationName,'
+        'counselingId: $counselingId,'
+        'userId: $userId,'
+        'transactionId: $transactionId,'
+        'counselingType: $counselingType,'
+        'priceMethod: $priceMethod,'
+        'priceDuration: $priceDuration,'
+        'priceCounseling: $priceCounseling,'
+        'priceResult: $priceResult,'
+        'paymentProof: $paymentProof,'
+        'paymentStatus: $paymentStatus,'
+        'paymentType: $paymentType,'
+        'doctorRatingId: $doctorRatingId,'
+        'doctorStarRating: $doctorStarRating,'
+        'doctorReview: $doctorReview,'
+        'createdAt: $createdAt,'
+        'updatedAt: $updatedAt,'
         '}';
   }
 
@@ -107,6 +115,8 @@ class DataRiwayatTransaksi {
         patientName: json["patient_name"] is String ? json["patient_name"] : "",
         patientAvatar:
             json["patient_avatar"] is String ? json["patient_avatar"] : "",
+        doctorAvatar:
+            json["doctor_avatar"] is String ? json["doctor_avatar"] : "",
         doctorName: json["doctor_name"] is String ? json["doctor_name"] : "",
         methodName: json["method_name"] is String ? json["method_name"] : "",
         durationName:
@@ -118,7 +128,8 @@ class DataRiwayatTransaksi {
         counselingType:
             json["counseling_type"] is String ? json["counseling_type"] : "",
         priceMethod: json["price_method"] is int ? json["price_method"] : 0,
-        priceDuration: json["price_duration"] is int ? json["price_duration"] : 0,
+        priceDuration:
+            json["price_duration"] is int ? json["price_duration"] : 0,
         priceCounseling:
             json["price_counseling"] is int ? json["price_counseling"] : 0,
         priceResult: json["price_result"] is int ? json["price_result"] : 0,
@@ -131,7 +142,8 @@ class DataRiwayatTransaksi {
             json["doctor_rating_id"] is int ? json["doctor_rating_id"] : 0,
         doctorStarRating:
             json["doctor_star_rating"] is int ? json["doctor_star_rating"] : 0,
-        doctorReview: json["doctor_review"] is String ? json["doctor_review"] : "",
+        doctorReview:
+            json["doctor_review"] is String ? json["doctor_review"] : "",
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -166,6 +178,4 @@ class DataRiwayatTransaksi {
       };
 }
 
-
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI2MTA1NjEsImlhdCI6MTcwMjYwNjk2MSwiaWQiOjE1LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.YomPai1CEVabjSyFJdsxeZdfCfCYw7vPLA1F0Y08KzA";
 

@@ -65,8 +65,9 @@ class _LogOutWidgetState extends State<LogOutWidget> {
                 child: const Text('Keluar'),
                 onPressed: () {
                   loginData.setBool('login', true);
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => const LoginScreen()));
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      (route) => false);
                 },
               ),
             ),

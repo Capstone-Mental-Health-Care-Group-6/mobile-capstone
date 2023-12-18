@@ -10,11 +10,15 @@ class ChatBotCSProvider extends ChangeNotifier {
   List<ChatBotCS> get chatBotCs => _chatMessages;
   final Map<String, String> menuExplanations = {
     'Bagaimana cara mengubah Biodata diri?':
-        '1. Buka aplikasi.\n2. Masuk ke akun Anda.\n3. Cari "Profil" atau pada  menu.\n4. Klik opsi "Edit Profil".\n5. Isi data baru dan simpan perubahan.\n\nApakah informasi yang\nsaya berikan sudah jelas?',
-    'Apa saja fitur yang tersedia?':
-        'Explanation for Fitur\n\nApakah informasi yang\nsaya berikan sudah jelas?',
-    'Panduan Konseling':
-        'Explanation for Konseling\n\nApakah informasi yang\nsaya berikan sudah jelas?',
+        "Buka aplikasi. Masuk ke akun Anda. Cari 'Profil' atau pada  menu. Klik opsi 'Edit Profil'. Isi data baru dan simpan perubahan. \n\nApakah informasi yang saya berikan sudah jelas?",
+    'Apa Fitur yang Tersedia?':
+        'Kami memiliki beberapa fitur yang tersedia seperti Artikel, Buat Janji, Chatbot dan Konseling. Namun, kami memiliki fitur unggulan yaitu konseling dengan dokter spesialis yang tersedia. \n\nApakah informasi yang saya berikan sudah jelas?',
+    'Panduan Untuk Buat Janji Dengan Konselor':
+        "Klik menu 'Buat Janji'. Pilih konselor yang ingin Anda panggil. Pilih tanggal dan waktu. Klik tombol 'Buat Janji'.\n\nApakah informasi yang saya berikan sudah jelas?",
+    'Panduan Untuk Konseling':
+        "Klik menu 'Konseling'. Pastikan Anda Sudah membuat Janji Dengan Dokter, Pilih Dokter yang ingin Anda konsultasi. Anda akan berkomunikasi melalui chat dan video call.\n\nApakah informasi yang saya berikan sudah jelas?",
+    'Panduan Untuk Chatbot':
+        "Klik menu 'Chatbot'. Pilih pertanyaan yang ingin Anda tanyakan. AI akan membalas pertanyaan Anda.\n\nApakah informasi yang saya berikan sudah jelas?"
   };
 
   void addMenuMessage(String message) {
@@ -33,10 +37,10 @@ class ChatBotCSProvider extends ChangeNotifier {
     addMenuMessage(buttonText);
   }
 
-  void addMenuButtons() {
-    addButton('Bagaimana cara mengubah Biodata diri?');
-    addButton('Apa saja fitur yang tersedia?');
-    addButton('Panduan Konseling');
+  void addAllMenuButtons() {
+    for (var key in menuExplanations.keys) {
+      addButton(key);
+    }
   }
 
   void clearMessages() {
@@ -53,8 +57,7 @@ class ChatBotCSProvider extends ChangeNotifier {
         _chatMessages.isNotEmpty ? _chatMessages[buttonIndex].text : "";
 
     if (lastMessage.contains("Bagaimana") ||
-        lastMessage.contains("fitur") ||
-        lastMessage.contains("Konseling")) {
+        menuExplanations.keys.any((key) => lastMessage.contains(key))) {
       String menuResponse = _chatMessages[buttonIndex].text;
       addUserMessage(menuResponse);
 
@@ -63,7 +66,7 @@ class ChatBotCSProvider extends ChangeNotifier {
           !message.text.contains('Selamat') &&
           !message.text.contains('Bagaimanakah') &&
           !message.text.startsWith('1') &&
-          !message.text.startsWith('Explanation'));
+          !menuExplanations.values.contains(message.text));
       notifyListeners();
 
       showMenuExplanation(menuResponse);
@@ -79,7 +82,7 @@ class ChatBotCSProvider extends ChangeNotifier {
     } else if (lastMessage == 'Tidak') {
       addUserMessage('Tidak');
       addMenuMessage('Bagaimanakah saya dapat membantu Anda?');
-      addMenuButtons();
+      addAllMenuButtons();
 
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
@@ -105,7 +108,7 @@ class ChatBotCSProvider extends ChangeNotifier {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addMenuMessage(
           'Selamat datang di aplikasi kesehatan mental kami! Saya akan dengan senang hati membantu Anda memahami fitur yang tersedia. Berikut beberapa hal yang dapat Anda lakukan:');
-      addMenuButtons();
+      addAllMenuButtons();
     });
   }
 }
