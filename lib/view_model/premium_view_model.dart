@@ -23,8 +23,8 @@ class PremiumViewModel extends ChangeNotifier {
   ActivePackageModel? get activePackageModel => _activePackageModel;
   int get selectedIndex => _selectedIndex;
 
-  Future<ActivePackageModel> fetchDataPremium(String token) async {
-    _activePackageModel = await _activePackageService.fetchData(token);
+  Future<ActivePackageModel> fetchDataPremium() async {
+    _activePackageModel = await _activePackageService.fetchData();
     try {
       if (_activePackageModel != null) {
         notifyListeners();

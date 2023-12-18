@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_models.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class JwtService {
   Map<String, dynamic> decodeToken(String token) {
@@ -26,7 +27,7 @@ class UrlBulService {
   final domainUrl = "https://kmb5alta.online";
   String buildUrl(int userId) {
     // ignore: unnecessary_null_comparison
-    if(userId == null ){
+    if (userId == null) {
       throw Exception("Couldn't extract user ID from token");
     }
     return '$domainUrl/counseling/user/2';
@@ -35,9 +36,13 @@ class UrlBulService {
 
 class ActivePackageService {
   final Dio _dio;
+  late SharedPreferences sp;
+  String token = '';
   ActivePackageService(this._dio);
 
-  Future fetchData(String token) async {
+  Future fetchData() async {
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
     try {
       final JwtService jwtService = JwtService();
       final int userId = jwtService.getTokenId(token);
@@ -58,5 +63,4 @@ class ActivePackageService {
       rethrow;
     }
   }
-  
 }

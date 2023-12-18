@@ -18,12 +18,9 @@ class ActivePackageViewModel extends ChangeNotifier {
 
   ActivePackageModel? get activePackageModel => _activePackageModel;
 
-  String token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI4NzkxNTMsImlhdCI6MTcwMjc5Mjc1MywiaWQiOjYzLCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.kDsfAWh1RA_7YhB6jcJdlr9x-pBVLxS_NdkORKErLNQ";
-
-  Future<void> delayLoading(String token) async {
+  Future<void> delayLoading() async {
     if (isLoaded) {
-      await fetchDataActivePackage(token);
+      await fetchDataActivePackage();
     }
 
 
@@ -36,8 +33,8 @@ class ActivePackageViewModel extends ChangeNotifier {
   }
 
 
-  Future<ActivePackageModel> fetchDataActivePackage(String token) async {
-    _activePackageModel = await _activePackageService.fetchData(token);
+  Future<ActivePackageModel> fetchDataActivePackage() async {
+    _activePackageModel = await _activePackageService.fetchData();
     try {
       if (_activePackageModel != null) {
         notifyListeners();
