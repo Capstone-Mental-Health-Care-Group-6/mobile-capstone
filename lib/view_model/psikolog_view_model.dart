@@ -16,12 +16,11 @@ class PsikologProvider extends ChangeNotifier {
 
   Future<void> fetchListPsikolog(String token) async {
     try {
-      isLoading = true;
-      dataPsikolog = await _apiService.fetchPsikolog();
+      dataPsikolog = await _apiService.fetchPsikolog(token);
       for (var data in dataPsikolog!.data){
-        if(data.ratings!.isNotEmpty){
-          countReviewDocter = data.ratings!.where((rating) => rating.doctorReview.toString() != "No review yet").length;
-          for(var rating in data.ratings!){
+        if(data.ratings.isNotEmpty){
+          countReviewDocter = data.ratings.where((rating) => rating.doctorReview.toString() != "No review yet").length;
+          for(var rating in data.ratings){
             countRatingDocter += rating.doctorStarRating;
           }
 
@@ -42,7 +41,7 @@ class PsikologProvider extends ChangeNotifier {
       isLoading = false;
       notFound = false;
     } catch (e) {
-      throw Exception('$e');
+      notFound = true;
     }
     notifyListeners();
   }
@@ -50,7 +49,7 @@ class PsikologProvider extends ChangeNotifier {
   Future<void> fetchListPsikologSearch(String token) async {
     try {
       dataPsikolog =
-          await _apiService.fetchPsikologSearch(searchController.text);
+          await _apiService.fetchPsikologSearch(searchController.text,token);
       for (var data in dataPsikolog!.data){
         if(data.ratings != null){
           countReviewDocter = data.ratings!.where((rating) => rating.doctorReview.toString() != "No review yet").length;

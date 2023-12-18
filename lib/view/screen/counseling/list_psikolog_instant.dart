@@ -258,7 +258,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                               MaterialPageRoute(
                                                   builder: (_) =>
                                                       const ProfilePsikologScreen(
-                                                          isInstan: true, session: 2,)));
+                                                          isInstan: true, session: 1,)));
                                         },
                                         child: const Text(
                                           "Mulai Chat",
