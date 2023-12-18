@@ -4,7 +4,6 @@ import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class ChatMenuScreen extends StatefulWidget {
   const ChatMenuScreen({super.key});
 
@@ -125,7 +124,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/images/chatbot.png',
+            'assets/images/ChatBot.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(
@@ -146,8 +145,6 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
       ),
     );
   }
-
-
 
   Widget _buildMenuResponseButton(
     ChatBotCS message,
