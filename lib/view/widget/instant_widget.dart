@@ -244,51 +244,6 @@ class _InstantWidgetState extends State<InstantWidget> {
                                       ),
                               ),
                             ),
-                            '${datas.status}' == "not_finished"
-                                ? ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xff0085FF),
-                                      padding: const EdgeInsets.all(
-                                        10.0,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          8.0,
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Mulai Chat',
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  )
-                                : OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.all(10.0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          8.0,
-                                        ),
-                                      ),
-                                      side: const BorderSide(
-                                        color: Color(0xff0085FF),
-                                      ),
-                                      foregroundColor: const Color(0xff0085FF),
-                                    ),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Chat Kembali',
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12.0,
-                                      ),
-                                    ),
-                                  ),
                           ],
                         ),
                       ),
