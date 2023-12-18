@@ -42,7 +42,7 @@ class PsikologProvider extends ChangeNotifier {
       isLoading = false;
       notFound = false;
     } catch (e) {
-      throw Exception('$e');
+      notFound = true;
     }
     notifyListeners();
   }
@@ -50,7 +50,7 @@ class PsikologProvider extends ChangeNotifier {
   Future<void> fetchListPsikologSearch(String token) async {
     try {
       dataPsikolog =
-          await _apiService.fetchPsikologSearch(token, searchController.text);
+          await _apiService.fetchPsikologSearch(searchController.text,token);
       for (var data in dataPsikolog!.data){
         if(data.ratings.isNotEmpty){
           countReviewDocter = data.ratings.where((rating) => rating.doctorReview.toString() != "No review yet").length;

@@ -185,8 +185,8 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                     const SizedBox(height: 5),
                                                     const Text(
                                                       "Spesialis Positive psychology",
-                                                      style:
-                                                          TextStyle(fontSize: 14),
+                                                      style: TextStyle(
+                                                          fontSize: 14),
                                                     ),
                                                     const SizedBox(height: 3),
                                                     const Text(
@@ -258,9 +258,12 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (_) =>
-                                                                const ProfilePsikologScreen(
+                                                                ProfilePsikologScreen(
                                                                     isInstan:
-                                                                        false)));
+                                                                        false,
+                                                                    session: 2,
+                                                                    doctorId: data
+                                                                        .id)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",

@@ -1,98 +1,55 @@
-import 'dart:developer';
-
-import 'package:animate_do/animate_do.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:empathi_care/view/screen/payment_method_screen.dart';
+import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProfilePsikologScreen extends StatefulWidget {
-  final bool isInstan;
-  final DateTime? dateKonseling;
-  final int? session;
   const ProfilePsikologScreen({
     super.key,
-    required this.isInstan,
-    this.dateKonseling,
-    this.session,
+    required bool isInstan,
+    required int session,
+    required this.doctorId,
   });
+
+  final int doctorId;
 
   @override
   State<ProfilePsikologScreen> createState() => _ProfilePsikologScreenState();
 }
 
-class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with TickerProviderStateMixin {
+class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
+    with TickerProviderStateMixin {
   final _carouselController = CarouselController();
-
-  int session = 0;
 
   late AnimationController _animateControllerNext;
   late AnimationController _animateControllerPrev;
   DateTime? firstDate, lastDate;
-  List<Map<String, dynamic>> selectedSchedule = [];
-  List<String> selectedDate = [];
-  bool isInstan = false, isLoading = true;
-  Map<String, List> scheduleList = {};
- List<Map<String, dynamic>> listKeahlian = [
+
+  List<Map<String, dynamic>> listKeahlian = [
     {"keahlian": "Keluarga", "icon": "assets/icons/home_icon.svg"},
     {"keahlian": "Percintaan", "icon": "assets/icons/love_icon.svg"},
     {"keahlian": "Kendali Emosi", "icon": "assets/icons/flame_icon.svg"},
   ];
-  List<Map<String, dynamic>> listReview = [
-    {
-      "name": "Naufal rafi shafgani",
-      'time': "2 hari lalu",
-      "rating": "5",
-      "review": "Dokter sangat hebat! Terima kasih telah memberi saya saran yang luar biasa dan telah membantu saya melalui masalah yang sangat berat. Terima kasih dok.",
-    },
-    {
-      "name": "Abdul",
-      'time': "3 hari lalu",
-      "rating": "4",
-      "review": "Dokter sangat hebat! Terima kasih telah memberi saya saran yang luar biasa dan telah membantu saya melalui masalah yang sangat berat. Terima kasih dok.",
-    },
-    {
-      "name": "Dhea",
-      'time': "5 hari lalu",
-      "rating": "4.5",
-      "review": "Dokter sangat hebat! Terima kasih telah memberi saya saran yang luar biasa dan telah membantu saya melalui masalah yang sangat berat. Terima kasih dok.",
-    },
-  ];
+
+  late ProfilePsikologProvider prov;
   @override
   void initState() {
-    isInstan = widget.isInstan;
-    _animateControllerNext = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    _animateControllerPrev = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
-    session = widget.session ?? 0;
+    _animateControllerNext = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    _animateControllerPrev = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
 
-    getJadwal();
     getCalledar();
-    countList();
+
+    prov = context.read<ProfilePsikologProvider>();
+    prov.init(context, widget.doctorId);
     super.initState();
-  }
-
-  Future loading() async {
-    await Future.delayed(const Duration(seconds: 2)).then((value) => isLoading = false);
-  }
-
-  countList() async {
-    for (int i = 0; i < session; i++) {
-      selectedDate.add("");
-    }
-
-    if (isInstan) {
-      selectedSchedule.add({"date": "", "selected": false});
-    }
-
-    await Future.delayed(const Duration(seconds: 2)).then((value) {
-      setState(() {
-        isLoading = false;
-      });
-    });
   }
 
   getCalledar() {
@@ -107,358 +64,513 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
     super.dispose();
   }
 
-  List getJadwal() {
-    setState(() {
-      isLoading = true;
-    });
-    if (isInstan) {
-      return scheduleList['date'] = [
-        "9.30 - 10.00",
-        "13.30 - 14.00",
-        "15.30 - 16.00",
-      ];
-    } else {
-      return [];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text(
-          "Profile Psikolog",
-          style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            "Profile Psikolog",
+            style: GoogleFonts.montserrat(
+                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
         ),
-        surfaceTintColor: Colors.white,
-      ),
-      body: Builder(
-        builder: (context) {
-          if (isLoading) {
-            return shimmerLoadingInstan();
-          } else {
-            return FadeInLeft(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: const BouncingScrollPhysics(),
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 140,
-                          color: const Color(0xffCCE7FF),
-                          child: const Align(
-                            child: Image(image: AssetImage("assets/images/doctors.png")),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 19.5, vertical: 16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+        body: Consumer<ProfilePsikologProvider>(
+          builder: (context, profileProv, child) {
+            return profileProv.isLoading
+                ? shimmerLoadingInstan()
+                : Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 160,
+                              color: const Color(0xffCCE7FF),
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Image(
+                                  image: NetworkImage(
+                                    prov.dataDoctor['doctor_avatar'].toString(),
+                                  ),
+                                  fit: BoxFit.fill,
+                                  width: double.infinity,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 19.5, vertical: 16),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "Rangga S.Psi., M.Psi",
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Icon(
-                                    MdiIcons.star,
-                                    color: const Color(0xffFFBB00),
-                                    size: 24,
-                                  ),
-                                  const SizedBox(
-                                    width: 3.5,
-                                  ),
-                                  Text(
-                                    "4.8",
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "Therapy, positive psychology",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 10,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                "Tentang",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 7),
-                              Text(
-                                "Dr. Rangga S adalah seorang profesional psikologi yang berpengalaman dengan latar belakang pendidikan yang kuat, memegang gelar Sarjana Psikologi (S.Psi) dan Magister Psikologi (M.Psi). Dengan lebih dari sepuluh tahun pengalaman praktik, Dr. Rangga telah menjadi seorang ahli dalam konseling keluarga dan terapi individu.",
-                                textAlign: TextAlign.justify,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              Text(
-                                "Nomor Izin Praktik",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                "SIPP : 3232323232",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 12,
-                                ),
-                              ),
-                              const SizedBox(height: 20),
-                              isInstan
-                                  ? Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Jadwal yang tersedia",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${scheduleList['date']?.length} Jadwal Tersedia",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 7),
-                                        GridView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                                          itemCount: scheduleList["date"]?.length,
-                                          itemBuilder: (context, indexGrid) {
-                                            return InkWell(
-                                              onTap: () {
-                                                selectedSchedule[0]['date'] = scheduleList["date"]![indexGrid].toString();
-                                                selectedSchedule[0]['selected'] = true;
-                                                setState(() {});
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: const Color(0xffCCE7FF),
-                                                  borderRadius: BorderRadius.circular(12),
-                                                  border: selectedSchedule[0]['date'] == scheduleList["date"]![indexGrid].toString() ? Border.all(color: Colors.blue) : null,
-                                                ),
-                                                child: Center(
-                                                    child: Text(
-                                                  scheduleList["date"]![indexGrid].toString(),
-                                                  style: GoogleFonts.montserrat(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: selectedSchedule[0]['date'] == scheduleList["date"]![indexGrid].toString() ? Colors.blue : Colors.black,
-                                                  ),
-                                                )),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    )
-                                  : premiumMethod(),
-                              const SizedBox(height: 20),
-                              Text(
-                                "Keahlian",
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                                itemCount: listKeahlian.length,
-                                itemBuilder: (context, index) {
-                                  return Center(
-                                      child: Row(
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      SvgPicture.asset(
-                                        listKeahlian[index]['icon'],
+                                      Expanded(
+                                        child: Text(
+                                          prov.dataDoctor['doctor_name']
+                                              .toString(),
+                                          style: GoogleFonts.montserrat(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ),
-                                      const SizedBox(width: 6),
+                                      Icon(
+                                        MdiIcons.star,
+                                        color: const Color(0xffFFBB00),
+                                        size: 24,
+                                      ),
+                                      const SizedBox(
+                                        width: 3.5,
+                                      ),
                                       Text(
-                                        listKeahlian[index]['keahlian'].toString(),
-                                        style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
+                                        prov.avgRating.toString(),
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ],
-                                  ));
-                                },
-                              ),
-                              const SizedBox(height: 12),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
+                                  ),
                                   Text(
-                                    "Review",
+                                    "Therapy, positive psychology",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    "Tentang",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  const Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      _carouselController.previousPage();
-                                    },
-                                    child: const Icon(Icons.arrow_back_ios),
+                                  const SizedBox(height: 7),
+                                  Text(
+                                    prov.dataDoctor['doctor_description']
+                                        .toString(),
+                                    textAlign: TextAlign.justify,
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                  const SizedBox(width: 4),
-                                  InkWell(
-                                    onTap: () {
-                                      _carouselController.nextPage();
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    "Nomor Izin Praktik",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    prov.dataDoctor['doctor_sipp'] == ""
+                                        ? "SIPP : -"
+                                        : "SIPP : ${prov.dataDoctor['doctor_sipp']}",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  profileProv.isInstan
+                                      ? Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Jadwal yang tersedia",
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "${prov.workday.length} Jadwal Tersedia",
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 7),
+                                            GridView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                                      crossAxisCount: 3,
+                                                      crossAxisSpacing: 10,
+                                                      childAspectRatio: 3),
+                                              itemCount: prov.workday.length,
+                                              itemBuilder:
+                                                  (context, indexGrid) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                    profileProv.onSelectWorkday(
+                                                        profileProv
+                                                            .workday[indexGrid],
+                                                        0);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xffCCE7FF),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      border: profileProv
+                                                                  .selectedWorkday[
+                                                                      0][
+                                                                      'workday']
+                                                                      [
+                                                                      'workday_id']
+                                                                  .toString() ==
+                                                              profileProv
+                                                                  .workday[
+                                                                      indexGrid]
+                                                                      [
+                                                                      'workday_id']
+                                                                  .toString()
+                                                          ? Border.all(
+                                                              color:
+                                                                  Colors.blue)
+                                                          : null,
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          DateFormat("HH:mm",
+                                                                  "id_ID")
+                                                              .format(DateTime.parse(profileProv
+                                                                  .workday[
+                                                                      indexGrid]
+                                                                      [
+                                                                      'start_time']
+                                                                  .toString())),
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: profileProv
+                                                                        .selectedWorkday[
+                                                                            0][
+                                                                            'workday']
+                                                                            [
+                                                                            'workday_id']
+                                                                        .toString() ==
+                                                                    profileProv
+                                                                        .workday[
+                                                                            indexGrid]
+                                                                            [
+                                                                            'workday_id']
+                                                                        .toString()
+                                                                ? Colors.blue
+                                                                : Colors.black,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          " - ",
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: profileProv
+                                                                        .selectedWorkday[
+                                                                            0][
+                                                                            'workday']
+                                                                            [
+                                                                            'workday_id']
+                                                                        .toString() ==
+                                                                    profileProv
+                                                                        .workday[
+                                                                            indexGrid]
+                                                                            [
+                                                                            'workday_id']
+                                                                        .toString()
+                                                                ? Colors.blue
+                                                                : Colors.black,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          DateFormat("HH:mm",
+                                                                  "id_ID")
+                                                              .format(DateTime.parse(profileProv
+                                                                  .workday[
+                                                                      indexGrid]
+                                                                      [
+                                                                      'end_time']
+                                                                  .toString())),
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: profileProv
+                                                                        .selectedWorkday[
+                                                                            0][
+                                                                            'workday']
+                                                                            [
+                                                                            'workday_id']
+                                                                        .toString() ==
+                                                                    profileProv
+                                                                        .workday[
+                                                                            indexGrid]
+                                                                            [
+                                                                            'workday_id']
+                                                                        .toString()
+                                                                ? Colors.blue
+                                                                : Colors.black,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      : premiumMethod(),
+                                  const SizedBox(height: 20),
+                                  Text(
+                                    "Keahlian",
+                                    style: GoogleFonts.montserrat(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            childAspectRatio: 4),
+                                    itemCount: listKeahlian.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        child: Center(
+                                            child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              listKeahlian[index]['icon'],
+                                            ),
+                                            const SizedBox(width: 2),
+                                            Text(
+                                              listKeahlian[index]['keahlian']
+                                                  .toString(),
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        )),
+                                      );
                                     },
-                                    child: const Icon(Icons.arrow_forward_ios),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Review",
+                                        style: GoogleFonts.montserrat(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const Spacer(),
+                                      InkWell(
+                                        onTap: () {
+                                          _carouselController.previousPage();
+                                        },
+                                        child: const Icon(Icons.arrow_back_ios),
+                                      ),
+                                      const SizedBox(width: 4),
+                                      InkWell(
+                                        onTap: () {
+                                          _carouselController.nextPage();
+                                        },
+                                        child:
+                                            const Icon(Icons.arrow_forward_ios),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        CarouselSlider(
-                            carouselController: _carouselController,
-                            options: CarouselOptions(
-                              aspectRatio: 2.5,
-                              scrollPhysics: const BouncingScrollPhysics(),
-                              initialPage: 0,
-                              enableInfiniteScroll: true,
-                              enlargeCenterPage: true,
-                              enlargeStrategy: CenterPageEnlargeStrategy.height,
-                              reverse: false,
-                              autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 12),
-                              autoPlayAnimationDuration: const Duration(milliseconds: 2000),
-                              autoPlayCurve: Curves.fastOutSlowIn,
-                              viewportFraction: 0.88,
-                              scrollDirection: Axis.horizontal,
-                              onPageChanged: (index, reason) {
-                                _animateControllerPrev.reset();
-                                _animateControllerPrev.forward();
-                                _animateControllerNext.reset();
-                                _animateControllerNext.forward();
-                              },
                             ),
-                            items: listReview
-                                .map(
-                                  (element) => Container(
-                                    padding: const EdgeInsets.all(10),
-                                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xffCCE7FF),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              height: 40,
-                                              width: 40,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                  image: AssetImage("assets/images/doctors.png"),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 12),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                            const SizedBox(height: 12),
+                            Visibility(
+                              visible: prov.dataDoctor['ratings'] != null,
+                              child: CarouselSlider(
+                                  carouselController: _carouselController,
+                                  options: CarouselOptions(
+                                    aspectRatio: 2,
+                                    scrollPhysics:
+                                        const BouncingScrollPhysics(),
+                                    initialPage: 0,
+                                    enableInfiniteScroll: true,
+                                    enlargeCenterPage: true,
+                                    enlargeStrategy:
+                                        CenterPageEnlargeStrategy.height,
+                                    reverse: false,
+                                    autoPlay: true,
+                                    autoPlayInterval:
+                                        const Duration(seconds: 12),
+                                    autoPlayAnimationDuration:
+                                        const Duration(milliseconds: 2000),
+                                    autoPlayCurve: Curves.fastOutSlowIn,
+                                    viewportFraction: 0.88,
+                                    scrollDirection: Axis.horizontal,
+                                    onPageChanged: (index, reason) {
+                                      _animateControllerPrev.reset();
+                                      _animateControllerPrev.forward();
+                                      _animateControllerNext.reset();
+                                      _animateControllerNext.forward();
+                                    },
+                                  ),
+                                  items: profileProv.ratings
+                                      .map(
+                                        (element) => Container(
+                                          padding: const EdgeInsets.all(10),
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffCCE7FF),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Row(
                                                 children: [
-                                                  Text(
-                                                    element['name'].toString(),
-                                                    style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold),
+                                                  Container(
+                                                    height: 40,
+                                                    width: 40,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      image: DecorationImage(
+                                                        image: NetworkImage(
+                                                            element['patient_avatar']
+                                                                .toString()),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
                                                   ),
-                                                  const SizedBox(height: 4),
-                                                  Text(
-                                                    element['time'],
-                                                    style: GoogleFonts.montserrat(fontSize: 14),
+                                                  const SizedBox(width: 12),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          element['patient_name']
+                                                              .toString(),
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 4),
+                                                        Text(
+                                                          "time",
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                                  fontSize: 14),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
+                                                  const SizedBox(width: 14),
+                                                  Icon(MdiIcons.star,
+                                                      color: Colors.yellow,
+                                                      size: 24),
+                                                  const SizedBox(width: 3.5),
+                                                  Text(
+                                                    element['doctor_star_rating']
+                                                        .toString(),
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                  )
                                                 ],
                                               ),
-                                            ),
-                                            const SizedBox(width: 14),
-                                            Icon(MdiIcons.star, color: Colors.yellow, size: 24),
-                                            const SizedBox(width: 3.5),
-                                            Text(
-                                              element['rating'],
-                                              style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
-                                            )
-                                          ],
+                                              const SizedBox(height: 10),
+                                              Text(
+                                                element['doctor_review']
+                                                    .toString(),
+                                                maxLines: 4,
+                                                textAlign: TextAlign.justify,
+                                                style: GoogleFonts.montserrat(
+                                                    fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                        const SizedBox(height: 10),
-                                        Text(
-                                          element['review'],
-                                          textAlign: TextAlign.justify,
-                                          style: GoogleFonts.montserrat(fontSize: 12),
-                                          maxLines: 4,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        
-                                      ],
-                                    ),
-                                  ),
-                                )
-                                .toList()),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 19.5),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) => const PaymentMethodScreen()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          fixedSize: Size(MediaQuery.of(context).size.width, 40),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
+                                      )
+                                      .toList()),
+                            ),
+                          ],
                         ),
-                        child: Text(
-                          "Mulai Chat",
-                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-                        )),
-                  )
-                ],
-              ),
-            );
-          }
-        },
-      ),
-    );
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 19.5),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PaymentMethodScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              fixedSize:
+                                  Size(MediaQuery.of(context).size.width, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Text(
+                              "Mulai Chat",
+                              style: GoogleFonts.montserrat(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      )
+                    ],
+                  );
+          },
+        ));
   }
 
   Widget shimmerLoadingInstan() {
@@ -483,7 +595,8 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 19.5, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 19.5, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -711,24 +824,27 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                       ),
                     ),
                     const SizedBox(height: 20),
-                    isInstan
+                    prov.isInstan
                         ? Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
                                     width: 131,
                                     height: 10.5,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor: Colors.white.withOpacity(0.5),
+                                      highlightColor:
+                                          Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
                                         decoration: BoxDecoration(
                                           color: const Color(0xffCCE7FF),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                       ),
                                     ),
@@ -738,13 +854,15 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                     height: 6.75,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor: Colors.white.withOpacity(0.5),
+                                      highlightColor:
+                                          Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
                                         decoration: BoxDecoration(
                                           color: const Color(0xffCCE7FF),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                       ),
                                     ),
@@ -755,7 +873,11 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                               GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 10,
+                                        childAspectRatio: 3),
                                 itemCount: 3,
                                 itemBuilder: (context, indexGrid) {
                                   return Container(
@@ -768,14 +890,17 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                         width: 65,
                                         height: 8.75,
                                         child: Shimmer.fromColors(
-                                          baseColor: Colors.grey.withOpacity(0.5),
-                                          highlightColor: Colors.white.withOpacity(0.5),
+                                          baseColor:
+                                              Colors.grey.withOpacity(0.5),
+                                          highlightColor:
+                                              Colors.white.withOpacity(0.5),
                                           child: Container(
                                             width: double.infinity,
                                             height: 10.5,
                                             decoration: BoxDecoration(
                                               color: const Color(0xffCCE7FF),
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                             ),
                                           ),
                                         ),
@@ -799,13 +924,15 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                     height: 10.5,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor: Colors.white.withOpacity(0.5),
+                                      highlightColor:
+                                          Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
                                         decoration: BoxDecoration(
                                           color: const Color(0xffCCE7FF),
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                       ),
                                     ),
@@ -816,7 +943,8 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                     height: 40,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor: Colors.white.withOpacity(0.5),
+                                      highlightColor:
+                                          Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
@@ -825,53 +953,6 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                     ),
                                   ),
                                   const SizedBox(height: 13),
-                                  Visibility(
-                                    visible: selectedDate[indexList] != "",
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Jadwal yang tersedia",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                            Text(
-                                              "${scheduleList['date${indexList + 1}']?.length} Jadwal Tersedia",
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 7),
-                                        GridView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                                          itemCount: scheduleList["date${indexList + 1}"]?.length,
-                                          itemBuilder: (context, indexGrid) {
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffCCE7FF),
-                                                borderRadius: BorderRadius.circular(12),
-                                              ),
-                                              child: Center(
-                                                  child: Text(
-                                                scheduleList["date${indexList + 1}"]![indexGrid].toString(),
-                                                style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
-                                              )),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
                                 ],
                               );
                             },
@@ -897,7 +978,11 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: 3),
                       itemCount: 3,
                       itemBuilder: (context, indexGrid) {
                         return Container(
@@ -1177,14 +1262,15 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 2,
+      itemCount: prov.session,
       itemBuilder: (context, indexList) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Konseling ${indexList + 1}",
-              style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold),
+              style: GoogleFonts.montserrat(
+                  fontSize: 14, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -1197,16 +1283,10 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                 ).then((value) {
                   if (value != null) {
                     final dateTime = DateTime.parse(value.toString());
-                    final dateIndo = DateFormat("dd/MM/yyyy", "id_ID").format(dateTime);
-                    selectedDate[indexList] = dateIndo;
-                    scheduleList["date${indexList + 1}"] = [
-                      "9.30 - 10.00",
-                      "13.30 - 14.00",
-                      "15.30 - 16.00",
-                    ];
-                    selectedSchedule.add({"date": "", "selected": false});
-                    log(selectedSchedule.toString());
-                    setState(() {});
+                    final dateIndo =
+                        DateFormat("dd/MM/yyyy", "id_ID").format(dateTime);
+
+                    prov.onSelectedDate(indexList, dateIndo);
                   }
                 });
               },
@@ -1215,7 +1295,9 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: selectedDate[indexList] == "" ? "dd/mm/yyyy" : selectedDate[indexList].toString(),
+                hintText: prov.selectedDate[indexList] == ""
+                    ? "mm/dd/yyyy"
+                    : prov.selectedDate[indexList].toString(),
                 suffixIcon: Icon(
                   MdiIcons.calendar,
                   color: Colors.blue,
@@ -1224,7 +1306,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
             ),
             const SizedBox(height: 13),
             Visibility(
-              visible: selectedDate[indexList] != "",
+              visible: prov.selectedDate[indexList] != "",
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1239,7 +1321,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                         ),
                       ),
                       Text(
-                        "${scheduleList['date${indexList + 1}']?.length} Jadwal Tersedia",
+                        "${prov.workday.length} Jadwal Tersedia",
                         style: GoogleFonts.montserrat(
                           fontSize: 14,
                         ),
@@ -1250,31 +1332,88 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
-                    itemCount: scheduleList["date${indexList + 1}"]?.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: 3),
+                    itemCount: prov.workday.length,
                     itemBuilder: (context, indexGrid) {
                       return InkWell(
                         onTap: () {
-                          selectedSchedule[indexList]['date'] = scheduleList["date${indexList + 1}"]![indexGrid].toString();
-                          selectedSchedule[indexList]['selected'] = true;
-                          log(selectedSchedule.toString());
+                          prov.onSelectWorkday(
+                              prov.workday[indexGrid], indexList);
+                          // log(prov.selectedWorkday[indexGrid]['workday']['workday_id'].toString());
+                          // log(prov.workday[indexGrid]['workday_id'].toString());
+                          // log(prov.selectedWorkday.toString());
+
                           setState(() {});
                         },
                         child: Container(
                           decoration: BoxDecoration(
                             color: const Color(0xffCCE7FF),
                             borderRadius: BorderRadius.circular(12),
-                            border: selectedSchedule[indexList]['date'] == scheduleList["date${indexList + 1}"]![indexGrid].toString() ? Border.all(color: Colors.blue) : null,
+                            border: prov.selectedWorkday[indexList]['workday']
+                                            ['workday_id']
+                                        .toString() ==
+                                    prov.workday[indexGrid]['workday_id']
+                                        .toString()
+                                ? Border.all(color: Colors.blue)
+                                : null,
                           ),
-                          child: Center(
-                              child: Text(
-                            scheduleList["date${indexList + 1}"]![indexGrid].toString(),
-                            style: GoogleFonts.montserrat(
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                              color: selectedSchedule[indexList]['date'] != scheduleList["date${indexList + 1}"]![indexGrid].toString() ? Colors.black : Colors.blue,
-                            ),
-                          )),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                DateFormat("HH:mm", "id_ID").format(
+                                    DateTime.parse(prov.workday[indexGrid]
+                                            ['start_time']
+                                        .toString())),
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: prov.selectedWorkday[indexList]
+                                                  ['workday']['workday_id']
+                                              .toString() !=
+                                          prov.workday[indexGrid]['workday_id']
+                                              .toString()
+                                      ? Colors.black
+                                      : Colors.blue,
+                                ),
+                              ),
+                              Text(
+                                " - ",
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: prov.selectedWorkday[indexList]
+                                                  ['workday']['workday_id']
+                                              .toString() !=
+                                          prov.workday[indexGrid]['workday_id']
+                                              .toString()
+                                      ? Colors.black
+                                      : Colors.blue,
+                                ),
+                              ),
+                              Text(
+                                DateFormat("HH:mm", "id_ID").format(
+                                    DateTime.parse(prov.workday[indexGrid]
+                                            ['end_time']
+                                        .toString())),
+                                style: GoogleFonts.montserrat(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                  color: prov.selectedWorkday[indexList]
+                                                  ['workday']['workday_id']
+                                              .toString() !=
+                                          prov.workday[indexGrid]['workday_id']
+                                              .toString()
+                                      ? Colors.black
+                                      : Colors.blue,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

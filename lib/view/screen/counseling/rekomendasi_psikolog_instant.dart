@@ -150,8 +150,8 @@ class _RekomendasiPsikologInstantState
                                                     const SizedBox(height: 5),
                                                     const Text(
                                                       "Spesialis Positive psychology",
-                                                      style:
-                                                          TextStyle(fontSize: 14),
+                                                      style: TextStyle(
+                                                          fontSize: 14),
                                                     ),
                                                     const SizedBox(height: 3),
                                                     const Text(
@@ -223,9 +223,12 @@ class _RekomendasiPsikologInstantState
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (_) =>
-                                                                const ProfilePsikologScreen(
+                                                                ProfilePsikologScreen(
                                                                     isInstan:
-                                                                        true)));
+                                                                        true,
+                                                                    session: 1,
+                                                                    doctorId: data
+                                                                        .id)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",
@@ -275,7 +278,6 @@ class _RekomendasiPsikologInstantState
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(20.0),

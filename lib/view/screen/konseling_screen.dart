@@ -1,4 +1,3 @@
-import 'package:empathi_care/model/konseling_model.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
 import 'package:empathi_care/view/screen/paket_screen.dart';
 import 'package:empathi_care/view_model/konseling_view_model.dart';
@@ -17,7 +16,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
   void initState() {
     super.initState();
     Provider.of<KonselingProvider>(context, listen: false)
-        .fetchTopikKonseling(token);
+        .fetchTopikKonseling();
   }
 
   @override
@@ -316,46 +315,53 @@ class _KonselingScreenState extends State<KonselingScreen> {
                     ),
                     SizedBox(
                       height: 205,
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemExtent: 35,
-                        children: konselingProvider.topikKonseling.data
-                                ?.map((datum) {
-                              return ListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Row(
-                                  children: [
-                                    Transform.scale(
-                                      scale: 1.19,
-                                      child: Radio<String>(
-                                        value: datum.name ?? "",
-                                        groupValue:
-                                            konselingProvider.selectedOption,
-                                        onChanged: (String? value) {
-                                          konselingProvider
-                                              .setSelectedOption(value!);
-                                        },
-                                        activeColor: Colors.black,
-                                        materialTapTargetSize:
-                                            MaterialTapTargetSize.shrinkWrap,
-                                        toggleable: true,
+                      child: konselingProvider.topikKonseling.data?.isEmpty ==
+                              true
+                          ? const CircularProgressIndicator()
+                          : ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemExtent: 38,
+                              children: konselingProvider.topikKonseling.data
+                                      ?.map((datum) {
+                                    return ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      title: Row(
+                                        children: [
+                                          Transform.scale(
+                                            scale: 1.2,
+                                            child: Radio<String>(
+                                              value: datum.name ?? "",
+                                              groupValue: konselingProvider
+                                                  .selectedOption,
+                                              onChanged: (String? value) {
+                                                konselingProvider
+                                                    .setSelectedOption(value!);
+                                                konselingProvider
+                                                    .setSelectedId(datum.id!);
+                                                konselingProvider.getById();
+                                              },
+                                              activeColor: Colors.black,
+                                              materialTapTargetSize:
+                                                  MaterialTapTargetSize
+                                                      .shrinkWrap,
+                                              toggleable: true,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 3),
+                                          Text(
+                                            datum.name ?? "",
+                                            style: const TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    const SizedBox(width: 3),
-                                    Text(
-                                      datum.name ?? "",
-                                      style: const TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList() ??
-                            [],
-                      ),
+                                    );
+                                  }).toList() ??
+                                  [],
+                            ),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -365,10 +371,18 @@ class _KonselingScreenState extends State<KonselingScreen> {
                           padding: const EdgeInsets.all(10),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const PaketScreen()));
+                              if (konselingProvider.selectedOption == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please select an option'),
+                                  ),
+                                );
+                              } else {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const PaketScreen()));
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(

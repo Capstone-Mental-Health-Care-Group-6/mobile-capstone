@@ -2,6 +2,7 @@ import 'package:empathi_care/model/riwayat_transaksi_model.dart';
 import 'package:empathi_care/utils/constant/currency.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view/screen/HistoryTransactions/detail_transaction.dart';
 import 'package:empathi_care/view/screen/riwayat_transaksi_isnone.dart';
 import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,7 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
   @override
   void initState() {
     super.initState();
-    Provider.of<RiwayatTransaksiProvider>(context, listen: false)
-        .getData(token);
+    Provider.of<RiwayatTransaksiProvider>(context, listen: false).getData();
   }
 
   @override
@@ -55,23 +55,23 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
           ),
         ),
         body: FutureBuilder<RiwayatTransaksi>(
-          future: riwayatTransaksiProvider.getData(token),
+          future: riwayatTransaksiProvider.getData(),
           builder: (context, snapshot) {
-            
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
+              return const Center(child: CircularProgressIndicator());
             } else {
               final riwayatTransaksi = snapshot.data!;
-              return riwayatTransaksi.message!.contains("data")? 
-               const RiwayatPemesananIsnone() :ListView.builder(
-                itemCount: riwayatTransaksi.data?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return buildListDokter(
-                      riwayatTransaksi.data![index], context);
-                },
-              );
+              return riwayatTransaksi.message!.contains("data")
+                  ? const RiwayatPemesananIsnone()
+                  : ListView.builder(
+                      itemCount: riwayatTransaksi.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return buildListDokter(
+                            riwayatTransaksi.data![index], context);
+                      },
+                    );
             }
           },
         ));
@@ -79,15 +79,18 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
 
   Widget buildListDokter(
       DataRiwayatTransaksi transaction, BuildContext context) {
+    final riwayatTransaksiProvider =
+        Provider.of<RiwayatTransaksiProvider>(context, listen: false);
+
     final tgl = transaction.createdAt != null
         ? getFormattedDateRiwayat(transaction.createdAt!)
         : '';
-
-    final img = transaction.patientAvatar ?? '';
+    final img = transaction.doctorAvatar ?? '';
     final name = transaction.doctorName ?? '';
-    final harga = formatRupiah(transaction.priceResult as double);
+    final harga = formatRupiah(transaction.priceResult);
     final berirating = transaction.doctorStarRating! > 0;
-
+    riwayatTransaksiProvider.setId(transaction.transactionId ?? '');
+    riwayatTransaksiProvider.addata();
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Column(
@@ -158,7 +161,15 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
                     const Spacer(),
                     berirating
                         ? ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailTransaction(
+                                        transactionId:
+                                            transaction.transactionId!)),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 3,
@@ -193,7 +204,15 @@ class _ListRiwayatTransaksiState extends State<ListRiwayatTransaksi> {
                                 borderRadius: BorderRadius.circular(13),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => DetailTransaction(
+                                        transactionId:
+                                            transaction.transactionId!)),
+                              );
+                            },
                             child: const Text(
                               "Beri Rating",
                               style: TextStyle(
