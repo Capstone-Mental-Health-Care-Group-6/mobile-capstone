@@ -16,6 +16,7 @@ class PsikologProvider extends ChangeNotifier {
 
   Future<void> fetchListPsikolog(String token) async {
     try {
+      isLoading = true;
       dataPsikolog = await _apiService.fetchPsikolog(token);
       for (var data in dataPsikolog!.data){
         if(data.ratings.isNotEmpty){
