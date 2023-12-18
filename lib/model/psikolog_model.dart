@@ -43,7 +43,7 @@ class Datum {
     List<Experience> experience;
     List<Education> education;
     List<Workday> workday;
-    List<Rating>? ratings;
+    List<Rating> ratings;
 
     Datum({
         required this.id,
@@ -98,7 +98,7 @@ class Datum {
         experience: List<Experience>.from(json["experience"].map((x) => Experience.fromJson(x))),
         education: List<Education>.from(json["education"].map((x) => Education.fromJson(x))),
         workday: List<Workday>.from(json["workday"].map((x) => Workday.fromJson(x))),
-        ratings: json["ratings"] == null ? [] : List<Rating>.from(json["ratings"]!.map((x) => Rating.fromJson(x))),
+        ratings: List<Rating>.from(json["ratings"].map((x) => Rating.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -126,7 +126,7 @@ class Datum {
         "experience": List<dynamic>.from(experience.map((x) => x.toJson())),
         "education": List<dynamic>.from(education.map((x) => x.toJson())),
         "workday": List<dynamic>.from(workday.map((x) => x.toJson())),
-        "ratings": ratings == null ? [] : List<dynamic>.from(ratings!.map((x) => x.toJson())),
+        "ratings": List<dynamic>.from(ratings.map((x) => x.toJson())),
     };
 }
 
@@ -209,14 +209,14 @@ class Experience {
 class Rating {
     int id;
     int doctorId;
-    DoctorName doctorName;
+    String doctorName;
     String doctorAvatar;
     int patientId;
-    PatientName patientName;
+    String patientName;
     String patientAvatar;
     String transactionId;
     int doctorStarRating;
-    DoctorReview doctorReview;
+    String doctorReview;
 
     Rating({
         required this.id,
@@ -234,65 +234,29 @@ class Rating {
     factory Rating.fromJson(Map<String, dynamic> json) => Rating(
         id: json["id"],
         doctorId: json["doctor_id"],
-        doctorName: doctorNameValues.map[json["doctor_name"]]!,
+        doctorName: json["doctor_name"],
         doctorAvatar: json["doctor_avatar"],
         patientId: json["patient_id"],
-        patientName: patientNameValues.map[json["patient_name"]]!,
+        patientName: json["patient_name"],
         patientAvatar: json["patient_avatar"],
         transactionId: json["transaction_id"],
         doctorStarRating: json["doctor_star_rating"],
-        doctorReview: doctorReviewValues.map[json["doctor_review"]]!,
+        doctorReview: json["doctor_review"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "doctor_id": doctorId,
-        "doctor_name": doctorNameValues.reverse[doctorName],
+        "doctor_name": doctorName,
         "doctor_avatar": doctorAvatar,
         "patient_id": patientId,
-        "patient_name": patientNameValues.reverse[patientName],
+        "patient_name": patientName,
         "patient_avatar": patientAvatar,
         "transaction_id": transactionId,
         "doctor_star_rating": doctorStarRating,
-        "doctor_review": doctorReviewValues.reverse[doctorReview],
+        "doctor_review": doctorReview,
     };
 }
-
-enum DoctorName {
-    DR_FAUZAN_ALI_VIJSMA_S_KOM
-}
-
-final doctorNameValues = EnumValues({
-    "dr. Fauzan Ali Vijsma, S.Kom.": DoctorName.DR_FAUZAN_ALI_VIJSMA_S_KOM
-});
-
-enum DoctorReview {
-    GOOD,
-    GOOD_EXPERIENCE,
-    GOOD_PSIKOLOG,
-    NO_REVIEW_YET
-}
-
-final doctorReviewValues = EnumValues({
-    "Good": DoctorReview.GOOD,
-    "Good Experience ": DoctorReview.GOOD_EXPERIENCE,
-    "Good Psikolog": DoctorReview.GOOD_PSIKOLOG,
-    "No review yet": DoctorReview.NO_REVIEW_YET
-});
-
-enum PatientName {
-    ABDULLOH_FAHMI,
-    DHEA1,
-    FAUZIAH,
-    TESTCLOUD
-}
-
-final patientNameValues = EnumValues({
-    "Abdulloh Fahmi": PatientName.ABDULLOH_FAHMI,
-    "Dhea1": PatientName.DHEA1,
-    "fauziah": PatientName.FAUZIAH,
-    "testcloud": PatientName.TESTCLOUD
-});
 
 class Workday {
     int id;
@@ -325,17 +289,3 @@ class Workday {
         "end_time": endTime.toIso8601String(),
     };
 }
-
-class EnumValues<T> {
-    Map<String, T> map;
-    late Map<T, String> reverseMap;
-
-    EnumValues(this.map);
-
-    Map<T, String> get reverse {
-        reverseMap = map.map((k, v) => MapEntry(v, k));
-        return reverseMap;
-    }
-}
-
-String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI5NDUzOTIsImlhdCI6MTcwMjg1ODk5MiwiaWQiOjc5LCJyb2xlIjoiUGF0aWVudCIsInN0YXR1cyI6IkFjdGl2ZSJ9.ehEqPzbDRwCETdOo7QzpMfbRjEKMB6tU7O8m4V4Ya6A";

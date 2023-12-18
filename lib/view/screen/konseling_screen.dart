@@ -339,7 +339,7 @@ class _KonselingScreenState extends State<KonselingScreen> {
                                                     .setSelectedOption(value!);
                                                 konselingProvider
                                                     .setSelectedId(datum.id!);
-                                                    konselingProvider.getById();
+                                                konselingProvider.getById();
                                               },
                                               activeColor: Colors.black,
                                               materialTapTargetSize:
@@ -371,10 +371,18 @@ class _KonselingScreenState extends State<KonselingScreen> {
                           padding: const EdgeInsets.all(10),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const PaketScreen()));
+                              if (konselingProvider.selectedOption == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please select an option'),
+                                  ),
+                                );
+                              } else {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => const PaketScreen()));
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(

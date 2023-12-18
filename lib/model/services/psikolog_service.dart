@@ -8,10 +8,7 @@ class PsikologApiService {
   final Dio _dio = Dio();
   String token = '';
 
-  Future<PsikologModel> fetchPsikolog() async {
-    sp = await SharedPreferences.getInstance();
-
-    token = sp.getString('accesstoken').toString();
+  Future<PsikologModel> fetchPsikolog(String token) async {
     try {
       final response = await _dio.get("${Url.baseUrl}/doctor",
           options: Options(headers: {'Authorization': 'Bearer $token'}));
@@ -21,10 +18,10 @@ class PsikologApiService {
     }
   }
 
-  Future<PsikologModel> fetchPsikologSearch(String search) async {
-    sp = await SharedPreferences.getInstance();
+  Future<PsikologModel> fetchPsikologSearch(String search,String token) async {
+    // sp = await SharedPreferences.getInstance();
 
-    token = sp.getString('accesstoken').toString();
+    // token = sp.getString('accesstoken').toString();
     try {
       final response = await _dio.get("${Url.baseUrl}/doctor?name=$search",
           options: Options(headers: {'Authorization': 'Bearer $token'}));
