@@ -227,8 +227,8 @@ class _RekomendasiPsikologInstantState
                                                                     isInstan:
                                                                         true,
                                                                     session: 1,
-                                                                    doctor_id:
-                                                                        data.id)));
+                                                                    doctorId: data
+                                                                        .id)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",

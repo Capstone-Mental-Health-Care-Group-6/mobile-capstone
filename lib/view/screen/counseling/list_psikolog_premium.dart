@@ -40,18 +40,19 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            surfaceTintColor: Colors.white,
-            backgroundColor: Colors.white,
-            elevation: 5,
-            shadowColor: Colors.black,
-            title: Text(
-              "Psikolog",
-              style: GoogleFonts.montserrat(
-                fontSize: 16.0,
-                color: const Color(0xff393938),
-                fontWeight: FontWeight.w700,
-              ),
-            ),),
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
+          elevation: 5,
+          shadowColor: Colors.black,
+          title: Text(
+            "Psikolog",
+            style: GoogleFonts.montserrat(
+              fontSize: 16.0,
+              color: const Color(0xff393938),
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
         body: Builder(builder: (context) {
           return Consumer<PsikologProvider>(builder: (context, value, child) {
             if (provider.isLoading == true) {
@@ -252,9 +253,11 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (_) =>
-                                                         ProfilePsikologScreen(
+                                                        ProfilePsikologScreen(
                                                             isInstan: false,
-                                                            session: 2, doctor_id:data.id)));
+                                                            session: 2,
+                                                            doctorId:
+                                                                data.id)));
                                           },
                                           child: const Text(
                                             "Mulai Chat",

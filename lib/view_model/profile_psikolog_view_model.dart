@@ -20,7 +20,7 @@ class ProfilePsikologProvider extends ChangeNotifier {
   List<Map<String, dynamic>> selectedWorkday = [];
   List selectedDate = [];
 
-  void init(BuildContext context) async {
+  void init(BuildContext context, int doctorId) async {
     isLoading = true;
     paketProvider = context.read<PaketProvider>();
     dataDoctor.clear();
@@ -37,15 +37,15 @@ class ProfilePsikologProvider extends ChangeNotifier {
 
     log(pref.getString("token").toString());
 
-    await getData();
+    await getData(doctorId);
 
     getAvg();
     await isPremium();
   }
 
-  Future getData() async {
+  Future getData(int doctorId) async {
     try {
-      dataDoctor = await profileService.getDataDoctor("13");
+      dataDoctor = await profileService.getDataDoctor(doctorId);
 
       workday = dataDoctor['workday'];
       ratings = dataDoctor['ratings'];
@@ -58,7 +58,8 @@ class ProfilePsikologProvider extends ChangeNotifier {
   void getAvg() async {
     int juml = 0;
     for (int i = 0; i < dataDoctor['ratings'].length; i++) {
-      juml = juml + int.parse(dataDoctor['ratings'][i]['doctor_star_rating'].toString());
+      juml = juml +
+          int.parse(dataDoctor['ratings'][i]['doctor_star_rating'].toString());
     }
 
     avgRating = ("2.0").toString();

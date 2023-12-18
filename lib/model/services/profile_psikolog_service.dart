@@ -9,14 +9,15 @@ class ProfilePsikologService {
 
   final Dio dio = Dio();
 
-  Future<Map<String, dynamic>> getDataDoctor(String idDoctor) async {
+  Future<Map<String, dynamic>> getDataDoctor(int idDoctor) async {
     try {
       final pref = await SharedPreferences.getInstance();
       Map<String, String> mainheader = {
         "Content-type": "application/json",
         "Authorization": "Bearer ${pref.getString('accesstoken')}",
       };
-      final response = await dio.get("${Url.baseUrl}/$idDoctor", options: Options(headers: mainheader));
+      final response = await dio.get("${Url.baseUrl}/doctor/$idDoctor",
+          options: Options(headers: mainheader));
 
       final responseBody = response.data['data'];
       log(responseBody.toString());
@@ -33,7 +34,8 @@ class ProfilePsikologService {
         "Content-type": "application/json",
         "Authorization": "Bearer ${pref.getString('accesstoken')}",
       };
-      final response = await dio.get("${Url.baseUrl}/$id", options: Options(headers: mainheader));
+      final response = await dio.get("${Url.baseUrl}/$id",
+          options: Options(headers: mainheader));
 
       final responseBody = response.data['data'];
 

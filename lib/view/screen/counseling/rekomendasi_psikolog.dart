@@ -262,8 +262,8 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                                     isInstan:
                                                                         false,
                                                                     session: 2,
-                                                                    doctor_id:
-                                                                        data.id)));
+                                                                    doctorId: data
+                                                                        .id)));
                                                   },
                                                   child: const Text(
                                                     "Mulai Chat",
