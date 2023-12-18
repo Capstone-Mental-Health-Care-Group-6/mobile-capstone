@@ -2,8 +2,11 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog.dart';
 import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
+import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ListPsikologPremium extends StatefulWidget {
@@ -14,227 +17,264 @@ class ListPsikologPremium extends StatefulWidget {
 }
 
 class _ListPsikologPremiumState extends State<ListPsikologPremium> {
-  bool isLoading = true, tersedia = false;
+  bool tersedia = false;
 
-  Future<void> delayLoading() async {
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      setState(() {
-        isLoading = false;
-      });
-    });
-  }
+  late PsikologProvider provider;
+  late SharedPreferences sp;
+  String token = '';
 
   @override
   void initState() {
-    delayLoading();
+    provider = Provider.of<PsikologProvider>(context, listen: false);
+    provider.fetchListPsikolog(token);
     super.initState();
+  }
+
+  void initial() async {
+    sp = await SharedPreferences.getInstance();
+    token = sp.getString('accesstoken').toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 5,
-          shadowColor: Colors.black,
-          title: Text(
-            "Psikolog",
-            style: GoogleFonts.montserrat(
-              fontSize: 16.0,
-              color: const Color(0xff393938),
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          surfaceTintColor: Colors.white,
-      ),
-      body: Builder(builder: (context) {
-        if (isLoading) {
-          return shimmerLoading();
-        } else {
-          return SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 30.0),
+        appBar: AppBar(
+            surfaceTintColor: Colors.white,
+            backgroundColor: Colors.white,
+            elevation: 5,
+            shadowColor: Colors.black,
+            title: Text(
+              "Psikolog",
+              style: GoogleFonts.montserrat(
+                fontSize: 16.0,
+                color: const Color(0xff393938),
+                fontWeight: FontWeight.w700,
+              ),
+            ),),
+        body: Builder(builder: (context) {
+          return Consumer<PsikologProvider>(builder: (context, value, child) {
+            if (provider.isLoading == true) {
+              return shimmerLoading();
+            } else if (provider.notFound != false) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      const TimeLine(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0, bottom: 15.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Expanded(
-                              flex: 1,
-                              child: Text(
-                                "Pilih Psikolog",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) {
-                                    return const RekomendasiPsikolog();
-                                  }),
-                                );
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Colors.blue.withOpacity(0.3),
-                                ),
-                                child: const Text(
-                                  "Lihat Semua",
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.black),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                      const Text(
+                        "Tidak menemukan hasil yang sesuai. Silakan coba kata kunci lainnya.",
+                        textAlign: TextAlign.center,
+                      ),
+                      Image.asset(
+                        "assets/images/Reminders-rafiki 1.png",
+                        width: 305,
+                        height: 305,
                       )
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: 7,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 12.0),
-                        child: Card(
-                          color: Colors.white,
-                          margin: EdgeInsets.zero,
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: Column(
+              );
+            } else {
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 30.0),
+                      child: Column(
+                        children: [
+                          const TimeLine(),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, bottom: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      height: 80,
-                                      width: 80,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.blue,
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/doctorEllipse.png'),
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                                const Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "Pilih Psikolog",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
                                     ),
-                                    const SizedBox(width: 9),
-                                    const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Rangga S.Psi., M.Psi",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(height: 5),
-                                        Text(
-                                          "Spesialis Positive psychology",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        SizedBox(height: 3),
-                                        Text(
-                                          "Pengalaman 1-3 Tahun",
-                                          style: TextStyle(fontSize: 14),
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                const SizedBox(height: 6),
-                                Row(
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(
-                                          Icons.thumbs_up_down,
-                                          color: Colors.blue,
-                                        ),
-                                        SizedBox(width: 7),
-                                        Text(
-                                          "69%",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        SizedBox(width: 8),
-                                        Icon(
-                                          Icons.rate_review,
-                                          color: Colors.blue,
-                                        ),
-                                        SizedBox(width: 7),
-                                        Text(
-                                          "3200",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) {
+                                        return const RekomendasiPsikolog();
+                                      }),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(5.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: Colors.blue.withOpacity(0.3),
                                     ),
-                                    const Spacer(),
-                                    ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          backgroundColor: Colors.blue,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (_)=> const ProfilePsikologScreen(isInstan: false, session: 2)));
-                                        },
-                                        child: buildShimmerText(
-                                          "Mulai Chat",
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                        )),
-                                  ],
+                                    child: const Text(
+                                      "Lihat Semua",
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.black),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        for (var data in provider.dataPsikolog!.data)
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      width: 3)),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.white,
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  // offset: Offset(, 3),
                                 ),
                               ],
                             ),
+                            margin: const EdgeInsets.only(bottom: 12.0),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        height: 80,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                data.doctorAvatar.toString()),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 9),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data.doctorName.toString(),
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Text(
+                                            "Spesialis Positive psychology",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          const Text(
+                                            "Online",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.green,
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.thumbs_up_down,
+                                            color: Colors.blue,
+                                          ),
+                                          const SizedBox(width: 7),
+                                          Text(
+                                            "${provider.percentageRating.toString()} %",
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          const Icon(
+                                            Icons.rate_review,
+                                            color: Colors.blue,
+                                          ),
+                                          const SizedBox(width: 7),
+                                          Text(
+                                            provider.countReviewDocter
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            backgroundColor: Colors.blue,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        const ProfilePsikologScreen(
+                                                            isInstan: false,
+                                                            session: 2)));
+                                          },
+                                          child: const Text(
+                                            "Mulai Chat",
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          );
-        }
-      }),
-    );
+              );
+            }
+          });
+        }));
   }
 
   Padding shimmerLoading() {
@@ -371,7 +411,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                     margin: const EdgeInsets.only(bottom: 12.0),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 13, vertical: 5),
+                          horizontal: 16, vertical: 8),
                       child: Column(
                         children: [
                           Row(
@@ -554,10 +594,29 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                             8,
                                           ))),
                                       onPressed: () {},
-                                      child: buildShimmerText(
-                                        "Mulai Chat",
-                                        fontSize: 16,
-                                        color: Colors.blue,
+                                      child: SizedBox(
+                                        width: getTextWidth(
+                                            "Mulai Chat",
+                                            const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal)),
+                                        height: 10,
+                                        child: Shimmer.fromColors(
+                                          baseColor: const Color(0xffDBDBDB),
+                                          highlightColor:
+                                              const Color(0xffDBDBDB),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                20.0,
+                                              ),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                          ),
+                                        ),
                                       ))
                                   : ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -570,10 +629,29 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                         ),
                                       ),
                                       onPressed: () {},
-                                      child: buildShimmerText(
-                                        "Mulai Chat",
-                                        fontSize: 16,
-                                        color: Colors.white,
+                                      child: SizedBox(
+                                        width: getTextWidth(
+                                            "Mulai Chat",
+                                            const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal)),
+                                        height: 10,
+                                        child: Shimmer.fromColors(
+                                          baseColor: const Color(0xffDBDBDB),
+                                          highlightColor:
+                                              const Color(0xffDBDBDB),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                20.0,
+                                              ),
+                                              shape: BoxShape.rectangle,
+                                            ),
+                                          ),
+                                        ),
                                       )),
                             ],
                           ),
@@ -598,40 +676,5 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
     )..layout(minWidth: 0, maxWidth: double.infinity);
 
     return textPainter.width;
-  }
-
-  Widget buildShimmerText(
-    String text, {
-    double? fontSize,
-    FontWeight? fontWeight,
-    Color? color,
-  }) {
-    return isLoading
-        ? SizedBox(
-            width: getTextWidth(
-                text, TextStyle(fontSize: fontSize, fontWeight: fontWeight)),
-            height: 10,
-            child: Shimmer.fromColors(
-              baseColor: const Color(0xffDBDBDB),
-              highlightColor: const Color(0xffDBDBDB),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(
-                    20.0,
-                  ),
-                  shape: BoxShape.rectangle,
-                ),
-              ),
-            ),
-          )
-        : Text(
-            text,
-            style: TextStyle(
-              fontSize: fontSize,
-              fontWeight: fontWeight,
-              color: color,
-            ),
-          );
   }
 }

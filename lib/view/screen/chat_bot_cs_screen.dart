@@ -4,6 +4,7 @@ import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
 class ChatMenuScreen extends StatefulWidget {
   const ChatMenuScreen({super.key});
 
@@ -17,7 +18,6 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
   @override
   void initState() {
     super.initState();
-
     _chatBotProvider = Provider.of<ChatBotCSProvider>(context, listen: false);
     _chatBotProvider.addInitialMessages();
   }
@@ -36,60 +36,44 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
           'HelpBot',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        surfaceTintColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (BuildContext context) {
-              return [
-                const PopupMenuItem(
-                  value: 'option1',
-                  child: Text('Option 1'),
-                ),
-                const PopupMenuItem(
-                  value: 'option2',
-                  child: Text('Option 2'),
-                ),
-              ];
-            },
-            onSelected: (value) {},
-          ),
-        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 10),
+        padding: const EdgeInsets.only(
+          top: 10,
+          bottom: 10,
+          left: 5,
+          right: 10,
+        ),
         child: Column(
           children: [
             Text('$formattedDate $formattedHour'),
             Expanded(
-              child: Consumer<ChatBotCSProvider>(
-                builder: (context, provider, child) {
-                  return ListView.builder(
-                    itemCount: provider.chatBotCs.length,
-                    itemBuilder: (context, index) {
-                      final message = provider.chatBotCs[index];
-                      var buttonKey = index;
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Consumer<ChatBotCSProvider>(
+                    builder: (context, provider, child) {
+                      return ListView.builder(
+                        itemCount: provider.chatBotCs.length,
+                        itemBuilder: (context, index) {
+                          final message = provider.chatBotCs[index];
+                          var buttonKey = index;
 
-                      return Align(
-                        alignment: message.isUser
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: message.isUser
-                            ? _buildUserMessageContainer(message)
-                            : (message.text.contains("Selamat") ||
-                                    message.text.contains("1") ||
-                                    message.text.startsWith('Explanation') ||
-                                    message.text.contains("Bagaimanakah") ||
-                                    message.text.contains("Terimakasih"))
-                                ? _buildBotMessageContainer(message)
-                                : _buildMenuResponseButton(
-                                    message, index, buttonKey, provider),
+                          return Align(
+                            alignment: message.isUser
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: message.isUser
+                                ? _buildUserMessageContainer(message)
+                                : (message.text.contains("Selamat") ||
+                                        provider.menuExplanations.values
+                                            .contains(message.text) ||
+                                        message.text.contains("Terimakasih") ||
+                                        message.text.contains("Bagaimanakah"))
+                                    ? _buildBotMessageContainer(message)
+                                    : _buildMenuResponseButton(
+                                        message, index, buttonKey, provider),
+                          );
+                        },
                       );
                     },
                   );
@@ -162,6 +146,8 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
       ),
     );
   }
+
+
 
   Widget _buildMenuResponseButton(
     ChatBotCS message,
