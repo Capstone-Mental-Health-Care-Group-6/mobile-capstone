@@ -1,17 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/model/payment_method_model.dart';
+import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view/screen/payment/pembayaran_manual_screen.dart';
 import 'package:empathi_care/view/screen/web_view_gopay_payment_screen.dart';
 import 'package:empathi_care/view/widget/card_invoice_widget.dart';
 import 'package:empathi_care/view/widget/card_method_payment.dart';
 import 'package:empathi_care/view/widget/card_psikolog_on_payment_method.dart';
+import 'package:empathi_care/view_model/konseling_view_model.dart';
+import 'package:empathi_care/view_model/paket_view_model.dart';
+import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
 import 'package:empathi_care/view_model/transaction_view_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentMethodScreen extends StatefulWidget {
   const PaymentMethodScreen({super.key});
@@ -37,33 +42,53 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   Widget build(BuildContext context) {
     final transactionViewModel =
         Provider.of<TransactionViewModel>(context, listen: false);
+    final counselingViewModel =
+        Provider.of<KonselingProvider>(context, listen: false);
+    final packageViewModel = Provider.of<PaketProvider>(context, listen: false);
+    final profilePsikologViewModel =
+        Provider.of<ProfilePsikologProvider>(context, listen: false);
 
     void makeTransaction() async {
+      final SharedPreferences sp = await SharedPreferences.getInstance();
+      final String token = sp.getString('accesstoken').toString();
+      final JwtService jwtService = JwtService();
+      final int patientId = jwtService.getTokenId(token);
+
       if (isCheckTermCondition) {
         debugPrint(_selectedPaymentMethod.name);
         if (_selectedPaymentMethod.type == 'manual') {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => PembayaranManualScreen(
-                        isManualPayment: true,
-                        manualPaymentMethod: _selectedPaymentMethod.name,
-                      )));
+          if (mounted) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => PembayaranManualScreen(
+                          isManualPayment: true,
+                          manualPaymentMethod: _selectedPaymentMethod.name,
+                        )));
+          }
         } else {
           try {
             await transactionViewModel.makeMidtransTransaction(
-                topicId: 1,
-                patientId: 2,
-                methodId: 1,
-                durationId: 1,
-                counselingId: 1,
-                counselingSession: 1,
-                counselingType: "A",
-                priceMethod: 125000,
-                priceCounseling: 300000,
-                priceDuration: 60000,
+                topicId: counselingViewModel.selectedId!,
+                patientId: patientId,
+                methodId: packageViewModel.selectedMetode,
+                durationId: packageViewModel.selectedDuration,
+                counselingId: packageViewModel
+                    .listPaket[packageViewModel.selectedPaket!]["id"],
+                counselingSession: packageViewModel
+                    .listPaket[packageViewModel.selectedPaket!]["sessions"],
+                counselingType:
+                    packageViewModel.listPaket[packageViewModel.selectedPaket!]
+                                ["type"] ==
+                            'INSTAN'
+                        ? "A"
+                        : "B",
+                priceMethod: 0,
+                priceCounseling: packageViewModel
+                    .listPaket[packageViewModel.selectedPaket!]["price"],
+                priceDuration: 0,
                 paymentType: _selectedPaymentMethod.name.toLowerCase(),
-                doctorId: 13);
+                doctorId: profilePsikologViewModel.dataDoctor['id']);
 
             if (mounted) {
               debugPrint(_selectedPaymentMethod.name);
@@ -103,7 +128,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           backgroundColor: Color(0XFF0085FF),
         );
 
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       }
     }
 
