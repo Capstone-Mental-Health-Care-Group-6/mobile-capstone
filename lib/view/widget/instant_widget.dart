@@ -15,8 +15,7 @@ class _InstantWidgetState extends State<InstantWidget> {
   @override
   void initState() {
     super.initState();
-    Provider.of<InstantViewModel>(context, listen: false)
-        .fetchDataInstant();
+    Provider.of<InstantViewModel>(context, listen: false).fetchDataInstant();
   }
 
   @override
@@ -77,11 +76,11 @@ class _InstantWidgetState extends State<InstantWidget> {
             ),
             instantViewModel.selectedIndex == 0 &&
                     instantViewModel.activePackageModel != null
-                ? cardInstant(instantViewModel.activePackageModel!.data!)
+                ? cardInstant(instantViewModel.activePackageModel!.data!.where((element) => element.status != 'pending').toList())
                 : instantViewModel.selectedIndex == 2 &&
                         instantViewModel.activePackageModel != null
                     ? cardInstant(instantViewModel.activePackageModel!.data!
-                        .where((element) => element.status == 'Not finished')
+                        .where((element) => element.status == 'not_finished')
                         .toList())
                     : instantViewModel.selectedIndex == 1
                         ? cardInstant(instantViewModel.activePackageModel!.data!
@@ -89,7 +88,7 @@ class _InstantWidgetState extends State<InstantWidget> {
                             .toList())
                         : const SizedBox(),
           ],
-        ); 
+        );
       },
     );
   }
@@ -103,45 +102,45 @@ class _InstantWidgetState extends State<InstantWidget> {
         final datas = data[index];
         if (datas.status == 'pending') {
           return null;
-        }
-        return datas.counselingType == "A"
-            ? Container(
-                width: MediaQuery.of(context).size.width,
-                height: 150.0,
-                margin: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.6),
-                      blurRadius: 1.0,
-                      offset: const Offset(0.0, 1.0),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 5.0,
+        } else {
+          return datas.counselingType == "A"
+              ? Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 150.0,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.6),
+                        blurRadius: 1.0,
+                        offset: const Offset(0.0, 1.0),
                       ),
-                      child: ListTile(
-                        leading: Container(
-                          width: 60.0,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: Stack(
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  width: 60.0,
-                                  height: 60.0,
-                                  child: ClipRRect(
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 5.0,
+                        ),
+                        child: ListTile(
+                          leading: Container(
+                            width: 60.0,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: Stack(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                Center(
+                                  child: SizedBox(
+                                    width: 60.0,
+                                    height: 60.0,
+                                    child: ClipRRect(
                                       borderRadius: BorderRadius.circular(
                                         30.0,
                                       ),
@@ -150,152 +149,154 @@ class _InstantWidgetState extends State<InstantWidget> {
                                           '${datas.doctorAvatar}',
                                         ),
                                         fit: BoxFit.cover,
-                                      ),),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          title: Text(
+                            '${datas.doctorName}',
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.0,
+                            ),
+                          ),
+                          titleAlignment: ListTileTitleAlignment.top,
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 8.0,
+                              ),
+                              Text(
+                                'Spesialis Psikologi',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10.0,
+                                  color: const Color(0xff323232),
+                                ),
+                              ),
+                              Text(
+                                'Metode ${datas.counselingMethod}',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10.0,
+                                  color: const Color(0xff323232),
+                                ),
+                              ),
+                              Text(
+                                'Topik ${datas.counselingTopic}',
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 10.0,
+                                  color: const Color(0xff323232),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        title: Text(
-                          '${datas.doctorName}',
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.0,
-                          ),
+                      ),
+                      const SizedBox(
+                        height: 2.0,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 15.0,
+                          right: 15.0,
                         ),
-                        titleAlignment: ListTileTitleAlignment.top,
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const SizedBox(
-                              height: 8.0,
-                            ),
-                            Text(
-                              'Spesialis Psikologi',
-                              style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10.0,
-                                color: const Color(0xff323232),
+                            Container(
+                              width: 152.0,
+                              height: 20.0,
+                              padding: const EdgeInsets.only(
+                                top: 3.0,
+                              ),
+                              decoration: BoxDecoration(
+                                color: '${datas.status}' == 'not_finished'
+                                    ? const Color(0xff54C438)
+                                    : const Color(0xff959595),
+                                borderRadius: BorderRadius.circular(
+                                  4.0,
+                                ),
+                              ),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: datas.status == "not_finished"
+                                    ? Text(
+                                        'Percakapan masih dibuka',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.0,
+                                        ),
+                                      )
+                                    : Text(
+                                        'Percakapan sudah ditutup',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.0,
+                                        ),
+                                      ),
                               ),
                             ),
-                            Text(
-                              'Metode ${datas.counselingMethod}',
-                              style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10.0,
-                                color: const Color(0xff323232),
-                              ),
-                            ),
-                            Text(
-                              'Topik ${datas.counselingTopic}',
-                              style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 10.0,
-                                color: const Color(0xff323232),
-                              ),
-                            ),
+                            '${datas.status}' == "not_finished"
+                                ? ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xff0085FF),
+                                      padding: const EdgeInsets.all(
+                                        10.0,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          8.0,
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      'Mulai Chat',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12.0,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )
+                                : OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.all(10.0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          8.0,
+                                        ),
+                                      ),
+                                      side: const BorderSide(
+                                        color: Color(0xff0085FF),
+                                      ),
+                                      foregroundColor: const Color(0xff0085FF),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      'Chat Kembali',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12.0,
+                                      ),
+                                    ),
+                                  ),
                           ],
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 2.0,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 15.0,
-                        right: 15.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 152.0,
-                            height: 20.0,
-                            padding: const EdgeInsets.only(
-                              top: 3.0,
-                            ),
-                            decoration: BoxDecoration(
-                              color: '${datas.status}' == 'Not Finished'
-                                  ? const Color(0xff54C438)
-                                  : const Color(0xff959595),
-                              borderRadius: BorderRadius.circular(
-                                4.0,
-                              ),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: datas.status == 'Not Finished'
-                                  ? Text(
-                                      'Percakapan masih dibuka',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10.0,
-                                      ),
-                                    )
-                                  : Text(
-                                      'Percakapan sudah ditutup',
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10.0,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                          '${datas.status}' == 'Not Finished'
-                              ? ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xff0085FF),
-                                    padding: const EdgeInsets.all(
-                                      10.0,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        8.0,
-                                      ),
-                                    ),
-                                  ),
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Mulai Chat',
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 12.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    padding: const EdgeInsets.all(10.0),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                        8.0,
-                                      ),
-                                    ),
-                                    side: const BorderSide(
-                                      color: Color(0xff0085FF),
-                                    ),
-                                    foregroundColor: const Color(0xff0085FF),
-                                  ),
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Chat Kembali',
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 12.0,
-                                    ),
-                                  ),
-                                ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : const SizedBox();
+                    ],
+                  ),
+                )
+              : const SizedBox();
+        }
       },
     );
   }
