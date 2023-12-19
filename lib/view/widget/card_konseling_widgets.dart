@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CardKonselingWidgets extends StatelessWidget {
-  const CardKonselingWidgets(
+  const CardKonselingWidgets( 
       {super.key,
       required this.title,
       required this.date,
       required this.time,
-      required this.textButton});
+      required this.textButton, required this.onPressed,});
 
   final String title;
   final String date;
   final String time;
   final String textButton;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ class CardKonselingWidgets extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: onPressed,
                         child: Text(
                           textButton,
                           textAlign: TextAlign.center,

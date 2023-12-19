@@ -3,6 +3,10 @@ import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
+
+import '../../view_model/get_patient_by_id_view_model.dart';
 
 class ChatMenuScreen extends StatefulWidget {
   const ChatMenuScreen({super.key});
@@ -13,18 +17,32 @@ class ChatMenuScreen extends StatefulWidget {
 
 class _ChatMenuScreenState extends State<ChatMenuScreen> {
   late ChatBotCSProvider _chatBotProvider;
+  late SharedPreferences sp;
+
+  late GetPatientByIdViewModel getPatientByIdViewModel;
+
+  String avatar = "";
 
   @override
   void initState() {
     super.initState();
     _chatBotProvider = Provider.of<ChatBotCSProvider>(context, listen: false);
     _chatBotProvider.addInitialMessages();
+    initial();
   }
 
   @override
   void dispose() {
     _chatBotProvider.clearMessages();
     super.dispose();
+  }
+
+  Future<void> initial() async {
+    sp = await SharedPreferences.getInstance();
+
+    avatar = sp.getString('avatar') ?? '';
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {});
   }
 
   @override
@@ -69,8 +87,10 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
                                         message.text.contains("Terimakasih") ||
                                         message.text.contains("Bagaimanakah"))
                                     ? _buildBotMessageContainer(message)
-                                    : _buildMenuResponseButton(
-                                        message, index, buttonKey, provider),
+                                    : message.text.contains("Load")
+                                        ? _buildLoadMessage(message)
+                                        : _buildMenuResponseButton(message,
+                                            index, buttonKey, provider),
                           );
                         },
                       );
@@ -107,10 +127,12 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
             ),
           ),
           const SizedBox(width: 8.0),
-          const CircleAvatar(
-            backgroundImage: AssetImage('assets/images/Ellipse 7.png'),
-            radius: 20.0,
-          ),
+          if (avatar.isNotEmpty) ...[
+            CircleAvatar(
+              backgroundImage: NetworkImage(avatar),
+              radius: 20.0,
+            ),
+          ],
         ],
       ),
     );
@@ -124,7 +146,7 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Image.asset(
-            'assets/images/ChatBot.png',
+            'assets/images/chatbot.png',
           ),
           const SizedBox(width: 10.0),
           Flexible(
@@ -193,6 +215,37 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLoadMessage(ChatBotCS message) {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.asset(
+            'assets/images/chatbot.png',
+          ),
+          const SizedBox(width: 10.0),
+          Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 46, 46, 46),
+              highlightColor: const Color.fromARGB(255, 117, 117, 117),
+              child: const Text(
+                "Typing...",
+                style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

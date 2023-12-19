@@ -1,4 +1,5 @@
 import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
+import 'package:empathi_care/view/screen/chat_bot_ai_screen.dart';
 import 'package:empathi_care/view/screen/list_artikel_screen.dart';
 import 'package:empathi_care/view/screen/notification_screen.dart';
 import 'package:empathi_care/view_model/artikel_home.dart';
@@ -264,7 +265,10 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 16,
               bottom: _fabBottomPosition,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ChatAIScreen()));
+                },
                 child: Container(
                   width: 70,
                   height: 70,

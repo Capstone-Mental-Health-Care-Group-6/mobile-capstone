@@ -5,12 +5,11 @@ import 'package:empathi_care/model/services/update_profile_services.dart';
 import 'package:empathi_care/model/update_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class UpdateProfileViewModel extends ChangeNotifier {
   UpdateProfileService updateProfileService = UpdateProfileService();
   UpdateProfileModel? updateProfileModel;
-  late DateTime newBirthDate;
+  DateTime? newBirthDate;
   File? newavatar;
   String? newavatarString;
   final ImagePicker _image = ImagePicker();
@@ -22,7 +21,6 @@ class UpdateProfileViewModel extends ChangeNotifier {
     String? newbirth,
     String? newgender,
   }) async {
-    newbirth = DateFormat('yyyy-MM-dd').format(newBirthDate);
     try {
       updateProfileModel = await updateProfileService.updateProfile(
         name: newname,

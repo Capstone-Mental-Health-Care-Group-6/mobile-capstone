@@ -220,7 +220,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                         ),
                                         const SizedBox(width: 7),
                                         Text(
-                                          "${provider.percentageRating.toString()} %",
+                                          "${provider.sumRatingPerDocter(data)} %",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
@@ -233,7 +233,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                         ),
                                         const SizedBox(width: 7),
                                         Text(
-                                          provider.countReviewDocter.toString(),
+                                          "${provider.sumReviewPerDocter(data)}",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
