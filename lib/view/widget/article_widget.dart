@@ -1,7 +1,7 @@
 // article_widget.dart
 
 import 'package:empathi_care/model/article_model.dart';
-import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
+import 'package:empathi_care/view/screen/article/artikel_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ArticleWidget extends StatelessWidget {
@@ -22,6 +22,7 @@ class ArticleWidget extends StatelessWidget {
           imagePath: article.thumbnail,
           category: article.categoryName,
           content: article.content,
+          userName: article.userName,
         ),
       ),
     );
@@ -48,8 +49,7 @@ class ArticleWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: NetworkImage(article
-                          .thumbnail), // Use NetworkImage for remote images
+                      image: NetworkImage(article.thumbnail),
                       fit: BoxFit.cover,
                     ),
                   ),

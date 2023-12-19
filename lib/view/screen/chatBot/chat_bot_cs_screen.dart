@@ -1,12 +1,11 @@
 import 'package:empathi_care/model/chat_bot_cs_model.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../../view_model/get_patient_by_id_view_model.dart';
 
 class ChatMenuScreen extends StatefulWidget {
   const ChatMenuScreen({super.key});
