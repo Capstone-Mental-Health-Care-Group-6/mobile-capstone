@@ -2,7 +2,7 @@ import 'package:empathi_care/model/riwayat_transaksi_model.dart';
 import 'package:empathi_care/utils/constant/currency.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
-import 'package:empathi_care/view/screen/HistoryTransactions/detail_transaction.dart';
+import 'package:empathi_care/view/screen/historyTransactions/detail_transaction.dart';
 import 'package:empathi_care/view/screen/counseling/riwayat_transaksi_isnone.dart';
 import 'package:empathi_care/view_model/riwayat_transaksi_view_model.dart';
 import 'package:flutter/material.dart';

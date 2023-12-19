@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:empathi_care/view/screen/payment/payment_method_screen.dart';
 import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
