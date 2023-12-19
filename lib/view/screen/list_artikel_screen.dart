@@ -1,5 +1,7 @@
+import 'package:empathi_care/model/article_model.dart';
 import 'package:empathi_care/view/widget/article_widget.dart';
-import 'package:empathi_care/view_model/artikel_rekomendasi_view_model.dart';
+import 'package:empathi_care/view_model/artikel_categori_view_model.dart';
+import 'package:empathi_care/view_model/article_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -13,97 +15,110 @@ class AllArticlesPage extends StatefulWidget {
 
 class AllArticlesPageState extends State<AllArticlesPage> {
   final TextEditingController controller = TextEditingController();
-  List<String> categories = [
-    'Semua',
-    'Stress',
-    'Anxiety',
-    'Depresi',
-    'Kesehatan'
-  ];
   String selectedCategory = 'Semua';
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ArticleListProvider>(context, listen: false).fetchArticles();
+    Provider.of<CategoryProvider>(context, listen: false)
+        .fetchCategoriesAndArticles();
+  }
+
   void updateSelectedCategory(String category) {
     if (selectedCategory != category) {
       selectedCategory = category;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
         build(context);
       });
     }
   }
 
   @override
-  void initState() {
-    super.initState();
-    Provider.of<ArticleProvider>(context, listen: false).fetchArticles();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Artikel',
-            style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
-          ),
-          elevation: 10,
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              onPressed: () {
-                showSearch(context: context, delegate: CustomSearch());
-              },
-              icon: const Icon(Icons.search),
-            ),
-          ],
+      appBar: AppBar(
+        title: Text(
+          'Artikel',
+          style: GoogleFonts.montserrat(fontWeight: FontWeight.bold),
         ),
-        body: Column(mainAxisSize: MainAxisSize.min, children: [
+        elevation: 10,
+        backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showSearch(context: context, delegate: CustomSearch());
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
+      ),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
           Container(
             alignment: Alignment.centerLeft,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Row(
-                children: categories.map((category) {
-                  bool isSelected = category == selectedCategory;
-                  return GestureDetector(
-                    onTap: () => updateSelectedCategory(category),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 8),
-                      margin:
-                          const EdgeInsets.only(left: 30, top: 10, bottom: 15),
-                      decoration: BoxDecoration(
-                        color:
-                            isSelected ? Colors.blue : const Color(0xFFCCE7FF),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: Text(
-                          category,
-                          style: TextStyle(
-                            color: isSelected ? Colors.white : Colors.black,
-                            fontSize: 16,
+              child: Consumer<CategoryProvider>(
+                builder: (context, categoryProvider, child) {
+                  return Row(
+                    children: categoryProvider.allCategories.map((category) {
+                      bool isSelected = category == selectedCategory;
+                      return GestureDetector(
+                        onTap: () => updateSelectedCategory(category),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 8),
+                          margin: const EdgeInsets.only(
+                              left: 30, top: 10, bottom: 15),
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? Colors.blue
+                                : const Color(0xFFCCE7FF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Center(
+                            child: Text(
+                              category,
+                              style: TextStyle(
+                                color: isSelected ? Colors.white : Colors.black,
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    }).toList(),
                   );
-                }).toList(),
+                },
               ),
             ),
           ),
           Expanded(
-            child: Consumer<ArticleProvider>(
+            child: Consumer<CategoryProvider>(
               builder: (context, articleProvider, child) {
+                List<Article> filteredArticles;
+                if (selectedCategory == 'Semua') {
+                  filteredArticles = articleProvider.articles;
+                } else {
+                  filteredArticles =
+                      articleProvider.getArticlesByCategory(selectedCategory);
+                }
+
                 return ListView.builder(
-                  itemCount: articleProvider.articles.length,
+                  itemCount: filteredArticles.length,
                   itemBuilder: (context, index) {
-                    var article = articleProvider.articles[index];
+                    var article = filteredArticles[index];
                     return ArticleWidget(article: article);
                   },
                 );
               },
             ),
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }
 
