@@ -11,7 +11,7 @@ class CategoryProvider with ChangeNotifier {
       final response = await Dio().get('https://kmb5alta.online/articles');
       final data = response.data['data'];
 
-      Set<String> uniqueCategories = Set<String>();
+      Set<String> uniqueCategories = <String>{};
 
       for (var item in data) {
         uniqueCategories.add(item['category_name']);
@@ -22,9 +22,7 @@ class CategoryProvider with ChangeNotifier {
       articles = List<Article>.from(data.map((item) => Article.fromJson(item)));
 
       notifyListeners();
-    } catch (error) {
-      print('Error fetching categories and articles: $error');
-    }
+    } catch (_) {}
   }
 
   List<Article> getArticlesByCategory(String selectedCategory) {

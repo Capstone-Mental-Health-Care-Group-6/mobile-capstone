@@ -1,7 +1,7 @@
 import 'package:empathi_care/model/article_model.dart';
 import 'package:empathi_care/view/widget/article_widget.dart';
 import 'package:empathi_care/view_model/artikel_categori_view_model.dart';
-import 'package:empathi_care/view_model/article_list_view_model.dart';
+import 'package:empathi_care/view_model/artikel_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +28,7 @@ class AllArticlesPageState extends State<AllArticlesPage> {
   void updateSelectedCategory(String category) {
     if (selectedCategory != category) {
       selectedCategory = category;
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         build(context);
       });
     }

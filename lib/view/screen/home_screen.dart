@@ -3,7 +3,6 @@ import 'package:empathi_care/view/screen/chat_bot_ai_screen.dart';
 import 'package:empathi_care/view/screen/list_artikel_screen.dart';
 import 'package:empathi_care/view/screen/notification_screen.dart';
 import 'package:empathi_care/view_model/artikel_home.dart';
-import 'package:empathi_care/view_model/artikel_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
