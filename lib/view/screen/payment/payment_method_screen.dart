@@ -4,7 +4,7 @@ import 'package:empathi_care/model/payment_method_model.dart';
 import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:empathi_care/view/screen/Register/terms_screen.dart';
 import 'package:empathi_care/view/screen/payment/pembayaran_manual_screen.dart';
-import 'package:empathi_care/view/screen/web_view_gopay_payment_screen.dart';
+import 'package:empathi_care/view/screen/payment/web_view_gopay_payment_screen.dart';
 import 'package:empathi_care/view/widget/card_invoice_widget.dart';
 import 'package:empathi_care/view/widget/card_method_payment.dart';
 import 'package:empathi_care/view/widget/card_psikolog_on_payment_method.dart';

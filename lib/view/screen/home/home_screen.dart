@@ -1,7 +1,7 @@
-import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
-import 'package:empathi_care/view/screen/chat_bot_ai_screen.dart';
-import 'package:empathi_care/view/screen/list_artikel_screen.dart';
-import 'package:empathi_care/view/screen/notification_screen.dart';
+import 'package:empathi_care/view/screen/Home/notification_screen.dart';
+import 'package:empathi_care/view/screen/article/artikel_detail_screen.dart';
+import 'package:empathi_care/view/screen/article/list_artikel_screen.dart';
+import 'package:empathi_care/view/screen/chatbot/chat_bot_ai_screen.dart';
 import 'package:empathi_care/view_model/artikel_home.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
