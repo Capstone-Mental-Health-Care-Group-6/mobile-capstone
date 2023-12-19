@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) => GetPatientByIdViewModel()),
               ChangeNotifierProvider(
-              create: (BuildContext context) => ZoomViewModel())
+              create: (BuildContext context) => ZoomViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) =>
                   DetailHistoryTransactionViewModel()),
