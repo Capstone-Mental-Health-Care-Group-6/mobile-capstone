@@ -19,55 +19,59 @@ class JwtService {
 
   int getTokenId(String token) {
     final Map<String, dynamic> decodedToken = decodeToken(token);
+    // ignore: unnecessary_null_comparison
+    if (decodedToken != null && decodedToken['id'] != null) {
     return decodedToken['id'];
+  } else {
+    throw Exception("Couldn't extract user ID from token");
+  }
   }
 }
 
 class UrlBulService {
   final domainUrl = "https://kmb5alta.online";
-  String buildUrl(int userId) {
+  String buildUrl(int id) {
     // ignore: unnecessary_null_comparison
-    if (userId == null) {
+    if (id == null) {
       throw Exception("Couldn't extract user ID from token");
     }
-    return '$domainUrl/counseling/user/1';
+    debugPrint('$id');
+    return '$domainUrl/counseling/user/$id';
   }
 }
 
 class ActivePackageService {
   late SharedPreferences sp;
-     final Dio _dio = Dio();
+  final Dio _dio = Dio();
   String token = '';
-  ActivePackageService();
 
   Future fetchData() async {
-    late SharedPreferences sp;
- 
-    String token = '';
-
     sp = await SharedPreferences.getInstance();
+
     token = sp.getString('accesstoken').toString();
-      try {
-        final JwtService jwtService = JwtService();
-        final int userId = jwtService.getTokenId(token);
-        final UrlBulService urlBulService = UrlBulService();
-        final String url = urlBulService.buildUrl(userId);
-        sp = await SharedPreferences.getInstance();
+    try {
+      final JwtService jwtService = JwtService();
+      final int userId = jwtService.getTokenId(token);
 
-        token = sp.getString('accesstoken').toString();
+      final UrlBulService urlBulService = UrlBulService();
+      final String url = urlBulService.buildUrl(userId);
 
-        final response = await _dio.get(
-          url,
-          options: Options(
-            headers: {'Authorization': 'Bearer $token'},
-          ),
-        );
-        debugPrint('$response');
-        final activePackage = ActivePackageModel.fromJson(response.data);
-        debugPrint('$activePackage');
-        return activePackage;
-      } catch (e) {
-        rethrow;
-      }
+      final response = await _dio.get(
+        url,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+      debugPrint('$response');
+
+      final ActivePackageModel activePackage =
+          ActivePackageModel.fromJson(response.data);
+
+      debugPrint('$activePackage');
+
+      return activePackage;
+    } catch (e) {
+      throw Exception('Gagal mengambil data dari API: $e');
     }
   }
+}

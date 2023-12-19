@@ -19,7 +19,6 @@ class ActivePackageViewModel extends ChangeNotifier {
     if (isLoaded) {
       await fetchDataActivePackage();
     }
-
     await Future.delayed(
       const Duration(seconds: 5),
     ).then((value) {
@@ -29,16 +28,16 @@ class ActivePackageViewModel extends ChangeNotifier {
   }
 
   Future<ActivePackageModel> fetchDataActivePackage() async {
-    _activePackageModel = await _activePackageService.fetchData();
     try {
-      if (_activePackageModel != null) {
+      // if (_activePackageModel != null) {
+        _activePackageModel = await _activePackageService.fetchData();
         notifyListeners();
         return _activePackageModel!;
-      } else {
-        throw Exception('Failed to fetch active package');
-      }
+      // } else {
+        // throw Exception('Failed to fetch active package');
+      // }
     } catch (e) {
-      throw Exception('$e');
+      throw Exception('Gagal mendapatkan data: $e');
     }
   }
 }
