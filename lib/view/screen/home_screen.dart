@@ -198,6 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     date: '17 Oktober 2019',
                                     category: article.categoryName,
                                     content: article.content,
+                                    userName: article.userName,
                                   ),
                                 ),
                               );

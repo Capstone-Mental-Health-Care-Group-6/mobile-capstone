@@ -11,6 +11,7 @@ class ArticleDetailPage extends StatelessWidget {
   final String date;
   final String category;
   final String content;
+  final String userName;
 
   const ArticleDetailPage({
     super.key,
@@ -20,6 +21,7 @@ class ArticleDetailPage extends StatelessWidget {
     required this.category,
     required this.content,
     String? titleParagraf,
+    required this.userName,
   });
 
   @override
@@ -75,11 +77,11 @@ class ArticleDetailPage extends StatelessWidget {
                       SizedBox(
                         width: 8,
                       ),
-                      Text("Udin",
+                      Text(userName,
                           style: GoogleFonts.montserrat(
                               fontSize: 12,
                               color: Colors.blue,
-                              fontWeight: FontWeight.w300)),
+                              fontWeight: FontWeight.w500)),
                       SizedBox(
                         width: 8,
                       ),
