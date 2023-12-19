@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/view/screen/counseling/list_psikolog_instant.dart';
 import 'package:empathi_care/view/screen/counseling/list_psikolog_premium.dart';
