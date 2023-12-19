@@ -52,9 +52,9 @@ class PsikologProvider extends ChangeNotifier {
       dataPsikolog =
           await _apiService.fetchPsikologSearch(searchController.text,token);
       for (var data in dataPsikolog!.data){
-        if(data.ratings != null){
-          countReviewDocter = data.ratings!.where((rating) => rating.doctorReview.toString() != "No review yet").length;
-          for(var rating in data.ratings!){
+        if(data.ratings.isNotEmpty){
+          countReviewDocter = data.ratings.where((rating) => rating.doctorReview.toString() != "No review yet").length;
+          for(var rating in data.ratings){
             countRatingDocter += rating.doctorStarRating;
           }
 
