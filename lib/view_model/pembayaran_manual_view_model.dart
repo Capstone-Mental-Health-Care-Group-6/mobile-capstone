@@ -1,7 +1,11 @@
 import 'dart:developer';
 
+import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:empathi_care/model/services/pembayaran_manual_service.dart';
+import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/paket_view_model.dart';
+import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
+import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,17 +17,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PembayaranManualProvider extends ChangeNotifier {
   String fileImage = "";
   bool isLoading = false;
+  int? patientId;
   PembayaranManualService pembayaranManualService = PembayaranManualService();
   late PaketProvider paketProvider;
+  late KonselingProvider konselingProvider;
+  late PsikologProvider psikologProvider;
+  late ProfilePsikologProvider profilePsikologProvider;
 
   void init(BuildContext context) async {
     final pref = await SharedPreferences.getInstance();
     paketProvider = context.read<PaketProvider>();
-
-    await pref.setString('token',
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI5MzIxMjksImlhdCI6MTcwMjg0NTcyOSwiaWQiOjUsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0._T851Z3YYOpPXgnsKFSeKYYzRv-BZG6zGpLlkjGLd9o");
-
-    log(pref.getString("token").toString());
+    konselingProvider = context.read<KonselingProvider>();
+    psikologProvider = context.read<PsikologProvider>();
+    profilePsikologProvider = context.read<ProfilePsikologProvider>();
+    fileImage = "";
+    final JwtService jwtService = JwtService();
+    patientId = jwtService.getTokenId(pref.getString("accesstoken").toString());
   }
 
   Future<bool> addTransaction() async {
@@ -33,14 +42,14 @@ class PembayaranManualProvider extends ChangeNotifier {
         "price_counseling": paketProvider.listPaket[paketProvider.selectedPaket!]['price'].toString(),
         "price_duration": paketProvider.listDuration[paketProvider.selectedDuration - 1]['additional_price'].toString(),
         "payment_type": "manual",
-        "doctor_id": "13",
-        "topic_id": "1",
-        "patient_id": "2",
+        "doctor_id": profilePsikologProvider.dataDoctor['id'],
+        "topic_id": konselingProvider.selectedId,
+        "patient_id": patientId.toString(),
         "method_id": paketProvider.listMethods[paketProvider.selectedMetode - 1]['id'].toString(),
         "duration_id": paketProvider.listDuration[paketProvider.selectedDuration - 1]['id'].toString(),
         "counseling_id": paketProvider.listPaket[paketProvider.selectedPaket!]['id'].toString(),
         "counseling_session": paketProvider.listPaket[paketProvider.selectedPaket!]['sessions'].toString(),
-        "counseling_type": "A",
+        "counseling_type": paketProvider.listPaket[paketProvider.selectedPaket!]['type'] == "INSTAN" ? "A" : "B",
       };
 
       final response = await pembayaranManualService.addTransaction(fileImage, params);
@@ -100,8 +109,7 @@ class PembayaranManualProvider extends ChangeNotifier {
     switch (pickerType) {
       case "gallery":
         try {
-          imageFile = await ImagePicker()
-              .pickImage(source: ImageSource.gallery, imageQuality: 100);
+          imageFile = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 100);
         } catch (e) {
           PermissionStatus permission = await Permission.storage.status;
           if (permission == PermissionStatus.denied) {
@@ -119,13 +127,11 @@ class PembayaranManualProvider extends ChangeNotifier {
                       children: [
                         Text(
                           "Perhatian!",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
                         ),
                         const Divider(),
                         const SizedBox(height: 10),
-                        const Text(
-                            "Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
+                        const Text("Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
                       ],
                     ),
                     actions: <Widget>[
@@ -135,16 +141,14 @@ class PembayaranManualProvider extends ChangeNotifier {
                         },
                         child: Text(
                           "Batal",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
                         child: Text(
                           "Pengaturan",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                     ],
@@ -159,8 +163,7 @@ class PembayaranManualProvider extends ChangeNotifier {
 
       case "camera":
         try {
-          imageFile = await ImagePicker()
-              .pickImage(source: ImageSource.camera, imageQuality: 80);
+          imageFile = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 80);
         } catch (e) {
           PermissionStatus permission = await Permission.camera.status;
           if (permission == PermissionStatus.denied) {
@@ -178,13 +181,11 @@ class PembayaranManualProvider extends ChangeNotifier {
                       children: [
                         Text(
                           "Perhatian!",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
                         ),
                         const Divider(),
                         const SizedBox(height: 10),
-                        const Text(
-                            "Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
+                        const Text("Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
                       ],
                     ),
                     actions: <Widget>[
@@ -194,16 +195,14 @@ class PembayaranManualProvider extends ChangeNotifier {
                         },
                         child: Text(
                           "Batal",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
                         child: Text(
                           "Pengaturan",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                     ],
