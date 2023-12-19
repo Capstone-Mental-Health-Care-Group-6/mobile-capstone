@@ -22,6 +22,7 @@ class ArticleWidget extends StatelessWidget {
           imagePath: article.thumbnail,
           category: article.categoryName,
           content: article.content,
+          userName: article.userName,
         ),
       ),
     );
@@ -48,8 +49,7 @@ class ArticleWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
-                      image: NetworkImage(article
-                          .thumbnail), // Use NetworkImage for remote images
+                      image: NetworkImage(article.thumbnail),
                       fit: BoxFit.cover,
                     ),
                   ),
