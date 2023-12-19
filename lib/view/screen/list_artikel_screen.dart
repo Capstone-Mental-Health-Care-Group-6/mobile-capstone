@@ -28,7 +28,7 @@ class AllArticlesPageState extends State<AllArticlesPage> {
   void updateSelectedCategory(String category) {
     if (selectedCategory != category) {
       selectedCategory = category;
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         build(context);
       });
     }
