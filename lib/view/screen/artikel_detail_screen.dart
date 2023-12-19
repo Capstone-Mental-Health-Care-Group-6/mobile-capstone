@@ -32,14 +32,6 @@ class ArticleDetailPage extends StatelessWidget {
         ),
         elevation: 10,
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: CustomSearch());
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
