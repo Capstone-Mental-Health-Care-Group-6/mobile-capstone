@@ -2,7 +2,7 @@ import 'package:empathi_care/view/screen/Profile/ChangePassword/change_password_
 import 'package:empathi_care/view/screen/Profile/EditProfile/edit_profile_screen.dart';
 import 'package:empathi_care/view/screen/Profile/Info/about_us_screen.dart';
 import 'package:empathi_care/view/screen/Profile/Info/privacy_screen.dart';
-import 'package:empathi_care/view/screen/Register/terms_screen.dart';
+import 'package:empathi_care/view/screen/auth/terms_screen.dart';
 import 'package:empathi_care/view/screen/chatbot/chat_bot_cs_screen.dart';
 import 'package:empathi_care/view/widget/DeleteLogOutProfile/delete_widget.dart';
 import 'package:empathi_care/view/widget/DeleteLogOutProfile/logout_widget.dart';

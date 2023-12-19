@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_3_screen.dart';
+import 'package:empathi_care/view/screen/auth/filling_profile/filling_profile_3_screen.dart';
 import 'package:empathi_care/view/widget/timeline_widget.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';

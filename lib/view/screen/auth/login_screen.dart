@@ -3,7 +3,7 @@ import 'package:empathi_care/model/mystate_model.dart';
 import 'package:empathi_care/model/services/get_all_patient_services.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
-import 'package:empathi_care/view/screen/Register/register_screen.dart';
+import 'package:empathi_care/view/screen/auth/register_screen.dart';
 import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
