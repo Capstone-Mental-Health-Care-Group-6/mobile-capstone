@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/zoom_model.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ZoomService {
@@ -21,6 +22,7 @@ class ZoomService {
           },
         ),
       );
+      debugPrint('$response');
       return ZoomModel.fromJson(response.data);
     } catch (e) {
       throw Exception('gaga fetch data $e');
