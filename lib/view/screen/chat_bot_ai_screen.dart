@@ -35,11 +35,9 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
-    if (sp != null) {
-      avatar = sp.getString('avatar') ?? '';
-      await Future.delayed(const Duration(seconds: 2));
-      setState(() {});
-    }
+    avatar = sp.getString('avatar') ?? '';
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {});
   }
 
   @override
@@ -90,10 +88,14 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                                 ? _buildUserMessageContainer(message)
                                 : (message.text.contains("Selamat") ||
                                         message.text.contains("Bagaimanakah") ||
-                                        message.text.contains("gangguan kecemasan") ||
-                                        message.text.contains("masalah stress") ||
-                                        message.text.contains("masalah depresi") ||
-                                        message.text.contains("masalah gangguan psikomatis") ||
+                                        message.text
+                                            .contains("gangguan kecemasan") ||
+                                        message.text
+                                            .contains("masalah stress") ||
+                                        message.text
+                                            .contains("masalah depresi") ||
+                                        message.text.contains(
+                                            "masalah gangguan psikomatis") ||
                                         message.text.contains("Terimakasih"))
                                     ? _buildBotMessageContainer(message)
                                     : message.text.contains("load")

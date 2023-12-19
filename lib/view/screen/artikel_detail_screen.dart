@@ -98,7 +98,7 @@ class ArticleDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Container(
+                  SizedBox(
                       width: 350,
                       height: 180,
                       child: Center(

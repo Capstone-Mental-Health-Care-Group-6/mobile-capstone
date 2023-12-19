@@ -130,7 +130,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                                     children: [
                                                       Text(
                                                         paketProv
-                                                            .listMethods![paketProv
+                                                            .listMethods[paketProv
                                                                     .selectedMetode -
                                                                 1]['name']
                                                             .toString(),
@@ -143,10 +143,10 @@ class _PaketScreenState extends State<PaketScreen> {
                                                       ),
                                                       const SizedBox(height: 4),
                                                       Text(
-                                                        paketProv.listDuration![
-                                                                paketProv
-                                                                        .selectedDuration -
-                                                                    1]['name']
+                                                        paketProv
+                                                            .listDuration[paketProv
+                                                                    .selectedDuration -
+                                                                1]['name']
                                                             .toString(),
                                                         style: GoogleFonts
                                                             .montserrat(
@@ -278,7 +278,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: paketProv.listPaket!.length,
+                                      itemCount: paketProv.listPaket.length,
                                       itemBuilder: (context, index) {
                                         return paketProv.listPaket != null
                                             ? Padding(
@@ -347,7 +347,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                                                       .circle,
                                                                 ),
                                                                 child: Image.network(paketProv
-                                                                    .listPaket![
+                                                                    .listPaket[
                                                                         index][
                                                                         'avatar']
                                                                     .toString()),
@@ -361,7 +361,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                                                 children: [
                                                                   Text(
                                                                     paketProv
-                                                                        .listPaket![
+                                                                        .listPaket[
                                                                             index]
                                                                             [
                                                                             'name']
@@ -375,7 +375,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                                                             : Colors.black),
                                                                   ),
                                                                   Text(
-                                                                    "Rp ${NumberFormat('###,###,###,###', 'ID').format(double.parse(paketProv.listPaket![index]['price'].toString()))}",
+                                                                    "Rp ${NumberFormat('###,###,###,###', 'ID').format(double.parse(paketProv.listPaket[index]['price'].toString()))}",
                                                                     style: TextStyle(
                                                                         fontSize:
                                                                             16,
@@ -397,8 +397,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                                               const EdgeInsets
                                                                   .all(10),
                                                           child: Text(paketProv
-                                                              .listPaket![index]
-                                                                  [
+                                                              .listPaket[index][
                                                                   'description']
                                                               .toString()
                                                               .replaceAll(
@@ -509,7 +508,7 @@ class _PaketScreenState extends State<PaketScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: paketProvider.listMethods!.length,
+                itemCount: paketProvider.listMethods.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 2.7,
@@ -556,8 +555,7 @@ class _PaketScreenState extends State<PaketScreen> {
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            paketProvider.listMethods![index]['name']
-                                .toString(),
+                            paketProvider.listMethods[index]['name'].toString(),
                             style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -582,7 +580,7 @@ class _PaketScreenState extends State<PaketScreen> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: paketProvider.listDuration!.length,
+                itemCount: paketProvider.listDuration.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 2.7,
@@ -610,7 +608,7 @@ class _PaketScreenState extends State<PaketScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          paketProvider.listDuration![index]['name'].toString(),
+                          paketProvider.listDuration[index]['name'].toString(),
                           style: GoogleFonts.montserrat(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,

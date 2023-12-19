@@ -40,11 +40,9 @@ class _ChatMenuScreenState extends State<ChatMenuScreen> {
   Future<void> initial() async {
     sp = await SharedPreferences.getInstance();
 
-    if (sp != null) {
-      avatar = sp.getString('avatar') ?? '';
-      await Future.delayed(const Duration(seconds: 2));
-      setState(() {});
-    }
+    avatar = sp.getString('avatar') ?? '';
+    await Future.delayed(const Duration(seconds: 2));
+    setState(() {});
   }
 
   @override
