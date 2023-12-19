@@ -1,3 +1,4 @@
+import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/view/widget/instant_widget.dart';
 import 'package:empathi_care/view/widget/premium_widget.dart';
 import 'package:empathi_care/view_model/active_package_view_model.dart';
@@ -18,13 +19,13 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
   @override
   void initState() {
     super.initState();
-    // final token =
-    //     Provider.of<ActivePackageViewModel>(context, listen: false).token;
-    Provider.of<ActivePackageViewModel>(context, listen: false).delayLoading();
+    Provider.of<ActivePackageViewModel>(context, listen: false)
+        .fetchDataActivePackage();
   }
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<ActivePackageViewModel>(context, listen: false);
     TabController tabController = TabController(length: 2, vsync: this);
     return Scaffold(
       appBar: AppBar(
@@ -42,12 +43,16 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
         shadowColor: Colors.grey,
       ),
       backgroundColor: Colors.white,
-      body: Consumer<ActivePackageViewModel>(
-        builder: (context, activeViewModel, _) {
-          if (activeViewModel.isLoaded) {
+      body: FutureBuilder<ActivePackageModel>(
+        future: prov.fetchDataActivePackage(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return shimmerLoad();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
           } else {
-            return SingleChildScrollView(
+            return 
+            SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
@@ -482,7 +487,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                                       ),
                                     ),
                                   ),
-                                ), 
+                                ),
                         ],
                       ),
                     ),
