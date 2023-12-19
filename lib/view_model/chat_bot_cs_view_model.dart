@@ -93,9 +93,17 @@ class ChatBotCSProvider extends ChangeNotifier {
 
   void showMenuExplanation(String menuKey) {
     if (menuExplanations.containsKey(menuKey)) {
-      addMenuMessage('${menuExplanations[menuKey]}');
-      addMenuMessage('Ya');
-      addMenuMessage('Tidak');
+      addMenuMessage('Load...');
+
+      Future.delayed(const Duration(seconds: 5), () {
+        _chatMessages.removeLast();
+
+        addMenuMessage('${menuExplanations[menuKey]}');
+        addMenuMessage('Ya');
+        addMenuMessage('Tidak');
+
+        notifyListeners();
+      });
     }
   }
 
