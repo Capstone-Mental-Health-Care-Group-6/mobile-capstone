@@ -18,11 +18,9 @@ class ArticleProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         // Handle error
-        print('Failed to load data');
       }
     } catch (error) {
       // Handle exception
-      print('Error: $error');
     }
   }
 
@@ -35,11 +33,9 @@ class ArticleProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         // Handle error
-        print('Failed to load data');
       }
     } catch (error) {
       // Handle exception
-      print('Error: $error');
     }
   }
 
@@ -52,12 +48,12 @@ class ArticleProvider extends ChangeNotifier {
         return data.map((article) => Article.fromJson(article)).toList();
       } else {
         // Handle error
-        print('Failed to load data');
+
         return [];
       }
     } catch (error) {
       // Handle exception
-      print('Error: $error');
+
       return [];
     }
   }

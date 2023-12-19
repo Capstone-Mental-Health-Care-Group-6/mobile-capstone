@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:empathi_care/model/rating_and_review_model.dart';
-import 'package:empathi_care/view_model/detail_history_transaction_view_model.dart';
 import 'package:empathi_care/view_model/rating_and_review_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';

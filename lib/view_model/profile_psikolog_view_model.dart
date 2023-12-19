@@ -57,12 +57,13 @@ class ProfilePsikologProvider extends ChangeNotifier {
 
   void getAvg() async {
     int juml = 0;
-    for (int i = 0; i < dataDoctor['ratings'].length; i++) {
-      juml = juml +
-          int.parse(dataDoctor['ratings'][i]['doctor_star_rating'].toString());
+    if (dataDoctor['ratings'] != null) {
+      for (int i = 0; i < dataDoctor['ratings'].length; i++) {
+        juml = juml + int.parse(dataDoctor['ratings'][i]['doctor_star_rating'].toString());
+      }
     }
 
-    avgRating = ("2.0").toString();
+    avgRating = (juml / ratings.length).toString();
 
     if (avgRating.length > 4) {
       avgRating = avgRating.substring(0, 4);

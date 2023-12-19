@@ -2,6 +2,7 @@
 
 import 'package:empathi_care/view/screen/list_artikel_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArticleDetailPage extends StatelessWidget {
@@ -98,7 +99,7 @@ class ArticleDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Container(
+                  SizedBox(
                       width: 350,
                       height: 180,
                       child: Center(
@@ -108,13 +109,7 @@ class ArticleDetailPage extends StatelessWidget {
                         ),
                       )),
                   const SizedBox(height: 8),
-                  RichText(
-                    textAlign: TextAlign.justify,
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: _buildTextSpans(content),
-                    ),
-                  )
+                  HtmlWidget(content),
                 ],
               ),
             ),
@@ -123,34 +118,4 @@ class ArticleDetailPage extends StatelessWidget {
       ),
     );
   }
-}
-
-List<TextSpan> _buildTextSpans(String content) {
-  List<TextSpan> textSpans = [];
-
-  List<String> wordsToBold = ['Mental', 'Apa itu Kesehatan MentalHealth'];
-
-  List<String> words = content.split(' ');
-
-  for (String word in words) {
-    if (wordsToBold.contains(word)) {
-      textSpans.add(
-        TextSpan(
-          text: '$word ',
-          style: GoogleFonts.montserrat(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-        ),
-      );
-    } else {
-      textSpans.add(
-        TextSpan(
-            text: '$word ',
-            style: GoogleFonts.montserrat(fontSize: 12, color: Colors.black54)),
-      );
-    }
-  }
-
-  return textSpans;
 }
