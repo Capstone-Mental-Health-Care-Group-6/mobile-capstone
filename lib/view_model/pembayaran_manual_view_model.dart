@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:empathi_care/model/services/pembayaran_manual_service.dart';
 import 'package:empathi_care/view_model/paket_view_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +17,7 @@ class PembayaranManualProvider extends ChangeNotifier {
 
   void init(BuildContext context) async {
     final pref = await SharedPreferences.getInstance();
+    // ignore: use_build_context_synchronously
     paketProvider = context.read<PaketProvider>();
 
     await pref.setString('token',
@@ -29,21 +29,37 @@ class PembayaranManualProvider extends ChangeNotifier {
   Future<bool> addTransaction() async {
     try {
       Map<String, dynamic> params = {
-        "price_method": paketProvider.listMethods[paketProvider.selectedMetode - 1]['additional_price'].toString(),
-        "price_counseling": paketProvider.listPaket[paketProvider.selectedPaket!]['price'].toString(),
-        "price_duration": paketProvider.listDuration[paketProvider.selectedDuration - 1]['additional_price'].toString(),
+        "price_method": paketProvider
+            .listMethods[paketProvider.selectedMetode - 1]['additional_price']
+            .toString(),
+        "price_counseling": paketProvider
+            .listPaket[paketProvider.selectedPaket!]['price']
+            .toString(),
+        "price_duration": paketProvider
+            .listDuration[paketProvider.selectedDuration - 1]
+                ['additional_price']
+            .toString(),
         "payment_type": "manual",
         "doctor_id": "13",
         "topic_id": "1",
         "patient_id": "2",
-        "method_id": paketProvider.listMethods[paketProvider.selectedMetode - 1]['id'].toString(),
-        "duration_id": paketProvider.listDuration[paketProvider.selectedDuration - 1]['id'].toString(),
-        "counseling_id": paketProvider.listPaket[paketProvider.selectedPaket!]['id'].toString(),
-        "counseling_session": paketProvider.listPaket[paketProvider.selectedPaket!]['sessions'].toString(),
+        "method_id": paketProvider.listMethods[paketProvider.selectedMetode - 1]
+                ['id']
+            .toString(),
+        "duration_id": paketProvider
+            .listDuration[paketProvider.selectedDuration - 1]['id']
+            .toString(),
+        "counseling_id": paketProvider.listPaket[paketProvider.selectedPaket!]
+                ['id']
+            .toString(),
+        "counseling_session": paketProvider
+            .listPaket[paketProvider.selectedPaket!]['sessions']
+            .toString(),
         "counseling_type": "A",
       };
 
-      final response = await pembayaranManualService.addTransaction(fileImage, params);
+      final response =
+          await pembayaranManualService.addTransaction(fileImage, params);
 
       if (response != null) {
         log(response.toString());

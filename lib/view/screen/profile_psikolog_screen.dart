@@ -267,21 +267,22 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 4),
                                     itemCount: listKeahlian.length,
                                     itemBuilder: (context, index) {
-                                      return Container(
-                                        child: Center(
-                                            child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              listKeahlian[index]['icon'],
-                                            ),
-                                            const SizedBox(width: 2),
-                                            Text(
-                                              listKeahlian[index]['keahlian'].toString(),
-                                              style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
-                                            ),
-                                          ],
-                                        )),
-                                      );
+                                      return Center(
+                                          child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            listKeahlian[index]['icon'],
+                                          ),
+                                          const SizedBox(width: 2),
+                                          Text(
+                                            listKeahlian[index]['keahlian']
+                                                .toString(),
+                                            style: GoogleFonts.montserrat(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ));
                                     },
                                   ),
                                   const SizedBox(height: 12),
