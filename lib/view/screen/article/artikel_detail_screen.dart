@@ -1,6 +1,5 @@
 // article_detail_page.dart
 
-import 'package:empathi_care/view/screen/article/list_artikel_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,14 +31,6 @@ class ArticleDetailPage extends StatelessWidget {
         ),
         elevation: 10,
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: CustomSearch());
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
