@@ -81,7 +81,7 @@ class ArticleDetailPage extends StatelessWidget {
                           style: GoogleFonts.montserrat(
                               fontSize: 12,
                               color: Colors.blue,
-                              fontWeight: FontWeight.w500)),
+                              fontWeight: FontWeight.w800)),
                       SizedBox(
                         width: 8,
                       ),
