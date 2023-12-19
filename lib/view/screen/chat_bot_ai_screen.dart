@@ -1,6 +1,7 @@
 import 'package:empathi_care/model/chat_bot_ai_model.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/view_model/chat_bot_ai_view_model.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +19,10 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
   late SharedPreferences sp;
   String token = '';
 
+  late GetPatientByIdViewModel getPatientByIdViewModel;
+
+  String avatar = "";
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +35,11 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
+    if (sp != null) {
+      avatar = sp.getString('avatar') ?? '';
+      await Future.delayed(const Duration(seconds: 2));
+      setState(() {});
+    }
   }
 
   @override
@@ -124,10 +134,12 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             ),
           ),
           const SizedBox(width: 8.0),
-          const CircleAvatar(
-            backgroundImage: AssetImage('assets/images/Ellipse 7.png'),
-            radius: 20.0,
-          ),
+          if (avatar.isNotEmpty) ...[
+            CircleAvatar(
+              backgroundImage: NetworkImage(avatar),
+              radius: 20.0,
+            )
+          ]
         ],
       ),
     );
