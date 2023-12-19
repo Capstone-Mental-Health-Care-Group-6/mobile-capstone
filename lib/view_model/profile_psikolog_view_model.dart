@@ -25,6 +25,7 @@ class ProfilePsikologProvider extends ChangeNotifier {
     paketProvider = context.read<PaketProvider>();
     dataDoctor.clear();
     selectedWorkday.clear();
+    selectedDate.clear();
     avgRating = "0";
     isInstan = paketProvider.isInstan;
 
@@ -49,7 +50,8 @@ class ProfilePsikologProvider extends ChangeNotifier {
 
       workday = dataDoctor['workday'];
       ratings = dataDoctor['ratings'];
-      // notifyListeners();
+
+      notifyListeners();
     } catch (e) {
       log(e.toString());
     }
@@ -72,6 +74,7 @@ class ProfilePsikologProvider extends ChangeNotifier {
 
   void onSelectWorkday(Map<String, dynamic> selected, int index) {
     selectedWorkday[index]['workday'] = selected;
+    log(selectedWorkday.toString());
 
     notifyListeners();
   }

@@ -52,7 +52,7 @@ dependencies:
   dio: ^5.4.0
   shared_preferences: ^2.2.2
   image_picker: ^1.0.5
-  permission_handler: ^11.1.0
+  permission_handler: ^11.0.1
   webview_flutter: ^4.4.2
   flutter_widget_from_html: ^0.14.9
   url_launcher: ^6.2.2

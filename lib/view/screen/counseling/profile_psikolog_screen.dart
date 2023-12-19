@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:empathi_care/view/screen/payment/payment_method_screen.dart';
 import 'package:empathi_care/view_model/profile_psikolog_view_model.dart';
@@ -275,11 +277,8 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                                           ),
                                           const SizedBox(width: 2),
                                           Text(
-                                            listKeahlian[index]['keahlian']
-                                                .toString(),
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold),
+                                            listKeahlian[index]['keahlian'].toString(),
+                                            style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
                                           ),
                                         ],
                                       ));
@@ -316,7 +315,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                               ),
                             ),
                             const SizedBox(height: 12),
-                            prov.dataDoctor['ratings'] != null
+                            prov.ratings.isNotEmpty || prov.dataDoctor['ratings'] != null
                                 ? CarouselSlider(
                                     carouselController: _carouselController,
                                     options: CarouselOptions(
@@ -1136,6 +1135,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                     final dateIndo = DateFormat("dd/MM/yyyy", "id_ID").format(dateTime);
 
                     prov.onSelectedDate(indexList, dateIndo);
+                    setState(() {});
                   }
                 });
               },
@@ -1185,9 +1185,6 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                       return InkWell(
                         onTap: () {
                           prov.onSelectWorkday(prov.workday[indexGrid], indexList);
-                          // log(prov.selectedWorkday[indexGrid]['workday']['workday_id'].toString());
-                          // log(prov.workday[indexGrid]['workday_id'].toString());
-                          // log(prov.selectedWorkday.toString());
 
                           setState(() {});
                         },
