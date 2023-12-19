@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:empathi_care/view/screen/payment/verification_payment_screen.dart';
@@ -146,7 +148,8 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFBB00),
                         borderRadius: BorderRadius.circular(10),
@@ -189,14 +192,16 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                   child: InkWell(
                     child: Text(
                       "Lihat rincian",
-                      style: GoogleFonts.montserrat(fontSize: 12, color: Colors.blue),
+                      style: GoogleFonts.montserrat(
+                          fontSize: 12, color: Colors.blue),
                     ),
                   ),
                 ),
                 const SizedBox(height: 16),
                 prov.fileImage == ""
                     ? Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                         width: double.infinity,
                         decoration: const BoxDecoration(
                           color: Color.fromRGBO(242, 242, 242, 1.0),
@@ -245,11 +250,13 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                                             8.0,
                                           ),
                                         ),
-                                        backgroundColor: const Color(0xff0085FF),
+                                        backgroundColor:
+                                            const Color(0xff0085FF),
                                         foregroundColor: Colors.white,
                                       ),
                                       onPressed: () {
-                                        pembayaranProv.showDialogImagePicker(context);
+                                        pembayaranProv
+                                            .showDialogImagePicker(context);
                                       },
                                       child: Text(
                                         'Select file',
@@ -320,17 +327,22 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                 const SizedBox(height: 16),
                 Text(
                   "Upload Bukti Pembayaran",
-                  style: GoogleFonts.montserrat(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.grey),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "* Transaksi Anda tidak akan kami proses sebelum menekan tombol konfirmasi pembayaran",
-                  style: GoogleFonts.montserrat(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "* Pastikan foto bukti transfer terbaca",
-                  style: GoogleFonts.montserrat(fontSize: 10, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.montserrat(
+                      fontSize: 10, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
                 SizedBox(
@@ -341,7 +353,8 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
 
                         if (result) {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const VerificationPaymentScreen(),
+                            builder: (context) =>
+                                const VerificationPaymentScreen(),
                           ));
                         }
                       },
