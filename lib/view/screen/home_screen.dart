@@ -177,6 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 20),
                   Consumer<ArticleHomeProvider>(
                     builder: (context, articleProvider, child) {
                       return GridView.count(
@@ -205,6 +206,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               margin: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    spreadRadius: 10,
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -218,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       article.thumbnail,
                                       width: 120,
                                       height: 100,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                   Container(
@@ -239,8 +248,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               const EdgeInsets.only(left: 11),
                                           child: Text(
                                             article.title,
-                                            style:
-                                                const TextStyle(fontSize: 12),
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500),
                                             textAlign: TextAlign.start,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,

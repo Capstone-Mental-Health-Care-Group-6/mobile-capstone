@@ -11,7 +11,7 @@ class ArticleHomeProvider extends ChangeNotifier {
   Future<void> fetchArticleslimit() async {
     try {
       final response =
-          await _dio.get('https://kmb5alta.online/articles?limit4');
+          await _dio.get('https://kmb5alta.online/articles?limit=4');
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['data'];
         _articles = data.map((article) => Article.fromJson(article)).toList();

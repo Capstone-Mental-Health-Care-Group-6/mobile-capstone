@@ -32,14 +32,6 @@ class ArticleDetailPage extends StatelessWidget {
         ),
         elevation: 10,
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: CustomSearch());
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -73,31 +65,32 @@ class ArticleDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  RichText(
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: [
-                        TextSpan(
-                            text: 'Ditinjau oleh',
-                            style: GoogleFonts.montserrat(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300)),
-                        TextSpan(
-                            text: ' Udin',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w300)),
-                        TextSpan(
-                            text: ' | $date | 7 menit',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300)),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "Ditinjau oleh",
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text("Udin",
+                          style: GoogleFonts.montserrat(
+                              fontSize: 12,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w300)),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "| $date | 7 menit",
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 8),
                   const SizedBox(height: 8),
                   SizedBox(
                       width: 350,
