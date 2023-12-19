@@ -1,9 +1,11 @@
 import 'package:empathi_care/model/chat_bot_ai_model.dart';
 import 'package:empathi_care/utils/constant/date.dart';
 import 'package:empathi_care/view_model/chat_bot_ai_view_model.dart';
+import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ChatAIScreen extends StatefulWidget {
   const ChatAIScreen({super.key});
@@ -17,6 +19,10 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
   late SharedPreferences sp;
   String token = '';
 
+  late GetPatientByIdViewModel getPatientByIdViewModel;
+
+  String avatar = "";
+
   @override
   void initState() {
     super.initState();
@@ -29,7 +35,11 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
-    // provider.fetchListPsikolog(token);
+    if (sp != null) {
+      avatar = sp.getString('avatar') ?? '';
+      await Future.delayed(const Duration(seconds: 2));
+      setState(() {});
+    }
   }
 
   @override
@@ -43,7 +53,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'HelpBot',
+          'VirtuBot',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
@@ -52,24 +62,6 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             Navigator.of(context).pop();
           },
         ),
-        actions: [
-          PopupMenuButton(
-            icon: const Icon(Icons.more_vert),
-            itemBuilder: (BuildContext context) {
-              return [
-                const PopupMenuItem(
-                  value: 'option1',
-                  child: Text('Option 1'),
-                ),
-                const PopupMenuItem(
-                  value: 'option2',
-                  child: Text('Option 2'),
-                ),
-              ];
-            },
-            onSelected: (value) {},
-          ),
-        ],
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 10),
@@ -85,28 +77,30 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
                       final message = provider.chatBotPrompt[index];
                       var buttonKey = index;
                       return Align(
-                        alignment: message.isUser
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: GestureDetector(
-                          onTap: () {
-                            if (!message.isUser) {
-                              provider.handleMenuButtonPress(index, token);
-                            }
-                          },
-                          child: message.isUser
-                              ? _buildUserMessageContainer(message)
-                              : (message.text.contains("Selamat") ||
-                                      message.text.contains("Apakah informasi") ||
-                                      message.text.contains("Bagaimanakah") ||
-                                      message.text.contains("Terimakasih"))
-                                  ? _buildBotMessageContainer(message)
-                                  // : provider.isLoading ? _buildBotMessageContainer(message) : _buildMenuResponseButton(
-                                  //     message, index, buttonKey, provider),
-                                      : _buildMenuResponseButton(
-                                      message, index, buttonKey, provider, token)
-                        ),
-                      );
+                          alignment: message.isUser
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (!message.isUser) {
+                                provider.handleMenuButtonPress(index, token);
+                              }
+                            },
+                            child: message.isUser
+                                ? _buildUserMessageContainer(message)
+                                : (message.text.contains("Selamat") ||
+                                        message.text.contains("Bagaimanakah") ||
+                                        message.text.contains("gangguan kecemasan") ||
+                                        message.text.contains("masalah stress") ||
+                                        message.text.contains("masalah depresi") ||
+                                        message.text.contains("masalah gangguan psikomatis") ||
+                                        message.text.contains("Terimakasih"))
+                                    ? _buildBotMessageContainer(message)
+                                    : message.text.contains("load")
+                                        ? _buildLoadMessage()
+                                        : _buildMenuResponseButton(message,
+                                            index, buttonKey, provider, token),
+                          ));
                     },
                   );
                 },
@@ -140,10 +134,12 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             ),
           ),
           const SizedBox(width: 8.0),
-          const CircleAvatar(
-            backgroundImage: AssetImage('assets/images/Ellipse 7.png'),
-            radius: 20.0,
-          ),
+          if (avatar.isNotEmpty) ...[
+            CircleAvatar(
+              backgroundImage: NetworkImage(avatar),
+              radius: 20.0,
+            )
+          ]
         ],
       ),
     );
@@ -179,13 +175,8 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
     );
   }
 
-  Widget _buildMenuResponseButton(
-    ChatBotPrompt message,
-    int index,
-    int buttonKey,
-    ChatBotAIProvider provider,
-    String token
-  ) {
+  Widget _buildMenuResponseButton(ChatBotPrompt message, int index,
+      int buttonKey, ChatBotAIProvider provider, String token) {
     bool processingTap = false;
 
     return Container(
@@ -203,7 +194,7 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             Future.delayed(const Duration(seconds: 1), () {
               processingTap = false;
             });
-            provider.handleMenuButtonPress(index,token);
+            provider.handleMenuButtonPress(index, token);
           }
         },
         onTapCancel: () {
@@ -227,6 +218,37 @@ class _ChatAIScreenState extends State<ChatAIScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLoadMessage() {
+    return Container(
+      margin: const EdgeInsets.all(10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Image.asset(
+            'assets/images/chatbot.png',
+          ),
+          const SizedBox(width: 10.0),
+          Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: Shimmer.fromColors(
+              baseColor: const Color.fromARGB(255, 46, 46, 46),
+              highlightColor: const Color.fromARGB(255, 117, 117, 117),
+              child: const Text(
+                "Typing...",
+                style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
