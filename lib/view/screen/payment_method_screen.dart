@@ -15,6 +15,7 @@ import 'package:empathi_care/view_model/transaction_view_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -48,6 +49,12 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
     final profilePsikologViewModel =
         Provider.of<ProfilePsikologProvider>(context, listen: false);
 
+    String formatNumberToDecimal(int number) {
+      NumberFormat numberFormat = NumberFormat.decimalPattern('id');
+
+      return numberFormat.format(number);
+    }
+    
     void makeTransaction() async {
       final SharedPreferences sp = await SharedPreferences.getInstance();
       final String token = sp.getString('accesstoken').toString();
@@ -77,15 +84,17 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 counselingSession: packageViewModel
                     .listPaket[packageViewModel.selectedPaket!]["sessions"],
                 counselingType:
-                    packageViewModel.listPaket[packageViewModel.selectedPaket!]
-                                ["type"] ==
-                            'INSTAN'
+                    packageViewModel.listPaket[packageViewModel.selectedPaket!]["type"] == 'INSTAN'
                         ? "A"
                         : "B",
-                priceMethod: 0,
+                priceMethod: packageViewModel
+                        .listMethods[packageViewModel.selectedMetode - 1]
+                    ["additional_price"],
                 priceCounseling: packageViewModel
                     .listPaket[packageViewModel.selectedPaket!]["price"],
-                priceDuration: 0,
+                priceDuration: packageViewModel
+                        .listDuration[packageViewModel.selectedDuration - 1]
+                    ["additional_price"],
                 paymentType: _selectedPaymentMethod.name.toLowerCase(),
                 doctorId: profilePsikologViewModel.dataDoctor['id']);
 
@@ -249,7 +258,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     'Total Biaya',
                     style: GoogleFonts.montserrat(),
                   ),
-                  Text('Rp 80.000',
+                  Text("Rp ${formatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"] + packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"] + packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}",
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w700, fontSize: 18))
                 ],
