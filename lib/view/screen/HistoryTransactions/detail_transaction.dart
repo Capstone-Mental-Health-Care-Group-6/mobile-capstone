@@ -1,6 +1,6 @@
 import 'package:empathi_care/model/detail_history_transaction_model.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
-import 'package:empathi_care/view/screen/chat_history_screen.dart';
+import 'package:empathi_care/view/screen/historyTransactions/chat_history_screen.dart';
 import 'package:empathi_care/view/widget/invoice_rating_widget.dart';
 import 'package:empathi_care/view/widget/rating_dialog.dart';
 import 'package:empathi_care/view_model/detail_history_transaction_view_model.dart';

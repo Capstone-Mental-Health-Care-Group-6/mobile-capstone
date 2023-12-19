@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:empathi_care/view/screen/Register/create_success_screen.dart';
+import 'package:empathi_care/view/screen/auth/create_success_screen.dart';
 import 'package:empathi_care/view/widget/timeline_widget.dart';
 import 'package:empathi_care/view_model/filling_provider.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';

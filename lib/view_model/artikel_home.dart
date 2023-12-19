@@ -18,11 +18,9 @@ class ArticleHomeProvider extends ChangeNotifier {
         notifyListeners();
       } else {
         // Handle error
-        print('Failed to load data');
       }
     } catch (error) {
       // Handle exception
-      print('Error: $error');
     }
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:empathi_care/model/services/pembayaran_manual_service.dart';
+import 'package:empathi_care/view_model/konseling_view_model.dart';
 import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,18 +14,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PembayaranManualProvider extends ChangeNotifier {
   String fileImage = "";
   bool isLoading = false;
+  int? patientId;
   PembayaranManualService pembayaranManualService = PembayaranManualService();
   late PaketProvider paketProvider;
+  late KonselingProvider konselingProvider;
+  late PsikologProvider psikologProvider;
+  late ProfilePsikologProvider profilePsikologProvider;
 
   void init(BuildContext context) async {
     final pref = await SharedPreferences.getInstance();
     // ignore: use_build_context_synchronously
     paketProvider = context.read<PaketProvider>();
-
-    await pref.setString('token',
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDI5MzIxMjksImlhdCI6MTcwMjg0NTcyOSwiaWQiOjUsInJvbGUiOiJQYXRpZW50Iiwic3RhdHVzIjoiQWN0aXZlIn0._T851Z3YYOpPXgnsKFSeKYYzRv-BZG6zGpLlkjGLd9o");
-
-    log(pref.getString("token").toString());
+    konselingProvider = context.read<KonselingProvider>();
+    psikologProvider = context.read<PsikologProvider>();
+    profilePsikologProvider = context.read<ProfilePsikologProvider>();
+    fileImage = "";
+    final JwtService jwtService = JwtService();
+    patientId = jwtService.getTokenId(pref.getString("accesstoken").toString());
   }
 
   Future<bool> addTransaction() async {
@@ -116,8 +123,7 @@ class PembayaranManualProvider extends ChangeNotifier {
     switch (pickerType) {
       case "gallery":
         try {
-          imageFile = await ImagePicker()
-              .pickImage(source: ImageSource.gallery, imageQuality: 100);
+          imageFile = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 100);
         } catch (e) {
           PermissionStatus permission = await Permission.storage.status;
           if (permission == PermissionStatus.denied) {
@@ -135,13 +141,11 @@ class PembayaranManualProvider extends ChangeNotifier {
                       children: [
                         Text(
                           "Perhatian!",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
                         ),
                         const Divider(),
                         const SizedBox(height: 10),
-                        const Text(
-                            "Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
+                        const Text("Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
                       ],
                     ),
                     actions: <Widget>[
@@ -151,16 +155,14 @@ class PembayaranManualProvider extends ChangeNotifier {
                         },
                         child: Text(
                           "Batal",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
                         child: Text(
                           "Pengaturan",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                     ],
@@ -175,8 +177,7 @@ class PembayaranManualProvider extends ChangeNotifier {
 
       case "camera":
         try {
-          imageFile = await ImagePicker()
-              .pickImage(source: ImageSource.camera, imageQuality: 80);
+          imageFile = await ImagePicker().pickImage(source: ImageSource.camera, imageQuality: 80);
         } catch (e) {
           PermissionStatus permission = await Permission.camera.status;
           if (permission == PermissionStatus.denied) {
@@ -194,13 +195,11 @@ class PembayaranManualProvider extends ChangeNotifier {
                       children: [
                         Text(
                           "Perhatian!",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600),
                         ),
                         const Divider(),
                         const SizedBox(height: 10),
-                        const Text(
-                            "Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
+                        const Text("Aplikasi memerlukan beberapa izin untuk dapat berjalan dengan baik. Apakah anda ingin mengaktifkannya?"),
                       ],
                     ),
                     actions: <Widget>[
@@ -210,16 +209,14 @@ class PembayaranManualProvider extends ChangeNotifier {
                         },
                         child: Text(
                           "Batal",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
                         child: Text(
                           "Pengaturan",
-                          style: GoogleFonts.montserrat(
-                              fontWeight: FontWeight.w600, color: Colors.black),
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.w600, color: Colors.black),
                         ),
                       ),
                     ],

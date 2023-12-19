@@ -1,6 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:empathi_care/view/screen/counseling/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog.dart';
-import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';

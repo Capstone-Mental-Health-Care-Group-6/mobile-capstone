@@ -1,7 +1,7 @@
 // article_widget.dart
 
 import 'package:empathi_care/model/article_model.dart';
-import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
+import 'package:empathi_care/view/screen/article/artikel_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ArticleWidget extends StatelessWidget {

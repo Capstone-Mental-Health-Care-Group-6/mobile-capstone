@@ -52,17 +52,24 @@ class CardInvoicePayment extends StatelessWidget {
         ),
         _buildSectionTitle("Detail Pemesanan"),
         _buildOrderDetails(
-            "Paket Chat",
+            "Paket ${packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["name"]}",
             packageViewModel.listPaket[packageViewModel.selectedPaket!]
                 ["type"]),
         _buildOrderDetails(
             "Topik", counselingViewModel.getid.data![0].name ?? '-'),
-        _buildOrderDetails("Durasi", "30 Menit"),
+        _buildOrderDetails(
+            "Durasi",
+            packageViewModel.listDuration[packageViewModel.selectedDuration - 1]
+                ["name"]),
         _buildOrderDetails("Sesi Konseling",
             "${packageViewModel.listPaket[packageViewModel.selectedPaket!]["sessions"]} Sesi"),
         _buildSectionTitle("Detail Pembayaran"),
         _buildPaymentDetails("Biaya Konsultasi",
             "Rp ${formatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"])}"),
+        _buildPaymentDetails("Biaya Metode",
+            "Rp ${formatNumberToDecimal(packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"])}"),
+        _buildPaymentDetails("Biaya Durasi",
+            "Rp ${formatNumberToDecimal(packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}"),
         const Padding(
           padding: EdgeInsets.only(left: 10, right: 10),
           child: Divider(
@@ -181,7 +188,7 @@ class CardInvoicePayment extends StatelessWidget {
                 fontFamily: MyFont.fontMontserrat),
           ),
           Text(
-            "Rp ${handleFormatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"])}",
+            "Rp ${handleFormatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"] + packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"] + packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}",
             style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
