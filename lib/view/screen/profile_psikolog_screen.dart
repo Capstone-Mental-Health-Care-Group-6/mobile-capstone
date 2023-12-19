@@ -23,8 +23,7 @@ class ProfilePsikologScreen extends StatefulWidget {
   State<ProfilePsikologScreen> createState() => _ProfilePsikologScreenState();
 }
 
-class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
-    with TickerProviderStateMixin {
+class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with TickerProviderStateMixin {
   final _carouselController = CarouselController();
 
   late AnimationController _animateControllerNext;
@@ -40,10 +39,8 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
   late ProfilePsikologProvider prov;
   @override
   void initState() {
-    _animateControllerNext = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-    _animateControllerPrev = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+    _animateControllerNext = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    _animateControllerPrev = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
 
     getCalledar();
 
@@ -71,8 +68,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
           backgroundColor: Colors.white,
           title: Text(
             "Profile Psikolog",
-            style: GoogleFonts.montserrat(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+            style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
           ),
         ),
         body: Consumer<ProfilePsikologProvider>(
@@ -85,6 +81,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                         child: ListView(
                           shrinkWrap: true,
                           physics: const BouncingScrollPhysics(),
+                          padding: const EdgeInsets.only(bottom: 20),
                           children: [
                             Container(
                               width: double.infinity,
@@ -102,8 +99,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 19.5, vertical: 16),
+                              padding: const EdgeInsets.symmetric(horizontal: 19.5, vertical: 16),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -112,8 +108,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          prov.dataDoctor['doctor_name']
-                                              .toString(),
+                                          prov.dataDoctor['doctor_name'].toString(),
                                           style: GoogleFonts.montserrat(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -153,8 +148,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                   ),
                                   const SizedBox(height: 7),
                                   Text(
-                                    prov.dataDoctor['doctor_description']
-                                        .toString(),
+                                    prov.dataDoctor['doctor_description'].toString(),
                                     textAlign: TextAlign.justify,
                                     style: GoogleFonts.montserrat(
                                       fontSize: 12,
@@ -170,9 +164,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    prov.dataDoctor['doctor_sipp'] == ""
-                                        ? "SIPP : -"
-                                        : "SIPP : ${prov.dataDoctor['doctor_sipp']}",
+                                    prov.dataDoctor['doctor_sipp'] == "" ? "SIPP : -" : "SIPP : ${prov.dataDoctor['doctor_sipp']}",
                                     style: GoogleFonts.montserrat(
                                       fontSize: 12,
                                     ),
@@ -182,9 +174,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                       ? Column(
                                           children: [
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
                                                   "Jadwal yang tersedia",
@@ -204,135 +194,51 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                             const SizedBox(height: 7),
                                             GridView.builder(
                                               shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                                      crossAxisCount: 3,
-                                                      crossAxisSpacing: 10,
-                                                      childAspectRatio: 3),
+                                              physics: const NeverScrollableScrollPhysics(),
+                                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
                                               itemCount: prov.workday.length,
-                                              itemBuilder:
-                                                  (context, indexGrid) {
+                                              itemBuilder: (context, indexGrid) {
                                                 return InkWell(
                                                   onTap: () {
-                                                    profileProv.onSelectWorkday(
-                                                        profileProv
-                                                            .workday[indexGrid],
-                                                        0);
+                                                    profileProv.onSelectWorkday(profileProv.workday[indexGrid], 0);
                                                   },
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xffCCE7FF),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                      border: profileProv
-                                                                  .selectedWorkday[
-                                                                      0][
-                                                                      'workday']
-                                                                      [
-                                                                      'workday_id']
-                                                                  .toString() ==
-                                                              profileProv
-                                                                  .workday[
-                                                                      indexGrid]
-                                                                      [
-                                                                      'workday_id']
-                                                                  .toString()
-                                                          ? Border.all(
-                                                              color:
-                                                                  Colors.blue)
+                                                      color: const Color(0xffCCE7FF),
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      border: profileProv.selectedWorkday[0]['workday']['workday_id'].toString() == profileProv.workday[indexGrid]['workday_id'].toString()
+                                                          ? Border.all(color: Colors.blue)
                                                           : null,
                                                     ),
                                                     child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         Text(
-                                                          DateFormat("HH:mm",
-                                                                  "id_ID")
-                                                              .format(DateTime.parse(profileProv
-                                                                  .workday[
-                                                                      indexGrid]
-                                                                      [
-                                                                      'start_time']
-                                                                  .toString())),
-                                                          style: GoogleFonts
-                                                              .montserrat(
+                                                          DateFormat("HH:mm", "id_ID").format(DateTime.parse(profileProv.workday[indexGrid]['start_time'].toString())),
+                                                          style: GoogleFonts.montserrat(
                                                             fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: profileProv
-                                                                        .selectedWorkday[
-                                                                            0][
-                                                                            'workday']
-                                                                            [
-                                                                            'workday_id']
-                                                                        .toString() ==
-                                                                    profileProv
-                                                                        .workday[
-                                                                            indexGrid]
-                                                                            [
-                                                                            'workday_id']
-                                                                        .toString()
+                                                            fontWeight: FontWeight.bold,
+                                                            color: profileProv.selectedWorkday[0]['workday']['workday_id'].toString() == profileProv.workday[indexGrid]['workday_id'].toString()
                                                                 ? Colors.blue
                                                                 : Colors.black,
                                                           ),
                                                         ),
                                                         Text(
                                                           " - ",
-                                                          style: GoogleFonts
-                                                              .montserrat(
+                                                          style: GoogleFonts.montserrat(
                                                             fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: profileProv
-                                                                        .selectedWorkday[
-                                                                            0][
-                                                                            'workday']
-                                                                            [
-                                                                            'workday_id']
-                                                                        .toString() ==
-                                                                    profileProv
-                                                                        .workday[
-                                                                            indexGrid]
-                                                                            [
-                                                                            'workday_id']
-                                                                        .toString()
+                                                            fontWeight: FontWeight.bold,
+                                                            color: profileProv.selectedWorkday[0]['workday']['workday_id'].toString() == profileProv.workday[indexGrid]['workday_id'].toString()
                                                                 ? Colors.blue
                                                                 : Colors.black,
                                                           ),
                                                         ),
                                                         Text(
-                                                          DateFormat("HH:mm",
-                                                                  "id_ID")
-                                                              .format(DateTime.parse(profileProv
-                                                                  .workday[
-                                                                      indexGrid]
-                                                                      [
-                                                                      'end_time']
-                                                                  .toString())),
-                                                          style: GoogleFonts
-                                                              .montserrat(
+                                                          DateFormat("HH:mm", "id_ID").format(DateTime.parse(profileProv.workday[indexGrid]['end_time'].toString())),
+                                                          style: GoogleFonts.montserrat(
                                                             fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: profileProv
-                                                                        .selectedWorkday[
-                                                                            0][
-                                                                            'workday']
-                                                                            [
-                                                                            'workday_id']
-                                                                        .toString() ==
-                                                                    profileProv
-                                                                        .workday[
-                                                                            indexGrid]
-                                                                            [
-                                                                            'workday_id']
-                                                                        .toString()
+                                                            fontWeight: FontWeight.bold,
+                                                            color: profileProv.selectedWorkday[0]['workday']['workday_id'].toString() == profileProv.workday[indexGrid]['workday_id'].toString()
                                                                 ? Colors.blue
                                                                 : Colors.black,
                                                           ),
@@ -357,12 +263,8 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                   const SizedBox(height: 8),
                                   GridView.builder(
                                     shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            childAspectRatio: 4),
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 4),
                                     itemCount: listKeahlian.length,
                                     itemBuilder: (context, index) {
                                       return Container(
@@ -374,11 +276,8 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                             ),
                                             const SizedBox(width: 2),
                                             Text(
-                                              listKeahlian[index]['keahlian']
-                                                  .toString(),
-                                              style: GoogleFonts.montserrat(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold),
+                                              listKeahlian[index]['keahlian'].toString(),
+                                              style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.bold),
                                             ),
                                           ],
                                         )),
@@ -408,8 +307,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                         onTap: () {
                                           _carouselController.nextPage();
                                         },
-                                        child:
-                                            const Icon(Icons.arrow_forward_ios),
+                                        child: const Icon(Icons.arrow_forward_ios),
                                       ),
                                     ],
                                   ),
@@ -417,126 +315,104 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                               ),
                             ),
                             const SizedBox(height: 12),
-                            Visibility(
-                              visible: prov.dataDoctor['ratings'] != null,
-                              child: CarouselSlider(
-                                  carouselController: _carouselController,
-                                  options: CarouselOptions(
-                                    aspectRatio: 2,
-                                    scrollPhysics:
-                                        const BouncingScrollPhysics(),
-                                    initialPage: 0,
-                                    enableInfiniteScroll: true,
-                                    enlargeCenterPage: true,
-                                    enlargeStrategy:
-                                        CenterPageEnlargeStrategy.height,
-                                    reverse: false,
-                                    autoPlay: true,
-                                    autoPlayInterval:
-                                        const Duration(seconds: 12),
-                                    autoPlayAnimationDuration:
-                                        const Duration(milliseconds: 2000),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    viewportFraction: 0.88,
-                                    scrollDirection: Axis.horizontal,
-                                    onPageChanged: (index, reason) {
-                                      _animateControllerPrev.reset();
-                                      _animateControllerPrev.forward();
-                                      _animateControllerNext.reset();
-                                      _animateControllerNext.forward();
-                                    },
-                                  ),
-                                  items: profileProv.ratings
-                                      .map(
-                                        (element) => Container(
-                                          padding: const EdgeInsets.all(10),
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xffCCE7FF),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 40,
-                                                    width: 40,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      image: DecorationImage(
-                                                        image: NetworkImage(
-                                                            element['patient_avatar']
-                                                                .toString()),
-                                                        fit: BoxFit.cover,
+                            prov.dataDoctor['ratings'] != null
+                                ? CarouselSlider(
+                                    carouselController: _carouselController,
+                                    options: CarouselOptions(
+                                      aspectRatio: 2,
+                                      scrollPhysics: const BouncingScrollPhysics(),
+                                      initialPage: 0,
+                                      enableInfiniteScroll: true,
+                                      enlargeCenterPage: true,
+                                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                                      reverse: false,
+                                      autoPlay: true,
+                                      autoPlayInterval: const Duration(seconds: 12),
+                                      autoPlayAnimationDuration: const Duration(milliseconds: 2000),
+                                      autoPlayCurve: Curves.fastOutSlowIn,
+                                      viewportFraction: 0.88,
+                                      scrollDirection: Axis.horizontal,
+                                      onPageChanged: (index, reason) {
+                                        _animateControllerPrev.reset();
+                                        _animateControllerPrev.forward();
+                                        _animateControllerNext.reset();
+                                        _animateControllerNext.forward();
+                                      },
+                                    ),
+                                    items: profileProv.ratings
+                                        .map(
+                                          (element) => Container(
+                                            padding: const EdgeInsets.all(10),
+                                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: const Color(0xffCCE7FF),
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      height: 40,
+                                                      width: 40,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                          image: NetworkImage(element['patient_avatar'].toString()),
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(width: 12),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          element['patient_name']
-                                                              .toString(),
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 4),
-                                                        Text(
-                                                          "time",
-                                                          style: GoogleFonts
-                                                              .montserrat(
-                                                                  fontSize: 14),
-                                                        ),
-                                                      ],
+                                                    const SizedBox(width: 12),
+                                                    Expanded(
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            element['patient_name'].toString(),
+                                                            style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold),
+                                                          ),
+                                                          const SizedBox(height: 4),
+                                                          Text(
+                                                            "time",
+                                                            style: GoogleFonts.montserrat(fontSize: 14),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(width: 14),
-                                                  Icon(MdiIcons.star,
-                                                      color: Colors.yellow,
-                                                      size: 24),
-                                                  const SizedBox(width: 3.5),
-                                                  Text(
-                                                    element['doctor_star_rating']
-                                                        .toString(),
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                  )
-                                                ],
-                                              ),
-                                              const SizedBox(height: 10),
-                                              Text(
-                                                element['doctor_review']
-                                                    .toString(),
-                                                maxLines: 4,
-                                                textAlign: TextAlign.justify,
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 12),
-                                              ),
-                                            ],
+                                                    const SizedBox(width: 14),
+                                                    Icon(MdiIcons.star, color: Colors.yellow, size: 24),
+                                                    const SizedBox(width: 3.5),
+                                                    Text(
+                                                      element['doctor_star_rating'].toString(),
+                                                      style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
+                                                    )
+                                                  ],
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Text(
+                                                  element['doctor_review'].toString(),
+                                                  maxLines: 4,
+                                                  textAlign: TextAlign.justify,
+                                                  style: GoogleFonts.montserrat(fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                      .toList()),
-                            ),
+                                        )
+                                        .toList())
+                                : SizedBox(
+                                    height: 50,
+                                    width: double.infinity,
+                                    child: Center(
+                                      child: Text(
+                                        "No Review",
+                                        style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  )
                           ],
                         ),
                       ),
@@ -546,25 +422,19 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PaymentMethodScreen()),
+                                MaterialPageRoute(builder: (context) => const PaymentMethodScreen()),
                               );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
-                              fixedSize:
-                                  Size(MediaQuery.of(context).size.width, 40),
+                              fixedSize: Size(MediaQuery.of(context).size.width, 40),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
                             child: Text(
                               "Mulai Chat",
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
+                              style: GoogleFonts.montserrat(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
                             )),
                       )
                     ],
@@ -595,8 +465,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                 ),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 19.5, vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 19.5, vertical: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -828,23 +697,20 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                         ? Column(
                             children: [
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   SizedBox(
                                     width: 131,
                                     height: 10.5,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor:
-                                          Colors.white.withOpacity(0.5),
+                                      highlightColor: Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
                                         decoration: BoxDecoration(
                                           color: const Color(0xffCCE7FF),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(20),
                                         ),
                                       ),
                                     ),
@@ -854,15 +720,13 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                     height: 6.75,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor:
-                                          Colors.white.withOpacity(0.5),
+                                      highlightColor: Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
                                         decoration: BoxDecoration(
                                           color: const Color(0xffCCE7FF),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(20),
                                         ),
                                       ),
                                     ),
@@ -873,11 +737,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                               GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 10,
-                                        childAspectRatio: 3),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
                                 itemCount: 3,
                                 itemBuilder: (context, indexGrid) {
                                   return Container(
@@ -890,17 +750,14 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                         width: 65,
                                         height: 8.75,
                                         child: Shimmer.fromColors(
-                                          baseColor:
-                                              Colors.grey.withOpacity(0.5),
-                                          highlightColor:
-                                              Colors.white.withOpacity(0.5),
+                                          baseColor: Colors.grey.withOpacity(0.5),
+                                          highlightColor: Colors.white.withOpacity(0.5),
                                           child: Container(
                                             width: double.infinity,
                                             height: 10.5,
                                             decoration: BoxDecoration(
                                               color: const Color(0xffCCE7FF),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                                              borderRadius: BorderRadius.circular(20),
                                             ),
                                           ),
                                         ),
@@ -924,15 +781,13 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                     height: 10.5,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor:
-                                          Colors.white.withOpacity(0.5),
+                                      highlightColor: Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
                                         decoration: BoxDecoration(
                                           color: const Color(0xffCCE7FF),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(20),
                                         ),
                                       ),
                                     ),
@@ -943,8 +798,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                     height: 40,
                                     child: Shimmer.fromColors(
                                       baseColor: Colors.grey.withOpacity(0.5),
-                                      highlightColor:
-                                          Colors.white.withOpacity(0.5),
+                                      highlightColor: Colors.white.withOpacity(0.5),
                                       child: Container(
                                         width: double.infinity,
                                         height: 10.5,
@@ -978,11 +832,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                     GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: 3),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
                       itemCount: 3,
                       itemBuilder: (context, indexGrid) {
                         return Container(
@@ -1269,8 +1119,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
           children: [
             Text(
               "Konseling ${indexList + 1}",
-              style: GoogleFonts.montserrat(
-                  fontSize: 14, fontWeight: FontWeight.bold),
+              style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             TextField(
@@ -1283,8 +1132,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                 ).then((value) {
                   if (value != null) {
                     final dateTime = DateTime.parse(value.toString());
-                    final dateIndo =
-                        DateFormat("dd/MM/yyyy", "id_ID").format(dateTime);
+                    final dateIndo = DateFormat("dd/MM/yyyy", "id_ID").format(dateTime);
 
                     prov.onSelectedDate(indexList, dateIndo);
                   }
@@ -1295,9 +1143,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                hintText: prov.selectedDate[indexList] == ""
-                    ? "mm/dd/yyyy"
-                    : prov.selectedDate[indexList].toString(),
+                hintText: prov.selectedDate[indexList] == "" ? "mm/dd/yyyy" : prov.selectedDate[indexList].toString(),
                 suffixIcon: Icon(
                   MdiIcons.calendar,
                   color: Colors.blue,
@@ -1332,17 +1178,12 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: 3),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 10, childAspectRatio: 3),
                     itemCount: prov.workday.length,
                     itemBuilder: (context, indexGrid) {
                       return InkWell(
                         onTap: () {
-                          prov.onSelectWorkday(
-                              prov.workday[indexGrid], indexList);
+                          prov.onSelectWorkday(prov.workday[indexGrid], indexList);
                           // log(prov.selectedWorkday[indexGrid]['workday']['workday_id'].toString());
                           // log(prov.workday[indexGrid]['workday_id'].toString());
                           // log(prov.selectedWorkday.toString());
@@ -1353,32 +1194,17 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                           decoration: BoxDecoration(
                             color: const Color(0xffCCE7FF),
                             borderRadius: BorderRadius.circular(12),
-                            border: prov.selectedWorkday[indexList]['workday']
-                                            ['workday_id']
-                                        .toString() ==
-                                    prov.workday[indexGrid]['workday_id']
-                                        .toString()
-                                ? Border.all(color: Colors.blue)
-                                : null,
+                            border: prov.selectedWorkday[indexList]['workday']['workday_id'].toString() == prov.workday[indexGrid]['workday_id'].toString() ? Border.all(color: Colors.blue) : null,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                DateFormat("HH:mm", "id_ID").format(
-                                    DateTime.parse(prov.workday[indexGrid]
-                                            ['start_time']
-                                        .toString())),
+                                DateFormat("HH:mm", "id_ID").format(DateTime.parse(prov.workday[indexGrid]['start_time'].toString())),
                                 style: GoogleFonts.montserrat(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
-                                  color: prov.selectedWorkday[indexList]
-                                                  ['workday']['workday_id']
-                                              .toString() !=
-                                          prov.workday[indexGrid]['workday_id']
-                                              .toString()
-                                      ? Colors.black
-                                      : Colors.blue,
+                                  color: prov.selectedWorkday[indexList]['workday']['workday_id'].toString() != prov.workday[indexGrid]['workday_id'].toString() ? Colors.black : Colors.blue,
                                 ),
                               ),
                               Text(
@@ -1386,30 +1212,15 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen>
                                 style: GoogleFonts.montserrat(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
-                                  color: prov.selectedWorkday[indexList]
-                                                  ['workday']['workday_id']
-                                              .toString() !=
-                                          prov.workday[indexGrid]['workday_id']
-                                              .toString()
-                                      ? Colors.black
-                                      : Colors.blue,
+                                  color: prov.selectedWorkday[indexList]['workday']['workday_id'].toString() != prov.workday[indexGrid]['workday_id'].toString() ? Colors.black : Colors.blue,
                                 ),
                               ),
                               Text(
-                                DateFormat("HH:mm", "id_ID").format(
-                                    DateTime.parse(prov.workday[indexGrid]
-                                            ['end_time']
-                                        .toString())),
+                                DateFormat("HH:mm", "id_ID").format(DateTime.parse(prov.workday[indexGrid]['end_time'].toString())),
                                 style: GoogleFonts.montserrat(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
-                                  color: prov.selectedWorkday[indexList]
-                                                  ['workday']['workday_id']
-                                              .toString() !=
-                                          prov.workday[indexGrid]['workday_id']
-                                              .toString()
-                                      ? Colors.black
-                                      : Colors.blue,
+                                  color: prov.selectedWorkday[indexList]['workday']['workday_id'].toString() != prov.workday[indexGrid]['workday_id'].toString() ? Colors.black : Colors.blue,
                                 ),
                               ),
                             ],
