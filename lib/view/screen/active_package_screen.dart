@@ -1,7 +1,10 @@
+import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/view/widget/instant_widget.dart';
 import 'package:empathi_care/view/widget/premium_widget.dart';
+import 'package:empathi_care/view_model/active_package_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ActivePacketScreen extends StatefulWidget {
@@ -13,27 +16,16 @@ class ActivePacketScreen extends StatefulWidget {
 
 class _ActivePacketScreenState extends State<ActivePacketScreen>
     with TickerProviderStateMixin {
-  bool isInstant = true;
-  bool isLoaded = true;
-
-  Future<void> delayLoading() {
-    return Future.delayed(
-      const Duration(seconds: 5),
-    ).then((value) {
-      setState(() {
-        isLoaded = false;
-      });
-    });
-  }
-
   @override
   void initState() {
-    delayLoading();
     super.initState();
+    Provider.of<ActivePackageViewModel>(context, listen: false)
+        .fetchDataActivePackage();
   }
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<ActivePackageViewModel>(context, listen: false);
     TabController tabController = TabController(length: 2, vsync: this);
     return Scaffold(
       appBar: AppBar(
@@ -51,12 +43,16 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
         shadowColor: Colors.grey,
       ),
       backgroundColor: Colors.white,
-      body: Builder(
-        builder: (context) {
-          if (isLoaded) {
+      body: FutureBuilder<ActivePackageModel>(
+        future: prov.fetchDataActivePackage(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return shimmerLoad();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
           } else {
-            return SingleChildScrollView(
+            return 
+            SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
@@ -81,7 +77,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                           color: Color(0xff0085FF),
                         ),
                         insets: EdgeInsets.symmetric(
-                          horizontal: 131.35,
+                          horizontal: 138.45,
                         ),
                       ),
                       tabs: [
@@ -126,27 +122,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
   }
 
   Widget shimmerLoad() {
-    int selectIndex = 0;
-    final List<Map<String, String>> listPaket = [
-      {
-        'status': 'Percakapan Masih dibuka',
-      },
-      {
-        'status': 'Percakapan Selesai',
-      },
-      {
-        'status': 'Masa aktif sudah berakhir',
-      },
-      {
-        'status': 'Masa aktif 6 hari',
-      },
-      {
-        'status': 'Masa aktif 14 hari',
-      },
-      {
-        'status': 'Masa aktif 29 hari',
-      },
-    ];
+    final prov = Provider.of<ActivePackageViewModel>(context, listen: false);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,18 +192,14 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                 itemCount: 3,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectIndex = index;
-                      });
-                    },
+                    onTap: () {},
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                         horizontal: 5.0,
                       ),
                       width: 68.0,
                       decoration: BoxDecoration(
-                        color: index == selectIndex
+                        color: index == prov.selectIndex
                             ? const Color(0xff0085FF)
                             : const Color(0xffCCE7FF),
                         borderRadius: BorderRadius.circular(
@@ -262,8 +234,12 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
           ),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: isLoaded ? 2 : 4,
+            itemCount: prov.activePackageModel?.data?.length ?? 0,
             itemBuilder: (context, index) {
+              final data1 = prov.activePackageModel!.data![index];
+              if (data1.status == 'pending') {
+                return null;
+              }
               return Container(
                 width: MediaQuery.of(context).size.width,
                 height: 150.0,
@@ -463,14 +439,7 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
                               ),
                             ),
                           ),
-                          listPaket[index]['status'] ==
-                                      'Percakapan Masih dibuka' ||
-                                  listPaket[index]['status'] ==
-                                      'Masa aktif 29 hari' ||
-                                  listPaket[index]['status'] ==
-                                      'Masa aktif 14 hari' ||
-                                  listPaket[index]['status'] ==
-                                      'Masa aktif 6 hari'
+                          data1.status == 'Not finished'
                               ? ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xff0085FF),

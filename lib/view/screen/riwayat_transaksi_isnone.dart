@@ -6,22 +6,6 @@ class RiwayatPemesananIsnone extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Transaksi saya",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        surfaceTintColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(2.0),
-          child: Container(
-            color: const Color.fromRGBO(0, 0, 0, 0.25),
-            height: 1,
-          ),
-        ),
-      ),
       body: Stack(
         children: [
           Container(

@@ -22,7 +22,13 @@ class _ZoomScreenState extends State<ZoomScreen> {
     Provider.of<ZoomViewModel>(context, listen: false)
         .getDataFromApi(doctorId: widget.doctorId!);
   }
+  const ZoomScreen({super.key});
 
+  @override
+  State<ZoomScreen> createState() => _ZoomScreenState();
+}
+
+class _ZoomScreenState extends State<ZoomScreen> {
   @override
   Widget build(BuildContext context) {
     debugPrint('${widget.doctorId}');

@@ -65,6 +65,25 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
         return Consumer<PsikologProvider>(builder: (context, value, child) {
           if (provider.isLoading == true) {
             return shimmerLoading();
+          } else if (provider.notFound != false) {
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      "Tidak menemukan hasil yang sesuai. Silakan coba kata kunci lainnya.",
+                      textAlign: TextAlign.center,
+                    ),
+                    Image.asset(
+                      "assets/images/Reminders-rafiki 1.png",
+                      width: 305,
+                      height: 305,
+                    )
+                  ],
+                ),
+              ),
+            );
           } else {
             return SingleChildScrollView(
               child: Column(
@@ -161,59 +180,61 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                       ),
                                     ),
                                     const SizedBox(width: 9),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          data.doctorName,
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        const Text(
-                                          "Spesialis Positive psychology",
-                                          style: TextStyle(fontSize: 14),
-                                        ),
-                                        const SizedBox(height: 3),
-                                        const Text("Online",
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green)),
-                                      ],
+                                    Flexible(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            data.doctorName,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Text(
+                                            "Spesialis Positive psychology",
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          const SizedBox(height: 3),
+                                          const Text("Online",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.green)),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 6),
                                 Row(
                                   children: [
-                                    const Row(
+                                    Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.thumbs_up_down,
                                           color: Colors.blue,
                                         ),
-                                        SizedBox(width: 7),
+                                        const SizedBox(width: 7),
                                         Text(
-                                          "69%",
-                                          style: TextStyle(
+                                          "${provider.percentageRating.toString()} %",
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),
                                         ),
-                                        SizedBox(width: 8),
-                                        Icon(
+                                        const SizedBox(width: 8),
+                                        const Icon(
                                           Icons.rate_review,
                                           color: Colors.blue,
                                         ),
-                                        SizedBox(width: 7),
+                                        const SizedBox(width: 7),
                                         Text(
-                                          "3200",
-                                          style: TextStyle(
+                                          provider.countReviewDocter.toString(),
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
                                           ),
@@ -236,8 +257,10 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (_) =>
-                                                      const ProfilePsikologScreen(
-                                                          isInstan: true)));
+                                                      ProfilePsikologScreen(
+                                                          isInstan: true,
+                                                          session: 1,
+                                                          doctorId: data.id)));
                                         },
                                         child: const Text(
                                           "Mulai Chat",

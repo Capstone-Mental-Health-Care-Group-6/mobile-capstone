@@ -9,10 +9,7 @@ class GetPatientByIdViewModel extends ChangeNotifier {
   Data? getPatientbyIdModel;
   String email = '';
   String name = '';
-  DateTime? birth;
-  String gender = '';
   String avatar = '';
-  String phone = '';
 
   late SharedPreferences sp;
 
@@ -30,11 +27,7 @@ class GetPatientByIdViewModel extends ChangeNotifier {
       notifyListeners();
       email = sp.getString('email').toString();
       name = sp.getString('name').toString();
-      birth = DateTime.parse(sp.getString('birth').toString());
-      gender = sp.getString('gender').toString();
       avatar = sp.getString('avatar').toString();
-      phone = sp.getString('phone').toString();
-      notifyListeners();
     } catch (e) {
       if (e is DioException) {
         rethrow;
