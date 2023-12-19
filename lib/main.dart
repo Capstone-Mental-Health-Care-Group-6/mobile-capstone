@@ -12,6 +12,7 @@ import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
+import 'package:empathi_care/view_model/zoom_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -65,7 +66,10 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => LoginViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => GetPatientByIdViewModel()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => ZoomViewModel())
         ],
+
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
