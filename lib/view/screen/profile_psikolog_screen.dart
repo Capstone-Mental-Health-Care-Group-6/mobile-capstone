@@ -1198,7 +1198,7 @@ class _ProfilePsikologScreenState extends State<ProfilePsikologScreen> with Tick
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "AWD",
+                                DateFormat("HH:mm", "id_ID").format(DateTime.parse(prov.workday[indexGrid]['start_time'].toString())),
                                 style: GoogleFonts.montserrat(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
