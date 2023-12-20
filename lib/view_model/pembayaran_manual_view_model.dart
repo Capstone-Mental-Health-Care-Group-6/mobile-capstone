@@ -17,12 +17,8 @@ class PembayaranManualProvider extends ChangeNotifier {
   String fileImage = "";
   bool isLoading = false;
   int? patientId;
-  int? patientId;
   PembayaranManualService pembayaranManualService = PembayaranManualService();
   late PaketProvider paketProvider;
-  late KonselingProvider konselingProvider;
-  late PsikologProvider psikologProvider;
-  late ProfilePsikologProvider profilePsikologProvider;
   late KonselingProvider konselingProvider;
   late PsikologProvider psikologProvider;
   late ProfilePsikologProvider profilePsikologProvider;
@@ -38,27 +34,11 @@ class PembayaranManualProvider extends ChangeNotifier {
     fileImage = "";
     final JwtService jwtService = JwtService();
     patientId = jwtService.getTokenId(pref.getString("accesstoken").toString());
-    konselingProvider = context.read<KonselingProvider>();
-    psikologProvider = context.read<PsikologProvider>();
-    profilePsikologProvider = context.read<ProfilePsikologProvider>();
-    fileImage = "";
-    final JwtService jwtService = JwtService();
-    patientId = jwtService.getTokenId(pref.getString("accesstoken").toString());
   }
 
   Future<bool> addTransaction() async {
     try {
       Map<String, dynamic> params = {
-        "price_method": paketProvider
-            .listMethods[paketProvider.selectedMetode - 1]['additional_price']
-            .toString(),
-        "price_counseling": paketProvider
-            .listPaket[paketProvider.selectedPaket!]['price']
-            .toString(),
-        "price_duration": paketProvider
-            .listDuration[paketProvider.selectedDuration - 1]
-                ['additional_price']
-            .toString(),
         "price_method": paketProvider
             .listMethods[paketProvider.selectedMetode - 1]['additional_price']
             .toString(),
@@ -88,8 +68,6 @@ class PembayaranManualProvider extends ChangeNotifier {
             : "B",
       };
 
-      final response =
-          await pembayaranManualService.addTransaction(fileImage, params);
       final response =
           await pembayaranManualService.addTransaction(fileImage, params);
 

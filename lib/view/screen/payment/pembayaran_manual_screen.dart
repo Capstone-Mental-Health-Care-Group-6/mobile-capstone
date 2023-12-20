@@ -160,8 +160,6 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: const Color(0xFFFFBB00),
                         borderRadius: BorderRadius.circular(10),
