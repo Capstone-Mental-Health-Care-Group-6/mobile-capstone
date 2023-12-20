@@ -53,7 +53,7 @@ class ChatBotAIProvider extends ChangeNotifier {
 
   void addUserMessage(String message) async {
     _chatMessages.add(ChatBotPrompt(text: message, isUser: true));
-    if (message != "Ya" && message != "Tidak" && !menuExplanations.values.contains(message)) {
+    if (message != "Ya, Sudah sangat jelas" && message != "Masih belum relevan" && !menuExplanations.values.contains(message)) {
       postPrompt(message);
     }
     notifyListeners();
@@ -103,22 +103,22 @@ class ChatBotAIProvider extends ChangeNotifier {
       notifyListeners();
 
       showMenuExplanation(menuResponse);
-    } else if (lastMessage == 'Ya') {
-      addUserMessage('Ya');
+    } else if (lastMessage == 'Ya, Sudah sangat jelas') {
+      addUserMessage('Ya, Sudah sangat jelas');
       addMenuMessage(
           'Terimakasih atas percakapannya!\nJika Anda memiliki pertanyaan lain nanti,\njangan ragu untuk datang kembali.\nSemoga harimu menyenangkan!');
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
-          (message.text.contains('Ya') || message.text.contains('Tidak')));
+          (message.text.contains('Ya, Sudah sangat jelas') || message.text.contains('Masih belum relevan')));
       notifyListeners();
-    } else if (lastMessage == 'Tidak') {
-      addUserMessage('Tidak');
+    } else if (lastMessage == 'Masih belum relevan') {
+      addUserMessage('Masih belum relevan');
       addMenuMessage('Bagaimanakah saya dapat membantu Anda?');
       addMenuButtons();
 
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
-          (message.text.contains('Ya') || message.text.contains('Tidak')));
+          (message.text.contains('Ya, Sudah sangat jelas') || message.text.contains('Masih belum relevan')));
       notifyListeners();
     }
   }
@@ -132,8 +132,8 @@ class ChatBotAIProvider extends ChangeNotifier {
         _chatMessages.removeLast();
 
         addMenuMessage('${menuExplanations[menuKey]}');
-        addMenuMessage('Ya');
-        addMenuMessage('Tidak');
+        addMenuMessage('Ya, Sudah sangat jelas');
+        addMenuMessage('Masih belum relevan');
         notifyListeners();
       }).catchError((error) {
         _chatMessages.removeLast();
