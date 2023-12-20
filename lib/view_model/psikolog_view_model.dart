@@ -35,10 +35,9 @@ class PsikologProvider extends ChangeNotifier {
 
   int sumRatingPerDocter(Datum data) {
     int percentageRatingTotal = 0;
-
     if (data.ratings.isNotEmpty) {
       int countReviewDocter = data.ratings
-          .where((rating) => rating.doctorReview != "No review yet")
+          .where((rating) => rating.doctorReview != "No review yet" || rating.doctorStarRating != 0)
           .length;
 
       double countRatingDocter = data.ratings
@@ -56,13 +55,12 @@ class PsikologProvider extends ChangeNotifier {
     }else{
       return 0;
     }
-
   }
 
   int sumReviewPerDocter(Datum data) {
     if (data.ratings.isNotEmpty) {
       int countReviewDocter = data.ratings
-          .where((rating) => rating.doctorReview != "No review yet")
+          .where((rating) => rating.doctorReview != "No review yet" || rating.doctorStarRating != 0)
           .length;
       return countReviewDocter;
     }else{
