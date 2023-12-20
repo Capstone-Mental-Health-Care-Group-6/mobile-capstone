@@ -1,7 +1,8 @@
-import 'package:empathi_care/view/screen/artikel_detail_screen.dart';
-import 'package:empathi_care/view/screen/list_artikel_screen.dart';
-import 'package:empathi_care/view/screen/notification_screen.dart';
-import 'package:empathi_care/view_model/artikel_rekomendasi_view_model.dart';
+import 'package:empathi_care/view/screen/Home/notification_screen.dart';
+import 'package:empathi_care/view/screen/article/artikel_detail_screen.dart';
+import 'package:empathi_care/view/screen/article/list_artikel_screen.dart';
+import 'package:empathi_care/view/screen/chatbot/chat_bot_ai_screen.dart';
+import 'package:empathi_care/view_model/artikel_home.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<ArticleProvider>(context, listen: false).fetchArticleslimit();
+    Provider.of<ArticleHomeProvider>(context, listen: false)
+        .fetchArticleslimit();
   }
 
   @override
@@ -174,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  Consumer<ArticleProvider>(
+                  SizedBox(height: 20),
+                  Consumer<ArticleHomeProvider>(
                     builder: (context, articleProvider, child) {
                       return GridView.count(
                         crossAxisCount: 2,
@@ -194,6 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     date: '17 Oktober 2019',
                                     category: article.categoryName,
                                     content: article.content,
+                                    userName: article.userName,
                                   ),
                                 ),
                               );
@@ -202,6 +206,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               margin: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    spreadRadius: 10,
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -215,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       article.thumbnail,
                                       width: 120,
                                       height: 100,
-                                      fit: BoxFit.cover,
+                                      fit: BoxFit.contain,
                                     ),
                                   ),
                                   Container(
@@ -236,8 +248,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               const EdgeInsets.only(left: 11),
                                           child: Text(
                                             article.title,
-                                            style:
-                                                const TextStyle(fontSize: 12),
+                                            style: const TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.w500),
                                             textAlign: TextAlign.start,
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -262,7 +275,10 @@ class _HomeScreenState extends State<HomeScreen> {
               right: 16,
               bottom: _fabBottomPosition,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => const ChatAIScreen()));
+                },
                 child: Container(
                   width: 70,
                   height: 70,

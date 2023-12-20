@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:empathi_care/view/screen/payment/verification_payment_screen.dart';
@@ -156,6 +158,8 @@ class _PembayaranManualScreenState extends State<PembayaranManualScreen> {
                       ),
                     ),
                     Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(

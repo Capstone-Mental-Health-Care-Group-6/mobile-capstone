@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_2_screen.dart';
+import 'package:empathi_care/view/screen/auth/filling_profile/filling_profile_3_screen.dart';
 import 'package:empathi_care/view/widget/timeline_widget.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';
@@ -6,16 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class FillingProfile1 extends StatefulWidget {
-  const FillingProfile1({super.key});
+class FillingProfile2 extends StatefulWidget {
+  const FillingProfile2({super.key});
 
   @override
-  State<FillingProfile1> createState() => _FillingProfile1State();
+  State<FillingProfile2> createState() => _FillingProfile1State();
 }
 
-class _FillingProfile1State extends State<FillingProfile1> {
+class _FillingProfile1State extends State<FillingProfile2> {
   late RegisterViewModel registerViewModel;
-  final namaLengkap = TextEditingController();
+  final nomorPonsel = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -30,12 +30,12 @@ class _FillingProfile1State extends State<FillingProfile1> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TimeLine1(
-              index: 1,
+              index: 2,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 24, left: 25),
               child: Text(
-                'Halo, Siapa namamu?',
+                'Berapa nomor ponselmu?',
                 style: GoogleFonts.montserrat(
                     fontSize: 24, fontWeight: FontWeight.w600),
               ),
@@ -43,10 +43,10 @@ class _FillingProfile1State extends State<FillingProfile1> {
             Padding(
               padding: const EdgeInsets.only(left: 25, top: 20, right: 25),
               child: TextFormField(
-                controller: namaLengkap,
-                keyboardType: TextInputType.emailAddress,
+                controller: nomorPonsel,
+                keyboardType: TextInputType.phone,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z_ ]+')),
+                  FilteringTextInputFormatter.digitsOnly,
                 ],
                 decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 13),
@@ -56,17 +56,17 @@ class _FillingProfile1State extends State<FillingProfile1> {
                     prefixIcon: Padding(
                       padding: EdgeInsets.only(left: 10),
                       child: Icon(
-                        Icons.person,
+                        Icons.phone,
                         size: 24,
                         color: Color(0xff636363),
                       ),
                     ),
-                    label: Text('Nama Lengkap')),
+                    label: Text('Nomor Ponsel')),
                 style: GoogleFonts.montserrat(
                     fontSize: 15, fontWeight: FontWeight.w500),
                 validator: (value) {
                   if (value! == '') {
-                    return 'Nama Lengkap Masih Kosong';
+                    return 'Nomor Telepon Masih Kosong';
                   } else {
                     return null;
                   }
@@ -93,9 +93,9 @@ class _FillingProfile1State extends State<FillingProfile1> {
                           foregroundColor: Colors.white),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          registerViewModel.name = namaLengkap.text;
+                          registerViewModel.phone = nomorPonsel.text;
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) => const FillingProfile2()));
+                              builder: (_) => const FillingProfile3()));
                         }
                       },
                       child: Text(

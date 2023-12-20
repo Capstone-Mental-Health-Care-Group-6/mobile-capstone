@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/model/mystate_model.dart';
+import 'package:empathi_care/model/services/get_all_patient_services.dart';
 import 'package:empathi_care/view/screen/ForgotPassword/confirmation_email_screen.dart';
 import 'package:empathi_care/view/screen/Home/routes_navigator.dart';
-import 'package:empathi_care/view/screen/Register/register_screen.dart';
+import 'package:empathi_care/view/screen/auth/register_screen.dart';
 import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
 import 'package:empathi_care/view_model/login_view_model.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
@@ -25,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late NavigationProvider navigationProvider;
   late SharedPreferences loginData;
   late GetPatientByIdViewModel getPatientByIdViewModel;
+  GetAllPatientService getAllPatientService = GetAllPatientService();
   late bool user;
 
   @override
@@ -44,13 +46,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void checkLogin(context) async {
     loginData = await SharedPreferences.getInstance();
+    String token = loginData.getString('accesstoken').toString();
     user = loginData.getBool('login') ?? true;
-
     if (user == false) {
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (_) => const RoutesScreen()),
-          (route) => false);
-      navigationProvider.setIndex(0);
+      bool isTokenValid = await getAllPatientService.isTokenValid(token);
+      loginData.setBool('login', isTokenValid);
+
+      if (!isTokenValid) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const RoutesScreen()),
+            (route) => false);
+        navigationProvider.setIndex(0);
+      }
     }
   }
 

@@ -1,8 +1,8 @@
 import 'package:empathi_care/utils/constant/pagecontroller.dart';
-import 'package:empathi_care/view/screen/OnBoarding/intro_page1.dart';
-import 'package:empathi_care/view/screen/OnBoarding/intro_page2.dart';
-import 'package:empathi_care/view/screen/OnBoarding/intro_page3.dart';
-import 'package:empathi_care/view/screen/login_screen.dart';
+import 'package:empathi_care/view/screen/auth/login_screen.dart';
+import 'package:empathi_care/view/screen/onbording/intro_page1.dart';
+import 'package:empathi_care/view/screen/onbording/intro_page2.dart';
+import 'package:empathi_care/view/screen/onbording/intro_page3.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';

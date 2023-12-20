@@ -43,16 +43,44 @@ class _ActivePacketScreenState extends State<ActivePacketScreen>
         shadowColor: Colors.grey,
       ),
       backgroundColor: Colors.white,
-      body: FutureBuilder<ActivePackageModel>(
+      body: FutureBuilder<ActivePackageModel?>(
         future: prov.fetchDataActivePackage(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return shimmerLoad();
           } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  10.0,
+                  100.0,
+                  10.0,
+                  0,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(
+                      "assets/images/Reminders-rafiki 1.png",
+                      width: 305,
+                      height: 305,
+                    ),
+                    const SizedBox(
+                      height: 15.0,
+                    ),
+                    Text(
+                      "Data Konseling Anda Belum Ada,\n Silahkan Buat Janji Terlebih Dahulu!",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
           } else {
-            return 
-            SingleChildScrollView(
+            return SingleChildScrollView(
               child: Column(
                 children: [
                   Container(

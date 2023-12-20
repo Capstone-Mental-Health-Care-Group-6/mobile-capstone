@@ -1,6 +1,6 @@
-import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_1_screen.dart';
-import 'package:empathi_care/view/screen/login_screen.dart';
-import 'package:empathi_care/view/screen/Register/terms_screen.dart';
+import 'package:empathi_care/view/screen/auth/filling_profile/filling_profile_1_screen.dart';
+import 'package:empathi_care/view/screen/auth/login_screen.dart';
+import 'package:empathi_care/view/screen/auth/terms_screen.dart';
 import 'package:empathi_care/view_model/password_provider.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
 import 'package:flutter/gestures.dart';

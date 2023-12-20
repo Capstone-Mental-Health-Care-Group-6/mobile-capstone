@@ -1,5 +1,5 @@
 import 'package:empathi_care/model/active_package_models.dart';
-import 'package:empathi_care/view/screen/zoom_screen.dart';
+import 'package:empathi_care/view/screen/counseling/zoom_screen.dart';
 import 'package:empathi_care/view_model/premium_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -97,6 +97,9 @@ class _PremiumWidgetState extends State<PremiumWidget> {
   }
 
   Widget cardInstant(List<Data> data) {
+    SnackBar snackBar = SnackBar(
+      content: Text('Saat ini fitur chat dalam tahap pengembangan'),
+    );
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -255,24 +258,20 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                     ),
                                     onPressed: () {
                                       data1.counselingMethod == 'VideoCall'
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ZoomScreen(
-                                                  doctorId: data1.id,
-                                                ),
-                                              ),
-                                            )
-                                          : data1.counselingMethod == 'Chat'
+                                          ? data1.id != null
                                               ? Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (_) => ZoomScreen(
+                                                    builder: (context) =>
+                                                        ZoomScreen(
                                                       doctorId: data1.id,
                                                     ),
                                                   ),
                                                 )
+                                              : const SizedBox()
+                                          : data1.counselingMethod == 'Chat'
+                                              ? ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar)
                                               : const SizedBox();
                                     },
                                     child: data1.counselingMethod == 'Chat'

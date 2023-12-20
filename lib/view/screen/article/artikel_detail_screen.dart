@@ -1,7 +1,7 @@
 // article_detail_page.dart
 
-import 'package:empathi_care/view/screen/list_artikel_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArticleDetailPage extends StatelessWidget {
@@ -10,6 +10,7 @@ class ArticleDetailPage extends StatelessWidget {
   final String date;
   final String category;
   final String content;
+  final String userName;
 
   const ArticleDetailPage({
     super.key,
@@ -19,6 +20,7 @@ class ArticleDetailPage extends StatelessWidget {
     required this.category,
     required this.content,
     String? titleParagraf,
+    required this.userName,
   });
 
   @override
@@ -31,14 +33,6 @@ class ArticleDetailPage extends StatelessWidget {
         ),
         elevation: 10,
         backgroundColor: Colors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showSearch(context: context, delegate: CustomSearch());
-            },
-            icon: const Icon(Icons.search),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -72,33 +66,34 @@ class ArticleDetailPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  RichText(
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: [
-                        TextSpan(
-                            text: 'Ditinjau oleh',
-                            style: GoogleFonts.montserrat(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w300)),
-                        TextSpan(
-                            text: ' Udin',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w300)),
-                        TextSpan(
-                            text: ' | $date | 7 menit',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 12,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w300)),
-                      ],
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        "Ditinjau oleh",
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(userName,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 12,
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w800)),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        "| $date | 7 menit",
+                        style: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8),
-                  Container(
+                  const SizedBox(height: 8),
+                  SizedBox(
                       width: 350,
                       height: 180,
                       child: Center(
@@ -108,13 +103,7 @@ class ArticleDetailPage extends StatelessWidget {
                         ),
                       )),
                   const SizedBox(height: 8),
-                  RichText(
-                    textAlign: TextAlign.justify,
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context).style,
-                      children: _buildTextSpans(content),
-                    ),
-                  )
+                  HtmlWidget(content),
                 ],
               ),
             ),
@@ -123,34 +112,4 @@ class ArticleDetailPage extends StatelessWidget {
       ),
     );
   }
-}
-
-List<TextSpan> _buildTextSpans(String content) {
-  List<TextSpan> textSpans = [];
-
-  List<String> wordsToBold = ['Mental', 'Apa itu Kesehatan MentalHealth'];
-
-  List<String> words = content.split(' ');
-
-  for (String word in words) {
-    if (wordsToBold.contains(word)) {
-      textSpans.add(
-        TextSpan(
-          text: '$word ',
-          style: GoogleFonts.montserrat(
-            color: Colors.black,
-            fontSize: 12,
-          ),
-        ),
-      );
-    } else {
-      textSpans.add(
-        TextSpan(
-            text: '$word ',
-            style: GoogleFonts.montserrat(fontSize: 12, color: Colors.black54)),
-      );
-    }
-  }
-
-  return textSpans;
 }

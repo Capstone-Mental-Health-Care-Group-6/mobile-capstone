@@ -1,6 +1,8 @@
 import 'package:empathi_care/view/screen/splash_screen.dart';
 import 'package:empathi_care/view_model/active_package_view_model.dart';
-import 'package:empathi_care/view_model/artikel_rekomendasi_view_model.dart';
+import 'package:empathi_care/view_model/artikel_categori_view_model.dart';
+import 'package:empathi_care/view_model/artikel_home.dart';
+import 'package:empathi_care/view_model/artikel_list_view.dart';
 import 'package:empathi_care/view_model/change_password_view_model.dart';
 import 'package:empathi_care/view_model/chat_bot_ai_view_model.dart';
 import 'package:empathi_care/view_model/chat_bot_cs_view_model.dart';
@@ -24,6 +26,7 @@ import 'package:empathi_care/view_model/payment_method_view_model.dart';
 import 'package:empathi_care/view_model/transaction_view_model.dart';
 import 'package:empathi_care/view_model/rating_and_review_view_model.dart';
 import 'package:empathi_care/view_model/register_view_model.dart';
+import 'package:empathi_care/view_model/zoom_view_model.dart';
 import 'package:empathi_care/view_model/update_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,7 +53,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
               create: (BuildContext context) =>
                   CountDownPaymentSuccessProvider()),
-          ChangeNotifierProvider(create: (context) => ArticleProvider()),
+          ChangeNotifierProvider(create: (context) => ArticleHomeProvider()),
+          ChangeNotifierProvider(create: (context) => ArticleListProvider()),
+          ChangeNotifierProvider(create: (context) => CategoryProvider()),
           ChangeNotifierProvider(
               create: (BuildContext context) => NavigationProvider()),
           ChangeNotifierProvider(
@@ -85,6 +90,8 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => LoginViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => GetPatientByIdViewModel()),
+              ChangeNotifierProvider(
+              create: (BuildContext context) => ZoomViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) =>
                   DetailHistoryTransactionViewModel()),
@@ -102,9 +109,10 @@ class MyApp extends StatelessWidget {
               create: (BuildContext context) => PremiumViewModel()),
           ChangeNotifierProvider(
               create: (BuildContext context) => ProfilePsikologProvider()),
-              ChangeNotifierProvider(
+          ChangeNotifierProvider(
               create: (BuildContext context) => PembayaranManualProvider()),
         ],
+
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,

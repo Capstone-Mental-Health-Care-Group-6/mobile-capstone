@@ -19,18 +19,21 @@ class PaketProvider extends ChangeNotifier {
     selectedMetode = 1;
 
     await getPaket("INSTAN", context);
+    // ignore: use_build_context_synchronously
     await getMethod(context);
     await getDuration();
   }
 
   Future getPaket(String metode, BuildContext context) async {
     try {
-      listPaket = await paketService.getPaket(metode, selectedMetode.toString(), selectedDuration.toString());
+      listPaket = await paketService.getPaket(
+          metode, selectedMetode.toString(), selectedDuration.toString());
       notifyListeners();
     } catch (e) {
       if (e is DioException) {
         isLoading = false;
         notifyListeners();
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.message.toString()),

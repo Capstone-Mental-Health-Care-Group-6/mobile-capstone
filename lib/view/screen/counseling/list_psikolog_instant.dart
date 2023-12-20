@@ -1,6 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:empathi_care/view/screen/counseling/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog_instant.dart';
-import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -220,7 +220,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                         ),
                                         const SizedBox(width: 7),
                                         Text(
-                                          "${provider.percentageRating.toString()} %",
+                                          "${provider.sumRatingPerDocter(data)} %",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,
@@ -233,7 +233,7 @@ class _ListPsikologInstantState extends State<ListPsikologInstant> {
                                         ),
                                         const SizedBox(width: 7),
                                         Text(
-                                          provider.countReviewDocter.toString(),
+                                          "${provider.sumReviewPerDocter(data)}",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12,

@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
+import 'package:empathi_care/view/screen/counseling/profile_psikolog_screen.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,6 +29,12 @@ class _RekomendasiPsikologInstantState
     super.initState();
   }
 
+  @override
+  void dispose() {
+    provider.searchController.clear();
+    super.dispose();
+  }
+
   void initial() async {
     sp = await SharedPreferences.getInstance();
     token = sp.getString('accesstoken').toString();
@@ -50,6 +56,13 @@ class _RekomendasiPsikologInstantState
               color: const Color(0xff393938),
               fontWeight: FontWeight.w700,
             ),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              provider.fetchListPsikolog(token);
+              Navigator.pop(context);
+            },
           ),
         ),
         body: Builder(builder: (context) {
@@ -178,7 +191,7 @@ class _RekomendasiPsikologInstantState
                                                   ),
                                                   const SizedBox(width: 7),
                                                   Text(
-                                                    "${provider.percentageRating.toString()} %",
+                                                    "${provider.sumRatingPerDocter(data)} %",
                                                     style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -192,8 +205,7 @@ class _RekomendasiPsikologInstantState
                                                   ),
                                                   const SizedBox(width: 7),
                                                   Text(
-                                                    provider.countReviewDocter
-                                                        .toString(),
+                                                    "${provider.sumReviewPerDocter(data)}",
                                                     style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,

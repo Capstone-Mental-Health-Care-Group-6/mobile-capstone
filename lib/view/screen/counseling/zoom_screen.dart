@@ -1,9 +1,15 @@
 import 'package:empathi_care/view/widget/card_konseling_widgets.dart';
+import 'package:empathi_care/view_model/zoom_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ZoomScreen extends StatefulWidget {
-  const ZoomScreen({super.key});
+  const ZoomScreen({
+    super.key,
+    required this.doctorId,
+  });
+  final int? doctorId;
 
   @override
   State<ZoomScreen> createState() => _ZoomScreenState();
@@ -11,16 +17,30 @@ class ZoomScreen extends StatefulWidget {
 
 class _ZoomScreenState extends State<ZoomScreen> {
   @override
+  void initState() {
+    super.initState();
+    Provider.of<ZoomViewModel>(context, listen: false)
+        .getDataFromApi(widget.doctorId!);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<ZoomViewModel>(context, listen: false);
+    debugPrint('${widget.doctorId}');
+    final String? linkGmeet = prov.zooModel?.data?.doctorMeetLink;
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Rangga S,Psi., M,Psi',
-          style: GoogleFonts.montserrat(
-            fontWeight: FontWeight.w700,
-            fontSize: 16.0,
-            color: Colors.black,
-          ),
+        title: Consumer<ZoomViewModel>(
+          builder: (context, prov, _) {
+            return Text(
+              '${prov.zooModel?.data?.doctorName}',
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w700,
+                fontSize: 16.0,
+                color: Colors.black,
+              ),
+            );
+          },
         ),
         surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
@@ -191,7 +211,9 @@ class _ZoomScreenState extends State<ZoomScreen> {
                                             const Color(0xff0085FF),
                                         foregroundColor: Colors.white,
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                       child: Text(
                                         ' Sudah terselesaikan :) ',
                                         style: GoogleFonts.montserrat(
@@ -218,14 +240,23 @@ class _ZoomScreenState extends State<ZoomScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 140.0,
-              color: const Color(0xffCCE7FF),
-              child: Image.asset(
-                'assets/images/doctors.png',
-                width: 50,
-                height: 50,
+              child: Consumer<ZoomViewModel>(
+                builder: (context, prov, _) {
+                  final String? doctorAvatar =
+                      prov.zooModel?.data?.doctorAvatar;
+                  debugPrint('$doctorAvatar');
+                  return doctorAvatar != null
+                      ? Image(
+                          image: NetworkImage(
+                            doctorAvatar,
+                          ),
+                          fit: BoxFit.fill,
+                        )
+                      : const CircularProgressIndicator();
+                },
               ),
             ),
             Padding(
@@ -255,7 +286,7 @@ class _ZoomScreenState extends State<ZoomScreen> {
                     'Konsultasi Via Gmeet',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
-                      fontSize: 12.0,
+                      fontSize: 14.0,
                     ),
                   ),
                   const SizedBox(
@@ -268,14 +299,14 @@ class _ZoomScreenState extends State<ZoomScreen> {
                         'ID rapat',
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
-                          fontSize: 10.0,
+                          fontSize: 12.0,
                         ),
                       ),
                       Text(
                         '232303',
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
-                          fontSize: 10.0,
+                          fontSize: 12.0,
                         ),
                       ),
                     ],
@@ -290,14 +321,14 @@ class _ZoomScreenState extends State<ZoomScreen> {
                         'Pascode',
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
-                          fontSize: 10.0,
+                          fontSize: 12.0,
                         ),
                       ),
                       Text(
                         '@Alta-Chan#',
                         style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
-                          fontSize: 10.0,
+                          fontSize: 12.0,
                         ),
                       )
                     ],
@@ -309,42 +340,48 @@ class _ZoomScreenState extends State<ZoomScreen> {
                     'Informasi Jadwal',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
-                      fontSize: 12.0,
+                      fontSize: 14.0,
                     ),
                   ),
                   Text(
                     'Mohon pastikan Anda hadir tepat waktu untuk konsultasi.',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w400,
-                      fontSize: 10.0,
+                      fontSize: 12.0,
                     ),
                   ),
                   const SizedBox(
-                    height: 8.0,
+                    height: 15.0,
                   ),
-                  const CardKonselingWidgets(
-                    title: 'Konseling 1',
-                    date: '15/10/2023',
-                    time: '10.30-11.00',
-                    textButton: 'Sesi Berakhir',
+                  Consumer<ZoomViewModel>(
+                    builder: (context, prov, _) {
+                      String formattedString = '';
+                      final String? date = prov.zooModel?.data?.date;
+                      if (date != null) {
+                        final DateTime formatDate = DateTime.parse(date);
+                        formattedString = prov.formattedDate(formatDate);
+                      } else {
+                        formattedString = '${prov.zooModel?.data?.date}';
+                      }
+                      return CardKonselingWidgets(
+                        title: 'Konseling 1',
+                        date: formattedString,
+                        time: '10.30-11.00',
+                        textButton: prov.isMeetingOpened
+                            ? "Sesi Berakhir"
+                            : "Mulai Sekarang",
+                        onPressed: () => prov.openGmeet(linkGmeet!),
+                      );
+                    },
                   ),
                   const SizedBox(
-                    height: 10.0,
-                  ),
-                  const CardKonselingWidgets(
-                    title: 'Konseling 2',
-                    date: '16/10/2023',
-                    time: '10.30-11.00',
-                    textButton: 'Mulai Sekarang',
-                  ),
-                  const SizedBox(
-                    height: 10.0,
+                    height: 12.0,
                   ),
                   Text(
                     '(*) Jadwal, topik, dan Tanggal bersifat absolut ( Tidak dapat berubah-ubah)',
                     style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w400,
-                      fontSize: 9.5,
+                      fontSize: 10.0,
                     ),
                   )
                 ],

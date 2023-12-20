@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:empathi_care/view/screen/counseling/list_psikolog_instant.dart';
 import 'package:empathi_care/view/screen/counseling/list_psikolog_premium.dart';
@@ -33,8 +35,7 @@ class _PaketScreenState extends State<PaketScreen> {
         appBar: AppBar(
           title: Text(
             "Paket",
-            style: GoogleFonts.montserrat(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
+            style: GoogleFonts.montserrat(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
           ),
           surfaceTintColor: Colors.white,
           backgroundColor: Colors.white,
@@ -44,8 +45,7 @@ class _PaketScreenState extends State<PaketScreen> {
             return paketProv.isLoading
                 ? shimmerLoading()
                 : Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     child: Stack(
                       children: [
                         ListView(
@@ -60,9 +60,7 @@ class _PaketScreenState extends State<PaketScreen> {
                                 const SizedBox(height: 16),
                                 Text(
                                   "Pilih Paket dan Metode",
-                                  style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
+                                  style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
@@ -73,25 +71,20 @@ class _PaketScreenState extends State<PaketScreen> {
                                 Visibility(
                                   visible: !paketProv.isInstan,
                                   child: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, right: 2, left: 2, bottom: 2),
+                                    padding: const EdgeInsets.only(top: 10, right: 2, left: 2, bottom: 2),
                                     decoration: BoxDecoration(
                                       color: const Color(0xff6C8AF7),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     width: double.infinity,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16),
+                                          padding: const EdgeInsets.symmetric(horizontal: 16),
                                           child: Text(
                                             "Mau ganti metode ? Klick \"Ganti\"",
-                                            style: GoogleFonts.montserrat(
-                                                fontSize: 14,
-                                                color: Colors.white),
+                                            style: GoogleFonts.montserrat(fontSize: 14, color: Colors.white),
                                           ),
                                         ),
                                         const SizedBox(height: 4),
@@ -99,23 +92,18 @@ class _PaketScreenState extends State<PaketScreen> {
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                             color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(8),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 16, vertical: 8),
+                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                                             child: Row(
                                               children: [
                                                 Container(
                                                   width: 40,
                                                   height: 40,
                                                   decoration: BoxDecoration(
-                                                    color:
-                                                        const Color(0xffCCE7FF),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                                    color: const Color(0xffCCE7FF),
+                                                    borderRadius: BorderRadius.circular(8),
                                                   ),
                                                   child: const Icon(
                                                     Icons.question_answer,
@@ -124,33 +112,16 @@ class _PaketScreenState extends State<PaketScreen> {
                                                 const SizedBox(width: 12),
                                                 Expanded(
                                                   child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        paketProv
-                                                            .listMethods![paketProv
-                                                                    .selectedMetode -
-                                                                1]['name']
-                                                            .toString(),
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
+                                                        paketProv.listMethods[paketProv.selectedMetode - 1]['name'].toString(),
+                                                        style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.bold),
                                                       ),
                                                       const SizedBox(height: 4),
                                                       Text(
-                                                        paketProv.listDuration![
-                                                                paketProv
-                                                                        .selectedDuration -
-                                                                    1]['name']
-                                                            .toString(),
-                                                        style: GoogleFonts
-                                                            .montserrat(
-                                                                fontSize: 14),
+                                                        paketProv.listDuration[paketProv.selectedDuration - 1]['name'].toString(),
+                                                        style: GoogleFonts.montserrat(fontSize: 14),
                                                       ),
                                                     ],
                                                   ),
@@ -166,20 +137,15 @@ class _PaketScreenState extends State<PaketScreen> {
                                                           () {},
                                                         ));
                                                   },
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    side: const BorderSide(
-                                                        color: Colors.blue),
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.white,
+                                                    side: const BorderSide(color: Colors.blue),
                                                   ),
                                                   child: Text(
                                                     "Ganti",
-                                                    style:
-                                                        GoogleFonts.montserrat(
+                                                    style: GoogleFonts.montserrat(
                                                       fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
                                                   ),
                                                 )
@@ -200,11 +166,9 @@ class _PaketScreenState extends State<PaketScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8, vertical: 4),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: InkWell(
@@ -212,26 +176,17 @@ class _PaketScreenState extends State<PaketScreen> {
                                               paketProv.onChangeType(context);
                                             },
                                             child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 12),
+                                              padding: const EdgeInsets.symmetric(vertical: 12),
                                               decoration: paketProv.isInstan
                                                   ? BoxDecoration(
-                                                      color: const Color(
-                                                          0xff0085FF),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                                      color: const Color(0xff0085FF),
+                                                      borderRadius: BorderRadius.circular(8),
                                                     )
                                                   : null,
                                               child: Center(
                                                   child: Text(
                                                 "Instan",
-                                                style: GoogleFonts.montserrat(
-                                                    color: paketProv.isInstan
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                    fontSize: 12),
+                                                style: GoogleFonts.montserrat(color: paketProv.isInstan ? Colors.white : Colors.black, fontSize: 12),
                                               )),
                                             ),
                                           ),
@@ -242,26 +197,17 @@ class _PaketScreenState extends State<PaketScreen> {
                                               paketProv.onChangeType(context);
                                             },
                                             child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 12),
+                                              padding: const EdgeInsets.symmetric(vertical: 12),
                                               decoration: !paketProv.isInstan
                                                   ? BoxDecoration(
-                                                      color: const Color(
-                                                          0xff0085FF),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                                      color: const Color(0xff0085FF),
+                                                      borderRadius: BorderRadius.circular(8),
                                                     )
                                                   : null,
                                               child: Center(
                                                   child: Text(
                                                 "Premium",
-                                                style: GoogleFonts.montserrat(
-                                                    color: !paketProv.isInstan
-                                                        ? Colors.white
-                                                        : Colors.black,
-                                                    fontSize: 12),
+                                                style: GoogleFonts.montserrat(color: !paketProv.isInstan ? Colors.white : Colors.black, fontSize: 12),
                                               )),
                                             ),
                                           ),
@@ -275,117 +221,61 @@ class _PaketScreenState extends State<PaketScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
-                                      itemCount: paketProv.listPaket!.length,
+                                      itemCount: paketProv.listPaket.length,
                                       itemBuilder: (context, index) {
                                         return paketProv.listPaket != null
                                             ? Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 16),
+                                                padding: const EdgeInsets.only(top: 16),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    paketProv
-                                                        .onSelectPaket(index);
+                                                    paketProv.onSelectPaket(index);
                                                   },
                                                   child: Card(
                                                     margin: EdgeInsets.zero,
                                                     elevation: 4,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8)),
+                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                                     color: Colors.white,
                                                     child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
                                                         Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: index ==
-                                                                    paketProv
-                                                                        .selectedPaket
-                                                                ? const Color
-                                                                    .fromARGB(
-                                                                    255,
-                                                                    21,
-                                                                    94,
-                                                                    153)
-                                                                : const Color(
-                                                                    0xffCCE7FF),
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                    .only(
-                                                              topLeft: Radius
-                                                                  .circular(8),
-                                                              topRight: Radius
-                                                                  .circular(8),
+                                                          padding: const EdgeInsets.all(10),
+                                                          decoration: BoxDecoration(
+                                                            color: index == paketProv.selectedPaket ? const Color.fromARGB(255, 21, 94, 153) : const Color(0xffCCE7FF),
+                                                            borderRadius: const BorderRadius.only(
+                                                              topLeft: Radius.circular(8),
+                                                              topRight: Radius.circular(8),
                                                             ),
                                                           ),
                                                           child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
+                                                            mainAxisAlignment: MainAxisAlignment.start,
                                                             children: [
                                                               Container(
                                                                 height: 40,
                                                                 width: 40,
-                                                                decoration:
-                                                                    const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
+                                                                decoration: const BoxDecoration(
+                                                                  shape: BoxShape.circle,
                                                                 ),
-                                                                child: Image.network(paketProv
-                                                                    .listPaket![
-                                                                        index][
-                                                                        'avatar']
-                                                                    .toString()),
+                                                                child: Image.network(paketProv.listPaket[index]['avatar'].toString()),
                                                               ),
-                                                              const SizedBox(
-                                                                  width: 12),
+                                                              const SizedBox(width: 12),
                                                               Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Text(
-                                                                    paketProv
-                                                                        .listPaket![
-                                                                            index]
-                                                                            [
-                                                                            'name']
-                                                                        .toString(),
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            16,
-                                                                        color: index ==
-                                                                                paketProv.selectedPaket
-                                                                            ? Colors.white
-                                                                            : Colors.black),
+                                                                    paketProv.listPaket[index]['name'].toString(),
+                                                                    style: TextStyle(fontSize: 16, color: index == paketProv.selectedPaket ? Colors.white : Colors.black),
                                                                   ),
                                                                   Text(
-                                                                    "Rp ${NumberFormat('###,###,###,###', 'ID').format(double.parse(paketProv.listPaket![index]['price'].toString()))}",
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            16,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        color: index ==
-                                                                                paketProv.selectedPaket
-                                                                            ? Colors.white
-                                                                            : Colors.black),
+                                                                    "Rp ${NumberFormat('###,###,###,###', 'ID').format(
+                                                                      double.parse(
+                                                                        paketProv.listPaket[index]['price'].toString(),
+                                                                      ),
+                                                                    )} / ${paketProv.listPaket[index]['sessions']} Sesi",
+                                                                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: index == paketProv.selectedPaket ? Colors.white : Colors.black),
                                                                   ),
                                                                 ],
                                                               )
@@ -393,16 +283,8 @@ class _PaketScreenState extends State<PaketScreen> {
                                                           ),
                                                         ),
                                                         Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(10),
-                                                          child: Text(paketProv
-                                                              .listPaket![index]
-                                                                  [
-                                                                  'description']
-                                                              .toString()
-                                                              .replaceAll(
-                                                                  ", ", ",\n")),
+                                                          padding: const EdgeInsets.all(10),
+                                                          child: Text(paketProv.listPaket[index]['description'].toString().replaceAll(", ", ",\n")),
                                                         )
                                                       ],
                                                     ),
@@ -428,19 +310,11 @@ class _PaketScreenState extends State<PaketScreen> {
                               onPressed: paketProv.selectedPaket != null
                                   ? paketProv.isInstan
                                       ? () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const ListPsikologInstant()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (_) => const ListPsikologInstant()));
                                           //instan
                                         }
                                       : () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (_) =>
-                                                      const ListPsikologPremium()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (_) => const ListPsikologPremium()));
                                           //premium
                                         }
                                   : null,
@@ -490,8 +364,7 @@ class _PaketScreenState extends State<PaketScreen> {
               const SizedBox(height: 20),
               Text(
                 "Atur Metode & Durasi Konseling",
-                style: GoogleFonts.montserrat(
-                    fontSize: 16, fontWeight: FontWeight.w700),
+                style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 4),
               Text(
@@ -501,19 +374,15 @@ class _PaketScreenState extends State<PaketScreen> {
               const SizedBox(height: 16),
               Text(
                 "Mau konseling melalui apa ?",
-                style: GoogleFonts.montserrat(
-                    fontSize: 14, fontWeight: FontWeight.w700),
+                style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: paketProvider.listMethods!.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 2.7,
-                    crossAxisSpacing: 5),
+                itemCount: paketProvider.listMethods.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 2.7, crossAxisSpacing: 5),
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
@@ -529,9 +398,7 @@ class _PaketScreenState extends State<PaketScreen> {
                     child: Container(
                       // padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
                       decoration: BoxDecoration(
-                        border: (provider.selectedMetode - 1) == index
-                            ? Border.all(color: Colors.blue)
-                            : null,
+                        border: (provider.selectedMetode - 1) == index ? Border.all(color: Colors.blue) : null,
                         color: const Color(0xffCCE7FF),
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -541,29 +408,19 @@ class _PaketScreenState extends State<PaketScreen> {
                           Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: (provider.selectedMetode - 1) == index
-                                  ? Colors.blue
-                                  : Colors.black,
+                              color: (provider.selectedMetode - 1) == index ? Colors.blue : Colors.black,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Icon(
-                              index == 0
-                                  ? Icons.question_answer
-                                  : MdiIcons.video,
+                              index == 0 ? Icons.question_answer : MdiIcons.video,
                               size: 18,
                               color: Colors.white,
                             ),
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            paketProvider.listMethods![index]['name']
-                                .toString(),
-                            style: GoogleFonts.montserrat(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w700,
-                                color: (provider.selectedMetode - 1) == index
-                                    ? Colors.blue
-                                    : Colors.black),
+                            paketProvider.listMethods[index]['name'].toString(),
+                            style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700, color: (provider.selectedMetode - 1) == index ? Colors.blue : Colors.black),
                           )
                         ],
                       ),
@@ -574,19 +431,15 @@ class _PaketScreenState extends State<PaketScreen> {
               const SizedBox(height: 26),
               Text(
                 "Berapa lama durasinya ?",
-                style: GoogleFonts.montserrat(
-                    fontSize: 14, fontWeight: FontWeight.w700),
+                style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 8),
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.zero,
-                itemCount: paketProvider.listDuration!.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 2.7,
-                    crossAxisSpacing: 5),
+                itemCount: paketProvider.listDuration.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 2.7, crossAxisSpacing: 5),
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
@@ -602,21 +455,14 @@ class _PaketScreenState extends State<PaketScreen> {
                     child: Container(
                       // padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
                       decoration: BoxDecoration(
-                        border: (provider.selectedDuration - 1) == index
-                            ? Border.all(color: Colors.blue)
-                            : null,
+                        border: (provider.selectedDuration - 1) == index ? Border.all(color: Colors.blue) : null,
                         color: const Color(0xffCCE7FF),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
                         child: Text(
-                          paketProvider.listDuration![index]['name'].toString(),
-                          style: GoogleFonts.montserrat(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: (provider.selectedDuration - 1) == index
-                                  ? Colors.blue
-                                  : Colors.black),
+                          paketProvider.listDuration[index]['name'].toString(),
+                          style: GoogleFonts.montserrat(fontSize: 14, fontWeight: FontWeight.w700, color: (provider.selectedDuration - 1) == index ? Colors.blue : Colors.black),
                         ),
                       ),
                     ),
@@ -856,8 +702,7 @@ class _PaketScreenState extends State<PaketScreen> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -869,13 +714,11 @@ class _PaketScreenState extends State<PaketScreen> {
                                   // });
                                 },
                                 child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
                                   decoration: provider.isInstan
                                       ? BoxDecoration(
                                           color: const Color(0xff0085FF),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                         )
                                       : null,
                                   child: Center(
@@ -883,15 +726,13 @@ class _PaketScreenState extends State<PaketScreen> {
                                       width: 47,
                                       height: 10,
                                       child: Shimmer.fromColors(
-                                        baseColor:
-                                            Colors.white.withOpacity(0.6),
+                                        baseColor: Colors.white.withOpacity(0.6),
                                         highlightColor: Colors.white,
                                         child: Container(
                                           width: 30,
                                           height: 10,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
+                                            borderRadius: BorderRadius.circular(12),
                                             gradient: const LinearGradient(
                                               colors: [
                                                 Colors.grey,
@@ -914,13 +755,11 @@ class _PaketScreenState extends State<PaketScreen> {
                                   // });
                                 },
                                 child: Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 12),
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
                                   decoration: !provider.isInstan
                                       ? BoxDecoration(
                                           color: const Color(0xff0085FF),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          borderRadius: BorderRadius.circular(8),
                                         )
                                       : null,
                                   child: Center(
@@ -928,15 +767,13 @@ class _PaketScreenState extends State<PaketScreen> {
                                       width: 47,
                                       height: 10,
                                       child: Shimmer.fromColors(
-                                        baseColor:
-                                            Colors.white.withOpacity(0.6),
+                                        baseColor: Colors.white.withOpacity(0.6),
                                         highlightColor: Colors.white,
                                         child: Container(
                                           width: 30,
                                           height: 10,
                                           decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
+                                            borderRadius: BorderRadius.circular(12),
                                             gradient: const LinearGradient(
                                               colors: [
                                                 Colors.grey,
@@ -964,8 +801,7 @@ class _PaketScreenState extends State<PaketScreen> {
                         return Card(
                           margin: const EdgeInsets.only(top: 16),
                           elevation: 4,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           color: Colors.white,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -973,11 +809,7 @@ class _PaketScreenState extends State<PaketScreen> {
                             children: [
                               Container(
                                 padding: const EdgeInsets.all(10),
-                                decoration: const BoxDecoration(
-                                    color: Color(0xffCCE7FF),
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(8),
-                                        topRight: Radius.circular(9))),
+                                decoration: const BoxDecoration(color: Color(0xffCCE7FF), borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(9))),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -990,23 +822,19 @@ class _PaketScreenState extends State<PaketScreen> {
                                     ),
                                     const SizedBox(width: 12),
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         SizedBox(
                                           height: 10.5,
                                           width: 107,
                                           child: Shimmer.fromColors(
-                                            baseColor:
-                                                Colors.grey.withOpacity(0.3),
-                                            highlightColor:
-                                                Colors.white.withOpacity(0.4),
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white.withOpacity(0.4),
                                             child: Container(
                                               height: 107,
                                               width: 107,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
+                                                borderRadius: BorderRadius.circular(12),
                                                 gradient: const LinearGradient(
                                                   colors: [
                                                     Colors.grey,
@@ -1022,16 +850,13 @@ class _PaketScreenState extends State<PaketScreen> {
                                           height: 10.5,
                                           width: 107,
                                           child: Shimmer.fromColors(
-                                            baseColor:
-                                                Colors.grey.withOpacity(0.3),
-                                            highlightColor:
-                                                Colors.white.withOpacity(0.4),
+                                            baseColor: Colors.grey.withOpacity(0.3),
+                                            highlightColor: Colors.white.withOpacity(0.4),
                                             child: Container(
                                               height: 107,
                                               width: 107,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
+                                                borderRadius: BorderRadius.circular(12),
                                                 gradient: const LinearGradient(
                                                   colors: [
                                                     Colors.grey,
@@ -1054,29 +879,23 @@ class _PaketScreenState extends State<PaketScreen> {
                                   children: [
                                     ListView.builder(
                                       shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       itemCount: 3,
                                       itemBuilder: (context, index) {
                                         return Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 5),
+                                          padding: const EdgeInsets.only(top: 5),
                                           child: SizedBox(
                                             height: 8.75,
                                             width: 81,
                                             child: Shimmer.fromColors(
-                                              baseColor:
-                                                  Colors.grey.withOpacity(0.3),
-                                              highlightColor:
-                                                  Colors.white.withOpacity(0.4),
+                                              baseColor: Colors.grey.withOpacity(0.3),
+                                              highlightColor: Colors.white.withOpacity(0.4),
                                               child: Container(
                                                 height: 8.75,
                                                 width: 81,
                                                 decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                  gradient:
-                                                      const LinearGradient(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  gradient: const LinearGradient(
                                                     colors: [
                                                       Colors.grey,
                                                       Colors.white,
@@ -1105,8 +924,7 @@ class _PaketScreenState extends State<PaketScreen> {
           Container(
             width: double.infinity,
             height: 40,
-            decoration: BoxDecoration(
-                color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(8)),
             child: Center(
               child: SizedBox(
                 height: 10.5,
@@ -1191,8 +1009,7 @@ class _PaketScreenState extends State<PaketScreen> {
           children: [
             Text(
               "Paket",
-              style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.bold, fontSize: 10),
+              style: GoogleFonts.montserrat(fontWeight: FontWeight.bold, fontSize: 10),
             ),
             Text(
               "Psikolog",

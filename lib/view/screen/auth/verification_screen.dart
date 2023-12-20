@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/Register/filling_profile/filling_profile_1_screen.dart';
+import 'package:empathi_care/view/screen/auth/filling_profile/filling_profile_1_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

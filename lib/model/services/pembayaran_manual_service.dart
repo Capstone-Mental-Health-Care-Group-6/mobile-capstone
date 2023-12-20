@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:empathi_care/utils/baseurl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,8 +34,9 @@ class PembayaranManualService {
           filename: file.toString(),
         ),
       });
+      log(data.toString());
       final response = await dio.post(
-        "${Url.baseUrl}/transkasi",
+        "${Url.baseUrl}/transaksi",
         data: data,
         options: Options(headers: mainheader),
       );
