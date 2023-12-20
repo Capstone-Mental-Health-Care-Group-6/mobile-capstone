@@ -4,11 +4,6 @@ import 'package:empathi_care/model/psikolog_model.dart';
 
 class PsikologProvider extends ChangeNotifier {
   final PsikologApiService _apiService = PsikologApiService();
-  int percentageRating = 0;
-  int percentageRatingTotal = 0;
-  double countRatingDocter = 0;
-  int countReviewDocter = 0;
-  int maxStarRating = 5;
   TextEditingController searchController = TextEditingController();
   bool isLoading = true, notFound = false;
 
@@ -18,27 +13,6 @@ class PsikologProvider extends ChangeNotifier {
     try {
       isLoading = true;
       dataPsikolog = await _apiService.fetchPsikolog(token);
-      for (var data in dataPsikolog!.data){
-        if(data.ratings.isNotEmpty){
-          countReviewDocter = data.ratings.where((rating) => rating.doctorReview.toString() != "No review yet").length;
-          for(var rating in data.ratings){
-            countRatingDocter += rating.doctorStarRating;
-          }
-
-          if(countReviewDocter != 0 && countRatingDocter != 0.0){
-            percentageRatingTotal = (countRatingDocter / (maxStarRating * countReviewDocter) * 100).round();
-          }
-        }else{
-          countReviewDocter=0;
-          countRatingDocter=0;
-        }
-
-        if(countReviewDocter != 0 && countRatingDocter != 0.0){
-          percentageRating = percentageRatingTotal;
-        }else{
-          percentageRating = 0;
-        }
-      }
       isLoading = false;
       notFound = false;
     } catch (e) {
@@ -50,33 +24,47 @@ class PsikologProvider extends ChangeNotifier {
   Future<void> fetchListPsikologSearch(String token) async {
     try {
       dataPsikolog =
-          await _apiService.fetchPsikologSearch(searchController.text,token);
-      for (var data in dataPsikolog!.data){
-        if(data.ratings != null){
-          countReviewDocter = data.ratings!.where((rating) => rating.doctorReview.toString() != "No review yet").length;
-          for(var rating in data.ratings!){
-            countRatingDocter += rating.doctorStarRating;
-          }
-
-          if(countReviewDocter != 0 && countRatingDocter != 0.0){
-            percentageRatingTotal = (countRatingDocter / (maxStarRating * countReviewDocter) * 100).round();
-          }
-        }else{
-          countReviewDocter=0;
-          countRatingDocter=0;
-        }
-
-        if(countReviewDocter != 0 && countRatingDocter != 0.0){
-          percentageRating = percentageRatingTotal;
-        }else{
-          percentageRating = 0;
-        }
-      }
+          await _apiService.fetchPsikologSearch(searchController.text, token);
       isLoading = false;
       notFound = false;
     } catch (e) {
       notFound = true;
     }
     notifyListeners();
+  }
+
+  int sumRatingPerDocter(Datum data) {
+    int percentageRatingTotal = 0;
+    if (data.ratings.isNotEmpty) {
+      int countReviewDocter = data.ratings
+          .where((rating) => rating.doctorReview != "No review yet" || rating.doctorStarRating != 0)
+          .length;
+
+      double countRatingDocter = data.ratings
+          .fold(0.0, (sum, rating) => sum + rating.doctorStarRating);
+
+      if (countReviewDocter != 0) {
+        percentageRatingTotal =
+            (countRatingDocter / (5 * countReviewDocter) * 100).round();
+      }
+      int percentageRating =
+          (countReviewDocter != 0 && countRatingDocter != 0.0)
+              ? percentageRatingTotal
+              : 0;
+      return percentageRating;
+    }else{
+      return 0;
+    }
+  }
+
+  int sumReviewPerDocter(Datum data) {
+    if (data.ratings.isNotEmpty) {
+      int countReviewDocter = data.ratings
+          .where((rating) => rating.doctorReview != "No review yet" || rating.doctorStarRating != 0)
+          .length;
+      return countReviewDocter;
+    }else{
+      return 0;
+    }
   }
 }

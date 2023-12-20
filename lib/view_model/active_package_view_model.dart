@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:empathi_care/model/active_package_models.dart';
 import 'package:empathi_care/model/services/active_package_services.dart';
 import 'package:flutter/material.dart';
@@ -15,30 +16,18 @@ class ActivePackageViewModel extends ChangeNotifier {
 
   ActivePackageModel? get activePackageModel => _activePackageModel;
 
-  Future<void> delayLoading() async {
-    if (isLoaded) {
-      await fetchDataActivePackage();
-    }
-
-    await Future.delayed(
-      const Duration(seconds: 5),
-    ).then((value) {
-      isLoaded = false;
-      notifyListeners();
-    });
-  }
-
-  Future<ActivePackageModel> fetchDataActivePackage() async {
-    _activePackageModel = await _activePackageService.fetchData();
+  Future<ActivePackageModel?> fetchDataActivePackage() async {
     try {
-      if (_activePackageModel != null) {
-        notifyListeners();
-        return _activePackageModel!;
-      } else {
-        throw Exception('Failed to fetch active package');
-      }
+      _activePackageModel = await _activePackageService.fetchData();
+      notifyListeners();
+      return _activePackageModel!;
     } catch (e) {
-      throw Exception('$e');
+      if (e is DioException) {
+        if (e.response?.statusCode == 404) {
+          debugPrint('Error 404: Not Found');
+        }
+      }
+      throw Exception('Gagal mendapatkan data: $e');
     }
   }
 }

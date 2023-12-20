@@ -76,7 +76,10 @@ class _InstantWidgetState extends State<InstantWidget> {
             ),
             instantViewModel.selectedIndex == 0 &&
                     instantViewModel.activePackageModel != null
-                ? cardInstant(instantViewModel.activePackageModel!.data!.where((element) => element.status != 'pending').toList())
+                ? cardInstant(instantViewModel.activePackageModel!.data!
+                    .where((element) => element.status != 'pending')
+                    .toList()
+                    )
                 : instantViewModel.selectedIndex == 2 &&
                         instantViewModel.activePackageModel != null
                     ? cardInstant(instantViewModel.activePackageModel!.data!

@@ -1,5 +1,5 @@
 import 'package:empathi_care/model/active_package_models.dart';
-import 'package:empathi_care/view/screen/zoom_screen.dart';
+import 'package:empathi_care/view/screen/counseling/zoom_screen.dart';
 import 'package:empathi_care/view_model/premium_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -97,6 +97,9 @@ class _PremiumWidgetState extends State<PremiumWidget> {
   }
 
   Widget cardInstant(List<Data> data) {
+    SnackBar snackBar = SnackBar(
+      content: Text('Saat ini fitur chat dalam tahap pengembangan'),
+    );
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -212,7 +215,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                 top: 3.0,
                               ),
                               decoration: BoxDecoration(
-                                color: data1.date! == 'masa'
+                                color: data1.status == 'not_finished'
                                     ? const Color(0xff54C438)
                                     : const Color(0xff959595),
                                 borderRadius: BorderRadius.circular(
@@ -223,7 +226,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                 onTap: () {},
                                 child: data1.status == 'not_finished'
                                     ? Text(
-                                        'Masa aktif',
+                                        'Paket anda aktif',
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
@@ -231,7 +234,7 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                         ),
                                       )
                                     : Text(
-                                        'formatDate',
+                                        'Pending',
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
@@ -240,30 +243,8 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                       ),
                               ),
                             ),
-                            data1.status == 'finished'
-                                ? OutlinedButton(
-                                    style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.all(10.0),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          8.0,
-                                        ),
-                                      ),
-                                      side: const BorderSide(
-                                        color: Color(0xff0085FF),
-                                      ),
-                                      foregroundColor: const Color(0xff0085FF),
-                                    ),
-                                    onPressed: () {},
-                                    child: Text(
-                                      'Chat Kembali',
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12.0,
-                                      ),
-                                    ),
-                                  )
-                                : ElevatedButton(
+                            data1.status == 'not_finished'
+                                ? ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xff0085FF),
                                       padding: const EdgeInsets.all(
@@ -276,22 +257,21 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      data1.counselingMethod == 'Gmeet'
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const ZoomScreen(),
-                                              ),
-                                            )
-                                          : data1.counselingMethod == 'Chat'
+                                      data1.counselingMethod == 'VideoCall'
+                                          ? data1.id != null
                                               ? Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (_) =>
-                                                        const ZoomScreen(),
+                                                    builder: (context) =>
+                                                        ZoomScreen(
+                                                      doctorId: data1.id,
+                                                    ),
                                                   ),
                                                 )
+                                              : const SizedBox()
+                                          : data1.counselingMethod == 'Chat'
+                                              ? ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar)
                                               : const SizedBox();
                                     },
                                     child: data1.counselingMethod == 'Chat'
@@ -309,6 +289,36 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                               fontWeight: FontWeight.w700,
                                               fontSize: 12.0,
                                               color: Colors.white,
+                                            ),
+                                          ),
+                                  )
+                                : OutlinedButton(
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.all(10.0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                          8.0,
+                                        ),
+                                      ),
+                                      side: const BorderSide(
+                                        color: Color(0xff0085FF),
+                                      ),
+                                      foregroundColor: const Color(0xff0085FF),
+                                    ),
+                                    onPressed: () {},
+                                    child: data1.counselingMethod == 'Chat'
+                                        ? Text(
+                                            'Mulai Chat Kembali',
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12.0,
+                                            ),
+                                          )
+                                        : Text(
+                                            'Mulai Gmeet Kembali',
+                                            style: GoogleFonts.montserrat(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 12.0,
                                             ),
                                           ),
                                   ),

@@ -2,8 +2,8 @@ import 'package:empathi_care/view/screen/Profile/ChangePassword/change_password_
 import 'package:empathi_care/view/screen/Profile/EditProfile/edit_profile_screen.dart';
 import 'package:empathi_care/view/screen/Profile/Info/about_us_screen.dart';
 import 'package:empathi_care/view/screen/Profile/Info/privacy_screen.dart';
-import 'package:empathi_care/view/screen/Register/terms_screen.dart';
-import 'package:empathi_care/view/screen/chat_bot_cs_screen.dart';
+import 'package:empathi_care/view/screen/auth/terms_screen.dart';
+import 'package:empathi_care/view/screen/chatbot/chat_bot_cs_screen.dart';
 import 'package:empathi_care/view/widget/DeleteLogOutProfile/delete_widget.dart';
 import 'package:empathi_care/view/widget/DeleteLogOutProfile/logout_widget.dart';
 import 'package:empathi_care/view_model/get_patient_by_id_view_model.dart';
@@ -27,6 +27,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String gender = '';
 
   String phone = '';
+  String name = "";
+  String email = "";
   @override
   void initState() {
     getPatientByIdViewModel =
@@ -40,6 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     birth = DateTime.parse(sp.getString('birth').toString());
     gender = sp.getString('gender').toString();
     phone = sp.getString('phone').toString();
+    email = sp.getString('email').toString();
+    name = sp.getString('name').toString();
   }
 
   @override
@@ -71,14 +75,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                getPatientByIdViewModel.name,
+                                name,
                                 style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                               Text(
-                                getPatientByIdViewModel.email,
+                                email,
                                 style: GoogleFonts.montserrat(
                                     fontSize: 12, fontWeight: FontWeight.w500),
                               ),

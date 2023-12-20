@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/login_screen.dart';
+import 'package:empathi_care/view/screen/auth/login_screen.dart';
 import 'package:empathi_care/view_model/delete_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

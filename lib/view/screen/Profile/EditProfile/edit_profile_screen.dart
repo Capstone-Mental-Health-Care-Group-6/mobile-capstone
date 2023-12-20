@@ -469,8 +469,10 @@ class _EditProfileState extends State<EditProfile> {
                                   newname: namaLengkap.text,
                                   newemail: emailController.text,
                                   newphone: nomorPonsel.text,
+                                  newbirth: DateFormat('yyyy-MM-dd')
+                                      .format(selectDate),
                                   newgender: gender);
-                              updateProfileViewModel.newBirthDate = selectDate;
+
                               getPatientByIdViewModel.getPatientbyID();
                               Navigator.pop(context);
                               showDialog(

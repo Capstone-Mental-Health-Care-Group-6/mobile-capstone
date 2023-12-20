@@ -11,50 +11,38 @@ class ChatBotAIProvider extends ChangeNotifier {
   List<ChatBotPrompt> get chatBotPrompt => _chatMessages;
   Map<int, bool> get buttonHoverStatus => _buttonHoverStatus;
   Map<String, String> menuExplanations = {
-    'Mengatasi Gangguan Kecemasan':
-        // 'Jangan Berharap Kepada Manusia\n\nApakah informasi yang\nsaya berikan sudah jelas?',
-        '',
-    'Mengatasi Stress':
-                // 'Uninstall Mobile Legend dan Jangan Main Compe di VALORANT jika bermain SOLO \n\nApakah informasi yang\nsaya berikan sudah jelas?',
-                '',
-    'Mengatasi Depresi':
-                // 'Perbanyak Ibadah \n\nApakah informasi yang\nsaya berikan sudah jelas?',
-                '',
-    'Mengatasi Psikomatis':
-                // 'Dukungan keluarga dan teman-teman sangat penting. Membangun jaringan dukungan yang kuat dapat membantu individu dengan psikosomatis merasa lebih terhubung dan kurang terisolasi. Apakah masalah anda sudah terselesaikan? \n\nApakah informasi yang\nsaya berikan sudah jelas?',
-                '',
+    'Mengatasi Gangguan Kecemasan': '',
+    'Mengatasi Stress': '',
+    'Mengatasi Depresi': '',
+    'Mengatasi Psikomatis': '',
   };
-  // Map<String, String> menuExplanations = {};
-  
-  Future postPrompt(String message, String token) async{
-    try {
-      // print(message);
-      chatbotAi = await chatBotAi.postPromptChatbotAi(message);
-      // if(chatbotAi!.data.prompt == "Mengatasi Gangguan Kecemasan"){
-        menuExplanations['Mengatasi Gangguan Kecemasan'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
-      // }else if(chatbotAi!.data.prompt == "Mengatasi Stress"){
-        menuExplanations['Mengatasi Stress'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
-      // }else if(chatbotAi!.data.prompt == "Mengatasi Depresi"){
-        menuExplanations['Mengatasi Depresi'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
-      // }else{
-        menuExplanations['Mengatasi Psikomatis'] = "${chatbotAi!.data.resultPrompt} \n\nApakah informasi yang\nsaya berikan sudah jelas?";
-      // }
-      isLoading = false;
-    } catch (e) {
-      throw Exception(e);
-    }
-    notifyListeners();
-  }
 
-  // Future fetchPrompt(String token) async{
-  //   try {
-  //     chatbotAi = await chatBotAi.fetchChatBotAI(token);
-      
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  //   notifyListeners();
-  // }
+  Future postPrompt(String message) async {
+    try {
+      isLoading = true;
+      notifyListeners();
+
+      chatbotAi = await chatBotAi.postPromptChatbotAi(message);
+
+      menuExplanations['Mengatasi Gangguan Kecemasan'] =
+          "${chatbotAi!.data.resultPrompt} \n\n *chatbot ini dapat membuat kesalahan. jika memang tidak dapat menyelesaikan masalah gangguan kecemasan maka harap hubungi psikolog profesional \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+
+      menuExplanations['Mengatasi Stress'] =
+          "${chatbotAi!.data.resultPrompt} \n\n *chatbot ini dapat membuat kesalahan. jika memang tidak dapat menyelesaikan masalah stress maka harap hubungi psikolog profesional \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+
+      menuExplanations['Mengatasi Depresi'] =
+          "${chatbotAi!.data.resultPrompt} \n\n *chatbot ini dapat membuat kesalahan. jika memang tidak dapat menyelesaikan masalah depresi maka hubungi psikolog profesional \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+
+      menuExplanations['Mengatasi Psikomatis'] =
+          "${chatbotAi!.data.resultPrompt} \n\n *chatbot ini dapat membuat kesalahan. jika memang tidak dapat menyelesaikan masalah gangguan psikomatis maka hubungi psikolog profesional \n\nApakah informasi yang\nsaya berikan sudah jelas?";
+
+      isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      isLoading = false;
+      throw Exception(e);                
+    }
+  }
 
   void addMenuMessage(String message) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -63,10 +51,10 @@ class ChatBotAIProvider extends ChangeNotifier {
     });
   }
 
-  void addUserMessage(String message, String token) async {
+  void addUserMessage(String message) async {
     _chatMessages.add(ChatBotPrompt(text: message, isUser: true));
-    if(message != "Ya" && message != "Tidak"){
-      postPrompt(message,token);
+    if (message != "Ya, Sudah sangat jelas" && message != "Masih belum relevan" && !menuExplanations.values.contains(message)) {
+      postPrompt(message);
     }
     notifyListeners();
   }
@@ -100,48 +88,57 @@ class ChatBotAIProvider extends ChangeNotifier {
         lastMessage.contains("Depresi") ||
         lastMessage.contains("Psikomatis")) {
       String menuResponse = _chatMessages[buttonIndex].text;
-      addUserMessage(menuResponse,token);
+      addUserMessage(menuResponse);
 
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
           !message.text.contains('Selamat') &&
-          !message.text.contains('Bagaimanakah'));
+          !message.text.contains('gangguan kecemasan') &&
+          !message.text.contains('masalah stress') &&
+          !message.text.contains('masalah depresi') &&
+          !message.text.contains('masalah gangguan psikomatis') &&
+          !message.text.contains('Bagaimanakah') &&
+          !menuExplanations.values.contains(message.text));
+
+      notifyListeners();
 
       showMenuExplanation(menuResponse);
-      notifyListeners();
-    } else if (lastMessage == 'Ya') {
-      addUserMessage('Ya',token);
+    } else if (lastMessage == 'Ya, Sudah sangat jelas') {
+      addUserMessage('Ya, Sudah sangat jelas');
       addMenuMessage(
           'Terimakasih atas percakapannya!\nJika Anda memiliki pertanyaan lain nanti,\njangan ragu untuk datang kembali.\nSemoga harimu menyenangkan!');
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
-          (message.text.contains('Ya') || message.text.contains('Tidak')));
+          (message.text.contains('Ya, Sudah sangat jelas') || message.text.contains('Masih belum relevan')));
       notifyListeners();
-    } else if (lastMessage == 'Tidak') {
-      addUserMessage('Tidak',token);
+    } else if (lastMessage == 'Masih belum relevan') {
+      addUserMessage('Masih belum relevan');
       addMenuMessage('Bagaimanakah saya dapat membantu Anda?');
       addMenuButtons();
 
       _chatMessages.removeWhere((message) =>
           !message.isUser &&
-          (message.text.contains('Ya') || message.text.contains('Tidak')));
+          (message.text.contains('Ya, Sudah sangat jelas') || message.text.contains('Masih belum relevan')));
       notifyListeners();
     }
   }
 
   void showMenuExplanation(String menuKey) {
     if (menuExplanations.containsKey(menuKey)) {
-      // if(isLoading){
-      //   debugPrint(isLoading.toString());
-      //   addMenuMessage("Memuat");
-      //   notifyListeners();
-      // }else{
-      //   debugPrint(isLoading.toString());
-        addMenuMessage('${menuExplanations[menuKey]}');        
-        addMenuMessage('Ya');
-        addMenuMessage('Tidak');
+      addMenuMessage('load...');
+      notifyListeners();
+
+      postPrompt(menuKey).then((_) {
+        _chatMessages.removeLast();
+
+        addMenuMessage('${menuExplanations[menuKey]}');
+        addMenuMessage('Ya, Sudah sangat jelas');
+        addMenuMessage('Masih belum relevan');
         notifyListeners();
-      // }
+      }).catchError((error) {
+        _chatMessages.removeLast();
+        notifyListeners();
+      });
     }
   }
 

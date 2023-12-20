@@ -19,7 +19,6 @@ class UpdateProfileService {
   }) async {
     sp = await SharedPreferences.getInstance();
     accesstoken = sp.getString('accesstoken').toString();
-    print('$newavatar awererw');
     try {
       FormData data = FormData.fromMap({
         if (name != null) 'name': name,
@@ -34,7 +33,6 @@ class UpdateProfileService {
       final response = await _dio.put('${BaseUrl.baseurl}/account/update',
           data: data,
           options: Options(headers: {"Authorization": 'Bearer $accesstoken'}));
-      print('$response qweuqwueow');
       return UpdateProfileModel.fromJson(response.data);
     } on DioException catch (_) {
       rethrow;

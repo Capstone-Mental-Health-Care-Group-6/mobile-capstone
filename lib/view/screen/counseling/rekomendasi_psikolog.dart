@@ -1,4 +1,4 @@
-import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
+import 'package:empathi_care/view/screen/counseling/profile_psikolog_screen.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +34,12 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
   }
 
   @override
+  void dispose() {
+    provider.searchController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -49,6 +55,13 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
               fontWeight: FontWeight.w700,
             ),
           ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              provider.fetchListPsikolog(token);
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: Builder(builder: (context) {
           return Consumer<PsikologProvider>(builder: (context, value, child) {
@@ -60,67 +73,30 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  top: 20, bottom: 20, left: 20),
-                              width: 250,
-                              height: 50,
-                              child: TextFormField(
-                                controller: provider.searchController,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(8)),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Icon(
-                                      Icons.search,
-                                      size: 23,
-                                    ),
-                                  ),
-                                  hintText: "Search",
-                                ),
-                                onChanged: (text) async {
-                                  // final String query = viewModel.search.text;
-                                  await provider.fetchListPsikologSearch(token);
-                                },
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        width: double.infinity,
+                        child: TextFormField(
+                          controller: provider.searchController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                            ),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Icon(
+                                Icons.search,
+                                size: 23,
                               ),
                             ),
+                            hintText: "Search",
                           ),
-                          const SizedBox(width: 10),
-                          Container(
-                            margin: const EdgeInsets.only(
-                                top: 20, bottom: 20, right: 20),
-                            height: 50,
-                            child: OutlinedButton.icon(
-                              style: ButtonStyle(
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0)),
-                                ),
-                              ),
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.filter_alt_outlined,
-                                size: 24.0,
-                                color: Colors.black,
-                              ),
-                              label: Text(
-                                'Filter',
-                                style: GoogleFonts.montserrat(
-                                  fontSize: 13.0,
-                                  color: const Color(0xff393938),
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          onChanged: (text) async {
+                            // final String query = viewModel.search.text;
+                            await provider.fetchListPsikologSearch(token);
+                          },
+                        ),
                       ),
                       provider.notFound != true
                           ? Column(
@@ -213,7 +189,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                   ),
                                                   const SizedBox(width: 7),
                                                   Text(
-                                                    "${provider.percentageRating.toString()} %",
+                                                    "${provider.sumRatingPerDocter(data)} %",
                                                     style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -227,8 +203,7 @@ class _RekomendasiPsikologState extends State<RekomendasiPsikolog> {
                                                   ),
                                                   const SizedBox(width: 7),
                                                   Text(
-                                                    provider.countReviewDocter
-                                                        .toString(),
+                                                    "${provider.sumReviewPerDocter(data)}",
                                                     style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,

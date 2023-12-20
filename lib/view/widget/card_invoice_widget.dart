@@ -1,27 +1,49 @@
 import 'package:empathi_care/utils/constant/color.dart';
 import 'package:empathi_care/utils/constant/font_family.dart';
+import 'package:empathi_care/view_model/konseling_view_model.dart';
+import 'package:empathi_care/view_model/paket_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CardInvoicePayment extends StatelessWidget {
   const CardInvoicePayment({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
+    final counselingViewModel =
+        Provider.of<KonselingProvider>(context, listen: false);
+    final packageViewModel = Provider.of<PaketProvider>(context, listen: false);
+
     return Container(
-      height: 420,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: _buildContent(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        child: _buildContent(
+            counselingViewModel: counselingViewModel,
+            packageViewModel: packageViewModel),
+      ),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(
+      {required KonselingProvider counselingViewModel,
+      required PaketProvider packageViewModel}) {
+    String formatNumberToDecimal(int number) {
+      NumberFormat numberFormat = NumberFormat.decimalPattern('id');
+
+      return numberFormat.format(number);
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildPackageIntroduction(),
+        _buildPackageIntroduction(
+            counselingViewModel: counselingViewModel,
+            packageViewModel: packageViewModel),
         const Padding(
           padding: EdgeInsets.only(left: 12, right: 12),
           child: Divider(
@@ -29,51 +51,62 @@ class CardInvoicePayment extends StatelessWidget {
           ),
         ),
         _buildSectionTitle("Detail Pemesanan"),
-        _buildOrderDetails("Paket Chat", "Instan"),
-        _buildOrderDetails("Topik", "Stress"),
-        _buildOrderDetails("Durasi", "30 Menit"),
-        _buildOrderDetails("Sesi Konseling", "1 Sesi"),
+        _buildOrderDetails(
+            "Paket ${packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["name"]}",
+            packageViewModel.listPaket[packageViewModel.selectedPaket!]
+                ["type"]),
+        _buildOrderDetails(
+            "Topik", counselingViewModel.getid.data![0].name ?? '-'),
+        _buildOrderDetails(
+            "Durasi",
+            packageViewModel.listDuration[packageViewModel.selectedDuration - 1]
+                ["name"]),
+        _buildOrderDetails("Sesi Konseling",
+            "${packageViewModel.listPaket[packageViewModel.selectedPaket!]["sessions"]} Sesi"),
         _buildSectionTitle("Detail Pembayaran"),
-        _buildPaymentDetails("Biaya Konsultasi", "Rp.80.000"),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Text(
-            "ID 321ABC123",
-            style: TextStyle(fontFamily: MyFont.fontMontserrat),
-          ),
-        ),
-        _buildPaymentDetails("Diskon Voucher", "Rp.0"),
+        _buildPaymentDetails("Biaya Konsultasi",
+            "Rp ${formatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"])}"),
+        _buildPaymentDetails("Biaya Metode",
+            "Rp ${formatNumberToDecimal(packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"])}"),
+        _buildPaymentDetails("Biaya Durasi",
+            "Rp ${formatNumberToDecimal(packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}"),
         const Padding(
           padding: EdgeInsets.only(left: 10, right: 10),
           child: Divider(
             thickness: 2,
           ),
         ),
-        _buildTotalPrice(),
+        _buildTotalPrice(
+            handleFormatNumberToDecimal: formatNumberToDecimal,
+            counselingViewModel: counselingViewModel,
+            packageViewModel: packageViewModel),
       ],
     );
   }
 
-  Widget _buildPackageIntroduction() {
+  Widget _buildPackageIntroduction(
+      {required KonselingProvider counselingViewModel,
+      required PaketProvider packageViewModel}) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  "Paket Perkenalan",
-                  style: TextStyle(
+                  packageViewModel.listPaket[packageViewModel.selectedPaket!]
+                      ["name"],
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       fontFamily: MyFont.fontMontserrat),
                 ),
               ),
-              Text("Konseling",
+              const Text("Konseling",
                   style: TextStyle(
                       fontSize: 16, fontFamily: MyFont.fontMontserrat)),
             ],
@@ -87,9 +120,10 @@ class CardInvoicePayment extends StatelessWidget {
               minimumSize: const Size(90, 20),
               backgroundColor: ColorBase.primaryColor,
             ),
-            child: const Text(
-              "Instan",
-              style: TextStyle(
+            child: Text(
+              packageViewModel.listPaket[packageViewModel.selectedPaket!]
+                  ["type"],
+              style: const TextStyle(
                   color: Colors.black, fontFamily: MyFont.fontMontserrat),
             ),
           ),
@@ -132,9 +166,12 @@ class CardInvoicePayment extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalPrice() {
-    return const Padding(
-      padding: EdgeInsets.only(
+  Widget _buildTotalPrice(
+      {required Function handleFormatNumberToDecimal,
+      required KonselingProvider counselingViewModel,
+      required PaketProvider packageViewModel}) {
+    return Padding(
+      padding: const EdgeInsets.only(
         left: 10,
         right: 10,
         top: 5,
@@ -143,7 +180,7 @@ class CardInvoicePayment extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             "Total Harga",
             style: TextStyle(
                 fontSize: 16,
@@ -151,8 +188,8 @@ class CardInvoicePayment extends StatelessWidget {
                 fontFamily: MyFont.fontMontserrat),
           ),
           Text(
-            "Rp.80.000",
-            style: TextStyle(
+            "Rp ${handleFormatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"] + packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"] + packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}",
+            style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 fontFamily: MyFont.fontMontserrat),

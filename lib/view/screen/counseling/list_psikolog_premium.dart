@@ -1,6 +1,6 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:empathi_care/view/screen/counseling/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/screen/counseling/rekomendasi_psikolog.dart';
-import 'package:empathi_care/view/screen/profile_psikolog_screen.dart';
 import 'package:empathi_care/view/widget/time_line.dart';
 import 'package:empathi_care/view_model/psikolog_view_model.dart';
 import 'package:flutter/material.dart';
@@ -213,9 +213,12 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                             Icons.thumbs_up_down,
                                             color: Colors.blue,
                                           ),
-                                          const SizedBox(width: 7),
+                                          const SizedBox(
+                                              width:
+                                                  7), // Extract ratings for the current doctor
+                                          // Now you can use the 'ratings' list as needed
                                           Text(
-                                            "${provider.percentageRating.toString()} %",
+                                            "${provider.sumRatingPerDocter(data)} %",
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12,
@@ -228,8 +231,7 @@ class _ListPsikologPremiumState extends State<ListPsikologPremium> {
                                           ),
                                           const SizedBox(width: 7),
                                           Text(
-                                            provider.countReviewDocter
-                                                .toString(),
+                                            "${provider.sumReviewPerDocter(data)}",
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12,

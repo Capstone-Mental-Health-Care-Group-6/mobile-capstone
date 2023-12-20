@@ -1,8 +1,8 @@
 import 'package:empathi_care/view/screen/Profile/profile_screen.dart';
-import 'package:empathi_care/view/screen/active_package_screen.dart';
-import 'package:empathi_care/view/screen/home_screen.dart';
-import 'package:empathi_care/view/screen/konseling_screen.dart';
-import 'package:empathi_care/view/screen/list_riwayat_transaksi_screen.dart';
+import 'package:empathi_care/view/screen/counseling/active_package_screen.dart';
+import 'package:empathi_care/view/screen/counseling/konseling_screen.dart';
+import 'package:empathi_care/view/screen/home/home_screen.dart';
+import 'package:empathi_care/view/screen/historyTransactions/list_riwayat_transaksi_screen.dart';
 import 'package:empathi_care/view/widget/navigation_bottom_bar.dart';
 import 'package:empathi_care/view_model/navigator_provider.dart';
 import 'package:flutter/material.dart';

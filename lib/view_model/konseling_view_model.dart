@@ -60,7 +60,7 @@ class KonselingProvider extends ChangeNotifier {
   Future<void> getById() async {
     try {
       _getid = await _apiService.fetchTopikById(selectedId);
-      print("test$getid");
+
       notifyListeners();
     } catch (e) {
       throw Exception('Gagal mendapatkan data: $e');
