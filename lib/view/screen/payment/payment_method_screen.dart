@@ -54,7 +54,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
       return numberFormat.format(number);
     }
-    
+
     void makeTransaction() async {
       final SharedPreferences sp = await SharedPreferences.getInstance();
       final String token = sp.getString('accesstoken').toString();
@@ -258,7 +258,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                     'Total Biaya',
                     style: GoogleFonts.montserrat(),
                   ),
-                  Text("Rp ${formatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"] + packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"] + packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}",
+                  Text(
+                      "Rp ${formatNumberToDecimal(packageViewModel.listPaket[packageViewModel.selectedPaket!]["price"] + packageViewModel.listMethods[packageViewModel.selectedMetode - 1]["additional_price"] + packageViewModel.listDuration[packageViewModel.selectedDuration - 1]["additional_price"])}",
                       style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w700, fontSize: 18))
                 ],
