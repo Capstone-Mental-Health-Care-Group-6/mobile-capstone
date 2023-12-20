@@ -97,6 +97,9 @@ class _PremiumWidgetState extends State<PremiumWidget> {
   }
 
   Widget cardInstant(List<Data> data) {
+    SnackBar snackBar = SnackBar(
+      content: Text('Saat ini fitur chat dalam tahap pengembangan'),
+    );
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -255,24 +258,20 @@ class _PremiumWidgetState extends State<PremiumWidget> {
                                     ),
                                     onPressed: () {
                                       data1.counselingMethod == 'VideoCall'
-                                          ? Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ZoomScreen(
-                                                  doctorId: data1.id,
-                                                ),
-                                              ),
-                                            )
-                                          : data1.counselingMethod == 'Chat'
+                                          ? data1.id != null
                                               ? Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                    builder: (_) => ZoomScreen(
+                                                    builder: (context) =>
+                                                        ZoomScreen(
                                                       doctorId: data1.id,
                                                     ),
                                                   ),
                                                 )
+                                              : const SizedBox()
+                                          : data1.counselingMethod == 'Chat'
+                                              ? ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar)
                                               : const SizedBox();
                                     },
                                     child: data1.counselingMethod == 'Chat'

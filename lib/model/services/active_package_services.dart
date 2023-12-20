@@ -21,10 +21,10 @@ class JwtService {
     final Map<String, dynamic> decodedToken = decodeToken(token);
     // ignore: unnecessary_null_comparison
     if (decodedToken != null && decodedToken['id'] != null) {
-    return decodedToken['id'];
-  } else {
-    throw Exception("Couldn't extract user ID from token");
-  }
+      return decodedToken['id'];
+    } else {
+      throw Exception("Couldn't extract user ID from token");
+    }
   }
 }
 
@@ -71,7 +71,7 @@ class ActivePackageService {
 
       return activePackage;
     } catch (e) {
-      throw Exception('Gagal mengambil data dari API: $e');
+      rethrow;
     }
   }
 }

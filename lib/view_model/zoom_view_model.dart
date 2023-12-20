@@ -9,15 +9,14 @@ class ZoomViewModel extends ChangeNotifier {
   ZoomModel? _zoomModel;
   ZoomModel? get zooModel => _zoomModel;
 
-  Future<ZoomModel> getDataFromApi({required int doctorId}) async {
-    _zoomModel = await _zoomService.fetchData(id: doctorId);
+  Future<ZoomModel> getDataFromApi(doctorId) async {
+    _zoomModel = await _zoomService.fetchData(doctorId);
     try {
       if (_zoomModel != null) {
         debugPrint('aa : $_zoomModel');
         notifyListeners();
         return _zoomModel!;
       } else {
-        debugPrint('bb : $_zoomModel');
         throw Exception('Failed to fetch active package');
       }
     } catch (e) {

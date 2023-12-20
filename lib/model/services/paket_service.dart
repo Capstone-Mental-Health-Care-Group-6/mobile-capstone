@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:empathi_care/utils/baseurl.dart';
+import 'package:flutter/material.dart';
 
 class PaketService {
   PaketService();
@@ -20,6 +21,7 @@ class PaketService {
         );
       }
       final responseBody = response.data['data'];
+      debugPrint('$responseBody');
 
       return responseBody;
     } on DioException catch (_) {

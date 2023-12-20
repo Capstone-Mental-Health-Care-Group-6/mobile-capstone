@@ -9,7 +9,7 @@ class ZoomService {
   late String accessToken;
   final baseUrl = "https://kmb5alta.online";
 
-  Future<ZoomModel> fetchData({required int id}) async {
+  Future<ZoomModel> fetchData(int id) async {
     try {
       authUser = await SharedPreferences.getInstance();
       accessToken = authUser.getString('accesstoken').toString();
